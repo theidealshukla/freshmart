@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - FreshMart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="header container"></header>
+
+    <div class="container breadcrumb" style="margin-top: 1rem;">
+        <a href="index.html">Home</a> &gt; <span class="text-dark">Cart</span>
+    </div>
+
+    <main class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
+        <div class="flex flex-col lg:flex-row gap-8" style="display: flex; gap: 2rem;">
+            <!-- Cart Items -->
+            <div class="flex-1">
+                <h1 class="text-2xl font-bold mb-4">Your Cart (<span id="cart-count">0</span> items)</h1>
+                <div id="cart-items" class="flex flex-col gap-4">
+                    <!-- Items injected here -->
+                    <div class="text-center p-8 text-muted">Your cart is empty</div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="cart-summary"
+                style="min-width: 300px; padding: 1.5rem; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); height: fit-content;">
+                <h2 class="text-lg font-bold mb-4">Order Summary</h2>
+                <div class="flex justify-between mb-2 text-sm">
+                    <span class="text-muted">Subtotal</span>
+                    <span id="summary-subtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-2 text-sm">
+                    <span class="text-muted">Tax (8%)</span>
+                    <span id="summary-tax">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-4 text-sm">
+                    <span class="text-muted">Shipping</span>
+                    <span id="summary-shipping">$0.00</span>
+                </div>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 1rem 0;">
+                <div class="flex justify-between mb-6 font-bold text-lg">
+                    <span>Total</span>
+                    <span id="summary-total">$0.00</span>
+                </div>
+                <a href="checkout.html" class="btn btn-primary w-full text-center"
+                    style="width: 100%; display: block;">Proceed to Checkout</a>
+                <div class="text-center mt-4 text-xs text-muted">
+                    🔒 Secure Checkout
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer container"></footer>
+
+    <script type="module">
+        import { cart } from './js/cart.js';
+
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartCountEl = document.getElementById('cart-count');
+        const summarySubtotal = document.getElementById('summary-subtotal');
+        const summaryTax = document.getElementById('summary-tax');
+        const summaryShipping = document.getElementById('summary-shipping');
+        const summaryTotal = document.getElementById('summary-total');
+
+        function renderCart() {
+            const items = cart.items;
+            const totals = cart.getTotals();
+
+            cartCountEl.textContent = totals.count;
+            summarySubtotal.textContent = `$${totals.subtotal}`;
+            summaryTax.textContent = `$${totals.tax}`;
+            summaryShipping.textContent = totals.shipping === '0.00' ? 'Free' : `$${totals.shipping}`;
+            summaryTotal.textContent = `$${totals.total}`;
+
+            if (items.length === 0) {
+                cartItemsContainer.innerHTML = '<div class="text-center p-8 text-muted">Your cart is empty. <a href="index.html" class="text-primary font-bold">Start Shopping</a></div>';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = items.map(item => `
+                <div class="cart-item flex items-center gap-4 p-4 border rounded bg-white shadow-sm" style="border: 1px solid var(--border); border-radius: var(--radius-md);">
+                    <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm);">
+                    <div class="flex-1">
+                        <div class="flex justify-between mb-1">
+                            <h3 class="font-bold text-sm text-dark">${item.name}</h3>
+                            <span class="font-bold text-dark">$${(item.price * item.qty).toFixed(2)}</span>
+                        </div>
+                        <p class="text-xs text-muted mb-2">$${item.price} / ${item.unit}</p>
+                        <div class="flex items-center gap-4">
+                            <div class="qty-control flex items-center border rounded" style="border: 1px solid var(--border);">
+                                <button onclick="window.updateCartQty(${item.id}, -1)" class="px-2 py-1 hover:bg-gray-100">-</button>
+                                <span class="px-2 text-sm font-medium w-8 text-center">${item.qty}</span>
+                                <button onclick="window.updateCartQty(${item.id}, 1)" class="px-2 py-1 hover:bg-gray-100">+</button>
+                            </div>
+                            <button onclick="window.removeCartItem(${item.id})" class="text-xs text-danger hover:underline" style="color:var(--danger)">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Expose functions to window directly since onclick is used
+        window.updateCartQty = (id, delta) => {
+            cart.updateQty(id, delta);
+            renderCart();
+        };
+
+        window.removeCartItem = (id) => {
+            cart.remove(id);
+            renderCart();
+        };
+
+        // Initial Render
+        renderCart();
+
+        // Listen for updates from other tabs/events
+        window.addEventListener('cart-updated', renderCart);
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

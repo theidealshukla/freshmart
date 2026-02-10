@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - FreshMart India</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="header container"></header>
+
+    <div class="container breadcrumb" style="margin-top: 1rem;">
+        <a href="index.html">Home</a> &gt; <span class="text-dark">Orders</span>
+    </div>
+
+    <main class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
+        <div class="flex justify-between items-center mb-6 mobile-col">
+            <h1 class="text-2xl font-bold">Order History</h1>
+            <div class="flex gap-2">
+                <input type="text" placeholder="Search by Order ID..." class="p-2 border rounded"
+                    style="border:1px solid var(--border); border-radius:4px; min-width:300px;">
+                <button class="btn btn-outline" style="padding: 0.5rem 1rem;">Filter</button>
+            </div>
+        </div>
+
+        <!-- Success Message for New Order -->
+        <div id="new-order-msg" class="bg-green-100 text-green-800 p-4 rounded-lg mb-6 hidden"
+            style="background:#e8f5e9; color:#2e7d32; border:1px solid #c8e6c9;">
+            ✅ <strong>Order Placed Successfully!</strong> Your order #ORD-9999-IN has been received and is being packed.
+            <a href="order-tracking.html?id=ORD-9999-IN" class="underline ml-2">Track Status</a>
+        </div>
+
+        <div class="tabs flex gap-4 border-b mb-6 overflow-x-auto" style="border-bottom: 2px solid var(--border);">
+            <button class="tab active pb-2 border-b-2 border-green-500 font-bold whitespace-nowrap"
+                style="color:var(--primary); border-bottom: 2px solid var(--primary);">All Orders</button>
+            <button class="tab pb-2 text-muted whitespace-nowrap">Returns</button>
+            <button class="tab pb-2 text-muted whitespace-nowrap">Cancelled</button>
+        </div>
+
+        <div id="orders-list" class="flex flex-col gap-4">
+            <!-- Orders injected via JS -->
+        </div>
+
+    </main>
+
+    <footer class="footer container"></footer>
+
+    <script type="module">
+        import { orders } from './js/data.js';
+
+        // Check for new order flag
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('new')) {
+            document.getElementById('new-order-msg').classList.remove('hidden');
+        }
+
+        const ordersListEl = document.getElementById('orders-list');
+
+        function renderOrders() {
+            ordersListEl.innerHTML = orders.map(order => `
+                <div class="order-card p-6 bg-white border rounded-lg shadow-sm hover:shadow-md transition-shadow" style="background:var(--white); border:1px solid var(--border); border-radius:var(--radius-lg);">
+                    <div class="flex justify-between items-start mb-4 mobile-col">
+                        <div class="flex gap-8 text-sm mobile-gap-2">
+                            <div>
+                                <span class="block text-muted text-xs uppercase">Order Placed</span>
+                                <span class="font-medium">${order.date}</span>
+                            </div>
+                            <div>
+                                <span class="block text-muted text-xs uppercase">Total</span>
+                                <span class="font-medium">₹${order.total.toFixed(2)}</span>
+                            </div>
+                            <div>
+                                <span class="block text-muted text-xs uppercase">Order ID</span>
+                                <span class="font-medium text-primary cursor-pointer hover:underline">#${order.id}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4 mt-mobile-2">
+                            ${order.status === 'Delivered'
+                    ? `<span class="badge bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">✔ Delivered</span>`
+                    : `<span class="badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">🚚 ${order.status}</span>`
+                }
+                            <a href="order-tracking.html?id=${order.id}" class="btn btn-outline btn-sm text-xs">Track Order</a>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center mobile-col-reverse">
+                        <div class="flex gap-4 items-center">
+                            <!-- Show up to 3 images -->
+                            ${order.items.slice(0, 3).map(item => `
+                                <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded border" style="width:60px; height:60px; object-fit:cover; border-radius:4px; border:1px solid #eee;">
+                            `).join('')}
+                            ${order.itemCount > 3 ? `<span class="text-muted text-sm font-medium">+${order.itemCount - 3} more</span>` : ''}
+                        </div>
+                        <div class="flex flex-col gap-2 mobile-full-width mt-mobile-2">
+                            <button class="btn btn-primary btn-sm w-32 mobile-full-width">Buy Again</button>
+                            <button class="btn btn-outline btn-sm w-32 mobile-full-width">View Receipt</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderOrders();
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>

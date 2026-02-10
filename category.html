@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snacks & Drinks - FreshMart India</title>
+    <link rel="stylesheet" href="css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+    <header class="header container"></header>
+
+    <div class="container breadcrumb" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+        <a href="index.html">Home</a> &gt; <a href="#">Groceries</a> &gt; <span class="text-dark">Snacks & Drinks</span>
+    </div>
+
+    <!-- Mobile Filter Toggle -->
+    <div class="container lg:hidden py-4" style="display: none;">
+        <button id="filter-toggle" class="btn btn-outline w-full flex justify-between items-center">
+            <span>Filter & Sort</span>
+            <span>⬇</span>
+        </button>
+    </div>
+
+    <main class="container"
+        style="margin-top: 1rem; margin-bottom: 4rem; display: grid; grid-template-columns: 240px 1fr; gap: 2rem;">
+        <!-- Sidebar Filters -->
+        <aside class="filters" id="filters-sidebar" style="padding-right: 1rem;">
+            <div class="filter-group mb-6">
+                <h3 class="text-sm font-bold uppercase text-muted mb-3" style="letter-spacing: 0.5px;">Categories</h3>
+                <div class="flex flex-col gap-2 text-sm">
+                    <label class="flex items-center gap-2"><input type="checkbox" checked> Namkeen & Chips <span
+                            class="text-muted ml-auto">(24)</span></label>
+                    <label class="flex items-center gap-2"><input type="checkbox" checked> Cold Drinks & Juices <span
+                            class="text-muted ml-auto">(18)</span></label>
+                    <label class="flex items-center gap-2"><input type="checkbox"> Chocolates <span
+                            class="text-muted ml-auto">(42)</span></label>
+                    <label class="flex items-center gap-2"><input type="checkbox"> Biscuits & Cookies <span
+                            class="text-muted ml-auto">(12)</span></label>
+                </div>
+            </div>
+
+            <div class="filter-group mb-6">
+                <h3 class="text-sm font-bold uppercase text-muted mb-3">Price Range</h3>
+                <input type="range" min="0" max="1000" class="w-full" style="width: 100%;">
+                <div class="flex justify-between text-xs text-muted mt-2">
+                    <span>₹0</span>
+                    <span>₹1000+</span>
+                </div>
+            </div>
+
+            <div class="filter-group mb-6">
+                <h3 class="text-sm font-bold uppercase text-muted mb-3">Dietary Needs</h3>
+                <div class="flex flex-col gap-2 text-sm">
+                    <label class="flex items-center gap-2"><input type="checkbox"> Vegetarian (Veg)</label>
+                    <label class="flex items-center gap-2"><input type="checkbox"> Sugar-Free</label>
+                </div>
+            </div>
+
+            <!-- Promotion Card -->
+            <div class="bg-green-100 p-4 rounded-lg"
+                style="background: #e8f5e9; padding: 1.5rem; border-radius: var(--radius-lg);">
+                <span class="text-xs font-bold text-green-700 block mb-2">🏷️ Monsoon Sale</span>
+                <p class="text-sm text-green-800 mb-4">Get 20% off all soft drinks this weekend!</p>
+                <a href="#" class="text-xs font-bold text-green-700 flex items-center gap-1">View Offers →</a>
+            </div>
+        </aside>
+
+        <!-- Product Listing -->
+        <section class="product-listing-section">
+            <div class="flex justify-between items-center mb-4 mobile-col">
+                <div>
+                    <h1 class="text-2xl font-bold mb-1">Snacks & Drinks</h1>
+                    <p class="text-sm text-muted">Showing 12 of 128 products</p>
+                </div>
+                <!-- Sort Dropdown -->
+                <select
+                    style="border: 1px solid var(--border); padding: 0.5rem; border-radius: var(--radius-md); font-size: 0.9rem;"
+                    class="mobile-full-width mt-mobile-2">
+                    <option>Relevance</option>
+                    <option>Price: Low to High</option>
+                    <option>Price: High to Low</option>
+                    <option>Top Rated</option>
+                </select>
+            </div>
+
+            <!-- Active Filters -->
+            <div class="flex gap-2 mb-6 flex-wrap">
+                <span class="badge flex items-center gap-1 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs"
+                    style="background:var(--primary); color:white;">
+                    Cold Drinks <button style="color:white; margin-left: 4px;">×</button>
+                </span>
+                <span class="badge flex items-center gap-1 bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs"
+                    style="border:1px solid var(--border);">
+                    Under ₹200 <button style="margin-left: 4px;">×</button>
+                </span>
+                <button class="text-xs text-green-600 font-medium ml-2" style="color:var(--primary);">Clear all</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem;"
+                id="product-grid">
+                <!-- Injected via JS -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer container"></footer>
+
+    <script type="module">
+        import { products } from './js/data.js';
+
+        const grid = document.getElementById('product-grid');
+
+        // Filter products for "Snacks & Drinks" page
+        const categoryProducts = products.filter(p => p.category === 'snacks-drinks' || p.category === 'beverages');
+
+        // Render function
+        function renderProducts(list) {
+            grid.innerHTML = list.map(prod => `
+                <div class="card product-card">
+                    <div class="product-img-wrapper">
+                        ${prod.badge ? `<span style="position:absolute; top:10px; left:10px; background:${prod.badge.includes('OFF') ? 'var(--danger)' : 'var(--primary)'}; color:white; padding:2px 8px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${prod.badge}</span>` : ''}
+                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-cat">${prod.subcategory || 'Snacks'}</div>
+                        <h3 class="product-title">${prod.name}</h3>
+                        ${prod.origPrice ? `<div class="text-xs text-muted mb-1"><del>₹${prod.origPrice}</del></div>` : ''}
+                        <div class="product-footer">
+                            <div class="flex flex-col">
+                                <span class="product-price">₹${prod.price}</span>
+                                <span class="text-muted text-xs">${prod.unit}</span>
+                            </div>
+                            <button class="btn-add add-to-cart-btn" data-id="${prod.id}">+</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderProducts(categoryProducts);
+
+        // Mobile Filter Toggle Logic (Simulated)
+        const filterToggle = document.getElementById('filter-toggle');
+        const sidebar = document.getElementById('filters-sidebar');
+
+        // Simple logic handled in style.css media queries primarily, but JS can toggle classes if needed.
+        // For now, we rely on CSS media queries to show/hide or stack.
+    </script>
+    <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
