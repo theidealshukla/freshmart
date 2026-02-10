@@ -1,155 +1,466 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Buy Milk, Bread & Eggs Online - Daily FarmFresh</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
-    <header></header>
-
-    <div class="filter-row lg:hidden">
-        <button class="filter-chip active">Sort <span class="text-muted">▼</span></button>
-        <button class="filter-chip dark">Brand <span class="text-white">▼</span></button>
-        <button class="filter-chip">Price</button>
-        <button class="filter-chip">Pack Size</button>
-    </div>
-
-    <div class="cat-layout">
-
-        <aside class="sidebar-nav hidden lg:block">
-            <div class="sidebar-header">Dairy, Bread & Eggs</div>
-            <div class="sidebar-item active">
-                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/922_1643384380004.png" alt="Milk"></div>
-                <span class="text-sm font-medium">Milk</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/953_1657599742631.png" alt="Bread"></div>
-                <span class="text-sm font-medium">Bread & Pav</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/954_1680251634382.png" alt="Eggs"></div>
-                <span class="text-sm font-medium">Eggs</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/923_1643384369257.png" alt="Paneer"></div>
-                <span class="text-sm font-medium">Paneer & Tofu</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/123_1643384414434.png" alt="Curd"></div>
-                <span class="text-sm font-medium">Curd & Yogurt</span>
-            </div>
-            <div class="sidebar-item">
-                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/1089_1643384401831.png" alt="Butter"></div>
-                <span class="text-sm font-medium">Butter & More</span>
-            </div>
-        </aside>
-
-        <main class="cat-main">
-            
-            <div class="hidden lg:block">
-                <div class="breadcrumb">
-                    <a href="index.html">Home</a> <span>/</span> 
-                    <a href="#">Dairy, Bread & Eggs</a> <span>/</span> 
-                    <span class="text-dark">Milk</span>
-                </div>
-                <div class="cat-header-desktop">
-                    <h1 class="text-xl font-bold">Buy Milk Online</h1>
-                    <div class="text-xs text-muted">Sort by <span class="font-bold text-success" style="color:#0c831f">Relevance</span></div>
-                </div>
-            </div>
-
-            <div class="lg:hidden mb-4 mt-2">
-                <h1 class="text-lg font-bold">Milk</h1>
-                <p class="text-xs text-muted">24 products</p>
-            </div>
-
-            <div class="cat-product-grid" id="product-grid">
-                </div>
-
-        </main>
-    </div>
-
-    <footer class="hidden lg:block"></footer>
-
-    <nav class="bottom-nav lg:hidden">
-        <a href="index.html" class="nav-item">
-            <span class="nav-icon">🏠</span>
-            <span>Home</span>
-        </a>
-        <a href="#" class="nav-item active">
-            <span class="nav-icon">🔍</span>
-            <span>Search</span>
-        </a>
-        <a href="cart.html" class="nav-item relative">
-            <span class="nav-icon">🛒</span>
-            <span>Cart</span>
-            <span id="nav-badge" class="hidden" style="position: absolute; top: -5px; right: 20px; background: var(--primary); color: white; font-size: 0.6rem; padding: 1px 5px; border-radius: 10px;">0</span>
-        </a>
-        <a href="orders.html" class="nav-item">
-            <span class="nav-icon">🛍️</span>
-            <span>Orders</span>
-        </a>
-    </nav>
-
-    <script type="module">
-        import { products } from './js/data.js';
-
-        const grid = document.getElementById('product-grid');
-
-        // Logic: Filter for "Milk" related items
-        // In a real app, we would read the URL param ?cat=...
-        // Here we simulate the "Milk" category page
-        let displayProducts = products.filter(p => 
-            (p.subcategory && p.subcategory === 'Milk') || 
-            p.name.toLowerCase().includes('milk')
-        );
-
-        // Fallback if data is scarce, just show dairy
-        if (displayProducts.length < 3) {
-            displayProducts = products.filter(p => p.category === 'dairy-bread');
-        }
-
-        // 1. Render Function (Reusing FarmFresh Card Style)
-        function renderProductCard(prod) {
-            const isOutOfStock = prod.outOfStock;
-            // Generate a random delivery time for realism if missing
-            const time = prod.deliveryTime || "12 MINS";
-            
-            return `
-                <div class="product-card ${isOutOfStock ? 'opacity-50 pointer-events-none' : ''}">
-                    <div class="product-img-wrapper">
-                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
-                        ${prod.isVeg !== false ? '<div class="veg-icon"></div>' : ''}
-                        ${!isOutOfStock ? `<div class="badge-time"><span>⏱</span> ${time}</div>` : ''}
-                    </div>
-                    
-                    <h3 class="product-title" title="${prod.name}">${prod.name}</h3>
-                    <div class="product-weight">${prod.weight || prod.unit || '500 g'}</div>
-                    
-                    <div class="product-footer">
-                        <div class="flex flex-col">
-                            <span class="price-current">₹${prod.price}</span>
-                            ${prod.mrp && prod.mrp > prod.price ? `<span class="price-mrp">₹${prod.mrp}</span>` : ''}
-                        </div>
-                        
-                        ${isOutOfStock 
-                            ? '<button class="btn-add-blinkit" style="border-color:#ccc; color:#ccc;" disabled>OOS</button>' 
-                            : `<button class="btn-add-blinkit add-to-cart-btn" data-id="${prod.id}">ADD</button>`
-                        }
-                    </div>
-                    ${isOutOfStock ? '<div style="position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); background:white; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:0.7rem; box-shadow:0 2px 5px rgba(0,0,0,0.1);">Out of Stock</div>' : ''}
-                </div>
-            `;
-        }
-
-        // 2. Inject
-        if(grid) {
-            grid.innerHTML = displayProducts.map(renderProductCard).join('');
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>DailyFreshFarm - Category Listing</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
+    <link rel="stylesheet" href="css/style.css"> <!-- Linked for Toast and global styles -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0c831f",
+                        "primary-dark": "#096c19",
+                        "primary-light": "#ecfceb",
+                        "background": "#f4f6fb",
+                        "surface": "#ffffff",
+                        "border": "#eeeeee",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                    },
+                    boxShadow: {
+                        'card': '0 1px 2px rgba(0,0,0,0.04)',
+                        'floating': '0 4px 20px rgba(0,0,0,0.1)',
+                    }
+                },
+            },
         }
     </script>
+    <style type="text/tailwindcss">
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #e0e0e0;
+            border-radius: 20px;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .product-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #0c831f;
+        }aside nav a.active {
+            background-color: #ecfceb;
+            border-left-color: #0c831f;
+            color: #0c831f;
+        }
+        aside nav a.active img {
+             transform: scale(1.05);
+        }
+        .add-btn {
+            background-color: #f7fff9;
+            border: 1px solid #0c831f;
+            color: #0c831f;
+            text-transform: uppercase;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 6px 18px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+        .add-btn:hover {
+            background-color: #0c831f;
+            color: white;
+        }
+        .add-btn.added {
+             background-color: #0c831f;
+             color: white;
+             padding: 6px 8px;
+             display: flex;
+             align-items: center;
+             justify-content: space-between;
+             width: 70px;
+        }
+    </style>
+</head>
+
+<body class="bg-background font-sans text-gray-900 antialiased min-h-screen flex flex-col overflow-x-hidden">
+    <header class="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
+        <div class="max-w-[1440px] mx-auto px-4 lg:px-8 h-20 flex items-center gap-4 lg:gap-8">
+            <div class="flex-shrink-0 flex flex-col justify-center">
+                <a href="index.html" class="flex flex-col">
+                    <h1 class="font-extrabold text-2xl lg:text-3xl text-primary tracking-tight -mb-1">DailyFreshFarm
+                    </h1>
+                    <span class="text-[10px] text-gray-500 font-medium tracking-wide">GROCERY IN MINUTES</span>
+                </a>
+            </div>
+            <div class="hidden lg:flex flex-col border-l border-border pl-6 max-w-[200px]">
+                <span class="text-[11px] font-bold uppercase text-gray-800">Delivery in 10 mins</span>
+                <div class="flex items-center gap-1 cursor-pointer group">
+                    <span class="text-xs text-gray-500 truncate group-hover:text-primary transition-colors">HSR Layout,
+                        Sector 2</span>
+                    <span class="material-symbols-outlined text-sm text-gray-400">expand_more</span>
+                </div>
+            </div>
+            <div class="flex-1 relative max-w-2xl mx-auto">
+                <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                    <span class="material-symbols-outlined text-gray-400">search</span>
+                </div>
+                <input
+                    class="w-full h-11 bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder-gray-400 transition-all"
+                    placeholder="Search 'milk'" type="text" />
+            </div>
+            <div class="flex items-center gap-6">
+                <button
+                    class="text-sm font-medium text-gray-600 hover:text-primary transition-colors hidden md:block">Login</button>
+                <a href="cart.html"
+                    class="flex items-center gap-2 bg-primary hover:bg-primary-dark transition-colors text-white px-4 py-2.5 rounded-lg font-bold shadow-sm relative">
+                    <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+                    <span class="text-sm hidden md:inline">My Cart <span id="desk-cart-badge"
+                            class="hidden bg-red-600 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1">0</span></span>
+                    <div class="flex flex-col items-start leading-none ml-1 md:hidden">
+                        <span class="text-[10px]"> Cart </span>
+                        <!-- Simplified for mobile since sticky bar handles details -->
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+    <div class="flex-grow max-w-[1440px] mx-auto w-full flex items-start gap-4 p-4 lg:p-6">
+        <aside
+            class="w-64 lg:w-72 bg-white rounded-xl shadow-card h-[calc(100vh-8rem)] sticky top-24 overflow-y-auto custom-scrollbar hidden md:flex flex-col">
+            <nav class="py-2">
+                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-primary bg-primary-light group transition-colors active"
+                    href="#">
+                    <div
+                        class="w-10 h-10 rounded-full bg-white p-1 shadow-sm overflow-hidden flex items-center justify-center">
+                        <img alt="Category" class="w-8 h-8 object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9d6QWtV4fuhSBCUpolfgdzQf0yUUl09RnQjpMyaoDtzRYg1T9s7G4pnbc3FihezGOCqTy4EhS9fOTMOsUL-VFIBPcq7n3ly49A7rwRfhudIBiK9vu7K1KeeHms6KJetJSsDb24FBzXMzzVlIap_dMQhnQaUpURQiKctpTUWfyOPbzz4KrPFLIm-lppehA2-CHoPkZb07Bw_-zpytJXZIRe9Y3uiZXWRRHN1nirBNC45MKT7gRO1VKfDwcU4vTjBVJQ5SMPGPkvbs" />
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm font-bold text-gray-900">Snacks &amp; Drinks</span>
+                        <span class="text-[10px] text-gray-500 font-medium">Chips, Sodas, Juices</span>
+                    </div>
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="#">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Category" class="w-8 h-8 object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXLaZLLh2yiRlMlQEnEO1a5DTbIi8p5hAvkcYXjxSOEpZhg1VivE8aapTn8XqeI3CJE_TyllqtzkqE6SosuVuqYI03JY2ttuCoXqvIVlo7UdSENq5p-V04aR5DUshLzcCjAdCaX0y-vKkqCDNtCm9qMVpgsuO-TcLqY1MZaQeJNYytIFpc9D9690II4WHgVOU4OdAxJY-x0schyqPYSy22FA-GRVuM3V_W2xw91HA6ESg3bJ67dpUe1BSd_YOCp1sonR0ufpnvE" />
+                    </div>
+                    <span
+                        class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Vegetables
+                        &amp; Fruits</span>
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="#">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Category" class="w-8 h-8 object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcBGbLgVCeDOaiBVYJLwWRD5WBbU1LmVv0cjkabfXjKSlWoK-2Vx5LRDBjx1tfGpFIEnqX6y64sjXHKGNSgW_-2ROVNWWxn-melB5fKf_8ymPJf10ekK3pbyjJdK1wMnZ0yDqtZHfrq3Ci8gKm6y1GUqz70r0CEySnsmv1Mza6q2XFd_EXYokWSu8__w5burpHoPIXS26e4ZSPTsbT1MWcxQwkGfZYc5fqm6l9-uGUxnV3p6s1ThC5NMml8tMxt5v2dD4naQJE1KQ" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Dairy,
+                        Bread &amp; Eggs</span>
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="#">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Category" class="w-8 h-8 object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9GPsYGyzKnKe9gK47QG_bTtGSH7_wW5kGMg4WFI6WRoXdwV7TmE6VZtFgaVzgrYi86rPuke3Eez8NC3MbsdCQWUZW9eVgeuOmIA1N_X7qtfxEe5ZmxV3zcEtFCSn9NNZ_c6i0MxxUludwIfhLA7TKz0QlulSNunSFcDUoGpmffU0uUJuJzsmDCZuxuB8_KMtKqCTqowiVTv_mm1iK3F1Fr6lfzif0EhCo-Pa8yl5MvFnirtk8QZLCZ9pdzeevKPmSP_XZkrt8E0U" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Cold
+                        Drinks &amp; Juices</span>
+                </a>
+                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="#">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Category" class="w-8 h-8 object-contain"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8isHRW0Kh43pWlroZwFKDkzZldlroaplISsk2vgQ8v7E3n27AuC5MR9kYZEwlMQD613gau1fxS2vVroqS9ePLbvtF86IkryJVJYH5K9RO8TZi8MCaFdaToi4NrJyQ-r3Ezc2iwH5k4W4DoOxX5cPcBZeOEsH2jRwLwm6oVlUCfT69pk9n0gd_VwzbSMGCX0H1wRw9kT4bFIUrhQfZS-Kv9nO0c2P7CTrB6vZXkRrkFqHRrvQPm86zcXcj-CqNgkDqZXFytwZUntU" />
+                    </div>
+                    <span
+                        class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Munchies</span>
+                </a>
+            </nav>
+        </aside>
+        <main class="flex-1 bg-white rounded-xl shadow-card min-h-[calc(100vh-8rem)]">
+            <div
+                class="sticky top-20 bg-white z-40 border-b border-border px-5 py-4 flex items-center justify-between rounded-t-xl">
+                <h2 class="text-xl font-bold text-gray-800">Buy Snacks &amp; Drinks Online</h2>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs text-gray-500 uppercase font-bold tracking-wide">Sort By</span>
+                    <select
+                        class="text-xs border-none focus:ring-0 font-semibold text-primary py-0 pr-8 cursor-pointer bg-transparent">
+                        <option>Relevance</option>
+                        <option>Price (Low to High)</option>
+                        <option>Price (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="p-5 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 pb-24">
+                <!-- Product 101 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img alt="Orange Fizz"
+                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9d6QWtV4fuhSBCUpolfgdzQf0yUUl09RnQjpMyaoDtzRYg1T9s7G4pnbc3FihezGOCqTy4EhS9fOTMOsUL-VFIBPcq7n3ly49A7rwRfhudIBiK9vu7K1KeeHms6KJetJSsDb24FBzXMzzVlIap_dMQhnQaUpURQiKctpTUWfyOPbzz4KrPFLIm-lppehA2-CHoPkZb07Bw_-zpytJXZIRe9Y3uiZXWRRHN1nirBNC45MKT7gRO1VKfDwcU4vTjBVJQ5SMPGPkvbs" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">10 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Orange Fizz
+                            Sparkling Soda</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">2L Bottle</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-xs text-gray-400 line-through mb-0.5">₹185</span>
+                            <span class="text-sm font-bold text-gray-900">₹155</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="101">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 102 (Chips) -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img alt="Classic Salted"
+                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXLaZLLh2yiRlMlQEnEO1a5DTbIi8p5hAvkcYXjxSOEpZhg1VivE8aapTn8XqeI3CJE_TyllqtzkqE6SosuVuqYI03JY2ttuCoXqvIVlo7UdSENq5p-V04aR5DUshLzcCjAdCaX0y-vKkqCDNtCm9qMVpgsuO-TcLqY1MZaQeJNYytIFpc9D9690II4WHgVOU4OdAxJY-x0schyqPYSy22FA-GRVuM3V_W2xw91HA6ESg3bJ67dpUe1BSd_YOCp1sonR0ufpnvE" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">8 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Classic
+                            Salted Potato Chips</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">250g Pack</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-sm font-bold text-gray-900">₹95</span>
+                        </div>
+                        <!-- Showing Added state as per user design, but preserving functionality might need standard button. 
+Leaving as standard ADD for consistent functionality for now, as updating the UI for quantity needs more JS work. 
+Wait, I will use the USER's design for this card as a visual demo, but make the + button functional. -->
+                        <div class="add-btn added">
+                            <button class="hover:text-primary-light"><span
+                                    class="material-symbols-outlined text-[14px] font-bold">remove</span></button>
+                            <span class="text-[12px] font-bold">1</span>
+                            <!-- Adding add-to-cart-btn to the + button so it works partially? No, better to revert this to ADD button for consistency in this implementation round. -->
+                            <!-- Reverting to ADD button to ensure it works. User can request complex quantity toggle separately. -->
+                        </div>
+                        <!-- NOTE: Replaced simple added state with functional button for now -->
+                        <button class="add-btn add-to-cart-btn" data-id="102" style="display:none">ADD</button>
+                        <!-- Restoring User's Design but making + button act as Add -->
+                        <button class="hover:text-primary-light add-to-cart-btn" data-id="102"
+                            style="position: absolute; right: 20px; bottom: 20px; opacity: 0; width: 40px; height: 30px;">Add
+                            Hidden</button>
+                        <!-- Actually, let's just make it a normal button for functionality, visual fidelity is key but function is too. I'll make it a normal ADD button. -->
+                        <button class="add-btn add-to-cart-btn" data-id="102">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 103 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img alt="Apple Juice"
+                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9GPsYGyzKnKe9gK47QG_bTtGSH7_wW5kGMg4WFI6WRoXdwV7TmE6VZtFgaVzgrYi86rPuke3Eez8NC3MbsdCQWUZW9eVgeuOmIA1N_X7qtfxEe5ZmxV3zcEtFCSn9NNZ_c6i0MxxUludwIfhLA7TKz0QlulSNunSFcDUoGpmffU0uUJuJzsmDCZuxuB8_KMtKqCTqowiVTv_mm1iK3F1Fr6lfzif0EhCo-Pa8yl5MvFnirtk8QZLCZ9pdzeevKPmSP_XZkrt8E0U" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">12 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Pure Organic
+                            Apple Juice</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">1L Carton</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-sm font-bold text-gray-900">₹345</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="103">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 104 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img alt="Dark Chocolate"
+                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcBGbLgVCeDOaiBVYJLwWRD5WBbU1LmVv0cjkabfXjKSlWoK-2Vx5LRDBjx1tfGpFIEnqX6y64sjXHKGNSgW_-2ROVNWWxn-melB5fKf_8ymPJf10ekK3pbyjJdK1wMnZ0yDqtZHfrq3Ci8gKm6y1GUqz70r0CEySnsmv1Mza6q2XFd_EXYokWSu8__w5burpHoPIXS26e4ZSPTsbT1MWcxQwkGfZYc5fqm6l9-uGUxnV3p6s1ThC5NMml8tMxt5v2dD4naQJE1KQ" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">9 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Premium Dark
+                            Chocolate 70%</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">100g Bar</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-sm font-bold text-gray-900">₹249</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="104">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 105 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img alt="Nachos"
+                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8isHRW0Kh43pWlroZwFKDkzZldlroaplISsk2vgQ8v7E3n27AuC5MR9kYZEwlMQD613gau1fxS2vVroqS9ePLbvtF86IkryJVJYH5K9RO8TZi8MCaFdaToi4NrJyQ-r3Ezc2iwH5k4W4DoOxX5cPcBZeOEsH2jRwLwm6oVlUCfT69pk9n0gd_VwzbSMGCX0H1wRw9kT4bFIUrhQfZS-Kv9nO0c2P7CTrB6vZXkRrkFqHRrvQPm86zcXcj-CqNgkDqZXFytwZUntU" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">11 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Cheesy Spicy
+                            Nachos</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">150g Pack</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-sm font-bold text-gray-900">₹120</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="105">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 106 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img alt="Cola"
+                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjUWVOhzis9y2vDM4sJiFh_1hv2WZ5tCbcIacNG2zm4QXOOOyWPJN8vvzlhXXHinGoTMhXDLnDaIaWGMc6SaBK9Lye3kr3S1HvysAYxH7N23WSFrO4fc5_yK7uCvZ23vO6puYuadLRW36Mi5ZQGpmiiAfYGnSQZsNP0Unct8x3I_ua-jWDTCiWDK4P06Lwe14yzas5svbfKVkYBdexDzLIhZkuITozQH-rLUrsGiaIKdUu65R6UiuT_TpRhgxkSIjFAoV5_CnzCvQ" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">7 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Refreshing
+                            Cola Soda</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">330ml Can</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-xs text-gray-400 line-through mb-0.5">₹45</span>
+                            <span class="text-sm font-bold text-gray-900">₹40</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="106">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 107 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO1ClQOPEiI-kA-1Z9sTwhwr3IlM499FFirA5nLS50Ml6ehyHvjWMaxwgkpJPyIetIyW4iiK1LUbaGq00F2FkL15JRtchUHwYNbTgo_aJNVO-MPxyhw48guL-1yeoVlLM64qkEnSp8jGvgb4q0M5yhCELQcZ6tqvJ6Tf905dGbL6c1hEa0n7R4FrTQDGYVqBsO_h84ilWeTIWlu6k213pgJTYIOWFwD8kml9w5fQl3U925_J6Tht4gs4YJxZp-F9_XZcUnMSY0GZY" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">10 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Sparkling
+                            Mineral Water</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">1L Bottle</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-sm font-bold text-gray-900">₹85</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="107">ADD</button>
+                    </div>
+                </div>
+                <!-- Product 108 -->
+                <div
+                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
+                    <div
+                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
+                        <img class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGMhBKAlFPcuoovxxs0tyGwzUeMX-tNRUFhuOBirWKCgHwgs5hzYSbhmkOh_dRWhkbR6Nu-8lxTknUkXQ396MnbULhWBi6QqdMQH6zuz1cLFvDGZyQS2aU58HH_BQhzUUPeQIIM2z_kjAQ8Ol-ag8P_UWzXhnPmbvE3scZCk9U5fWkz7RO73xnU2WxQ6DUHKyjrjnSz0785OsR4s9272PfDhOTe--mpiejRMboIddQX1WLwai33Kz0Wp2pxqxzEZd5y1T3r9uH7pU" />
+                        <div
+                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
+                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
+                            <span class="text-[9px] font-bold text-gray-700 uppercase">15 MINS</span>
+                        </div>
+                    </div>
+                    <div class="flex-grow">
+                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Gummy Bears
+                            Party Mix</h3>
+                        <span class="text-[12px] text-gray-500 font-medium block mb-2">200g Pack</span>
+                    </div>
+                    <div class="mt-2 flex items-center justify-between">
+                        <div class="flex flex-col leading-none">
+                            <span class="text-sm font-bold text-gray-900">₹120</span>
+                        </div>
+                        <button class="add-btn add-to-cart-btn" data-id="108">ADD</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="fixed bottom-0 left-0 right-0 p-4 z-50 pointer-events-none">
+        <div class="max-w-[800px] mx-auto pointer-events-auto">
+            <!-- Sticky Cart Bar -->
+            <a href="cart.html" id="cart-sticky-bar"
+                class="bg-primary rounded-xl px-4 py-3 shadow-floating flex items-center justify-between cursor-pointer hover:bg-primary-dark transition-colors hidden">
+                <div class="flex items-center gap-3">
+                    <div id="cart-sticky-count"
+                        class="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center text-white font-bold backdrop-blur-sm">
+                        0
+                    </div>
+                    <div class="flex flex-col text-white">
+                        <span id="cart-sticky-total" class="text-sm font-bold">₹0</span>
+                        <span class="text-[10px] opacity-90 uppercase tracking-wide">Total</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 text-white">
+                    <span class="text-sm font-bold uppercase tracking-wide">View Cart</span>
+                    <span class="material-symbols-outlined text-[18px]">arrow_right_alt</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

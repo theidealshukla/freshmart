@@ -1,110 +1,430 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Daily FarmFresh - Fresh groceries delivered in 10 minutes</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Customer Home Page - DailyFreshFarm</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
+    <!-- Existing CSS for toast notifications and utilities -->
     <link rel="stylesheet" href="css/style.css">
+
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0c831f",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: "Work Sans", sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
-<body>
 
-    <header></header>
+<body class="bg-background-light dark:bg-background-dark text-[#0d1b0d] dark:text-white pb-20 lg:pb-0">
 
-    <main class="container">
-        
-        <section class="hero-wrapper">
-            <div class="hero-banner">
-                <div class="hero-text">
-                    <h1 class="hero-title">Order fresh items,<br>delivered in 8 mins</h1>
-                    <p class="hero-subtitle">Get farm-fresh vegetables, fruits, and dairy delivered to your doorstep.</p>
-                    <a href="#products-section" class="btn-hero">Shop Now</a>
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <header
+            class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
+            <div class="mx-auto flex max-w-[1280px] items-center justify-between px-6 py-4">
+                <div class="flex items-center gap-6">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <div
+                            class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-background-dark">
+                            <span class="material-symbols-outlined text-2xl font-bold">shopping_basket</span>
+                        </div>
+                        <h1 class="text-xl font-extrabold tracking-tight text-[#0d1b0d] dark:text-white">DailyFreshFarm
+                        </h1>
+                    </a>
+                    <button
+                        class="hidden lg:flex items-center gap-2 rounded-lg bg-primary/10 px-3 py-2 text-sm font-semibold text-background-dark dark:text-primary transition-colors hover:bg-primary/20">
+                        <span class="material-symbols-outlined text-lg">location_on</span>
+                        <span>Delivering to: <span class="font-bold">Bangalore, India</span></span>
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+                    </button>
                 </div>
-                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80" class="hero-img" alt="Grocery Banner">
+                <div class="flex-1 max-w-lg px-8">
+                    <div class="relative group">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-primary">
+                            <span class="material-symbols-outlined text-xl">search</span>
+                        </div>
+                        <input
+                            class="w-full rounded-xl border-none bg-primary/5 py-2.5 pl-11 pr-4 text-sm focus:ring-2 focus:ring-primary/50 dark:bg-white/5"
+                            placeholder="Search fresh groceries, organics..." type="text" />
+                    </div>
+                </div>
+                <div class="flex items-center gap-6">
+                    <nav class="hidden xl:flex items-center gap-8 text-sm font-medium">
+                        <a class="hover:text-primary transition-colors" href="category.html">Categories</a>
+                        <a class="hover:text-primary transition-colors" href="#">Offers</a>
+                        <a class="hover:text-primary transition-colors" href="orders.html">Orders</a>
+                    </nav>
+                    <div class="flex items-center gap-4">
+                        <button
+                            class="relative flex h-10 w-10 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                            <span class="material-symbols-outlined">person</span>
+                        </button>
+                        <a href="cart.html"
+                            class="relative flex items-center justify-center gap-2 rounded-xl bg-primary px-4 py-2 font-bold text-background-dark shadow-lg shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all">
+                            <span class="material-symbols-outlined">shopping_cart</span>
+                            <span class="text-sm">Cart</span>
+                            <!-- Added ID for JS to update -->
+                            <div id="desk-cart-badge"
+                                class="hidden absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-background-dark text-[10px] text-white">
+                                0</div>
+                        </a>
+                    </div>
+                </div>
             </div>
-        </section>
+        </header>
 
-        <section class="mb-12" style="margin-bottom: 3rem;">
-            <div class="cat-grid-dense" id="category-container">
+        <main class="flex-1">
+            <section class="mx-auto max-w-[1280px] px-6 py-8">
+                <div class="relative h-[480px] w-full overflow-hidden rounded-3xl bg-primary/20">
+                    <div class="absolute inset-0 bg-cover bg-center"
+                        data-alt="Wide variety of fresh organic vegetables in a wooden crate"
+                        style="background-image: linear-gradient(90deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuBraX29K2-IuKltAebHqRBmgGXq1TegTy3AscMH4Pj_8YOvSlZd0XCEk3jPXHC0d1E4E6Wk4Fsg2U2wpV0Rtsg6VbTMreuWvgIS8oouU9WFP0gSuO7z-ZJp-Hdcv4FhJR61e1NLmhpANKl6zZ-UiS2M4bV2oKPuEGAI8T0UBZ3bZHg1wsxOnAP-BWkv5ictOQgKek68ry18JS4psihnPqPXGIVkRrqNDeTaWYq5QzKABXSgUwmgLS0mldmsx2G7pjgI6HBPGpE047k');">
+                    </div>
+                    <div class="relative flex h-full flex-col justify-center px-12 text-white max-w-2xl">
+                        <span
+                            class="mb-4 inline-block w-fit rounded-full bg-primary px-4 py-1 text-xs font-bold uppercase tracking-widest text-background-dark">Seasonal
+                            Offers</span>
+                        <h2 class="text-6xl font-black leading-tight tracking-tight">Freshness <br /> <span
+                                class="text-primary">delivered</span> to your doorstep</h2>
+                        <p class="mt-6 text-lg font-medium text-white/90">Get 20% off on your first order of organic
+                            produce and daily essentials from DailyFreshFarm.</p>
+                        <div class="mt-10 flex gap-4">
+                            <a href="#featured-section"
+                                class="flex items-center rounded-xl bg-primary px-8 py-4 text-base font-bold text-background-dark hover:shadow-xl hover:shadow-primary/30 transition-all">Shop
+                                Now</a>
+                            <button
+                                class="rounded-xl bg-white/10 backdrop-blur-md px-8 py-4 text-base font-bold text-white border border-white/20 hover:bg-white/20 transition-all">View
+                                Deals</button>
+                        </div>
+                    </div>
                 </div>
-        </section>
+            </section>
 
-        <section id="products-section" style="margin-bottom: 4rem;">
-            <div class="section-header">
-                <h2 class="section-title">Dairy, Breads & Eggs</h2>
-                <a href="category.html" class="section-link">see all</a>
+            <section class="mx-auto max-w-[1280px] px-6 py-12">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-2xl font-bold tracking-tight">Shop by Category</h3>
+                    <a class="text-sm font-bold text-primary hover:underline flex items-center gap-1"
+                        href="category.html">
+                        View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <a href="category.html?cat=fruits-veg" class="group cursor-pointer text-center">
+                        <div
+                            class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
+                            <div class="h-full w-full bg-cover bg-center rounded-xl"
+                                data-alt="Close up of fresh strawberries and oranges"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPty-s-gz1Nhw_nFm6dsNP9JcOIzPhBxJTqGc-w3Itt0cHlt7Zh_nb9AQHYogapqUNM4G42V977_B0bKtl48FvjxEEw-qAEum-8PDCZt1SH-mPnT5uYKSovVy4dNQej5Rvm_iWNlGTJdOi8Z4RWiKZft34C6CYCZeo7nlUDIlrL1W-PQZ9yxxJPGBLXmZal3ot2ox2VmrVfYuftvQVb07e_RWSaCgZxUoKg0Bfw7_FGPSJmW55r_ba5Nznz2Fr3gMwRBU9cEOHcj0');">
+                            </div>
+                        </div>
+                        <span class="text-sm font-bold tracking-tight">Fruits &amp; Veggies</span>
+                    </a>
+                    <a href="category.html?cat=dairy-bread" class="group cursor-pointer text-center">
+                        <div
+                            class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
+                            <div class="h-full w-full bg-cover bg-center rounded-xl"
+                                data-alt="A glass bottle of milk and organic eggs"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCch4IgOHy63FDotTWVOloeXhx-WiBGA4qnMonwiV3Rc8p9Z7FOlr-tSQo2DyMJoYVpipreD5QZ0AH-zpp5XSGJWsMrBDvRB9MX2pFIjUemhh0-UDhydYjt70Kkuy22XM4fpYhdZ2CHcG-8RRd-LjCfhLR-SJxAwG2nWZBjmcfbMwuHKXudvXG5-dfe-TvX9nEloaxtaR1oqB5KnLVMjlKB0dqAGsr8IE19ZljywFPjHYEtPOfgbg1dhFXJpGKJnqMg3Cz0UeV2q2U');">
+                            </div>
+                        </div>
+                        <span class="text-sm font-bold tracking-tight">Dairy &amp; Eggs</span>
+                    </a>
+                    <a href="category.html?cat=dairy-bread" class="group cursor-pointer text-center">
+                        <div
+                            class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
+                            <div class="h-full w-full bg-cover bg-center rounded-xl"
+                                data-alt="Loaves of fresh sourdough bread and pastries"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAaQi9WnuziNZRWsin2ar_N_HWw_TutlABs0XTjpmZVDw_P3qQIH0OICkUxHPSlxEzSyYCr1HyHPRN8-3NWrayE3xIxDVpVNNlHqb1hdzofmsw1gwtsFrRakSBmKq5QcKjFLhPS9DOR0VhxiqIm2ytaSp4vA04fIFyoP_VGQQkpbj2rwVLOx6Sr3WDQt0gvEb1W2SWRfVVVo6-E8ZxdSmTQbs-WDgQB3Ma1KBC9G7fmmHKvPyn_3izS5bDdlWT_NuMzznJeiSNbtPU');">
+                            </div>
+                        </div>
+                        <span class="text-sm font-bold tracking-tight">Bakery</span>
+                    </a>
+                    <a href="category.html?cat=cold-drinks" class="group cursor-pointer text-center">
+                        <div
+                            class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
+                            <div class="h-full w-full bg-cover bg-center rounded-xl"
+                                data-alt="Assorted juice bottles and mineral water"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHe1nPqdo42yGbOw_TmjmU_3OjJW-6-8TUSIHFn3172RUPuIJFm_LOLaLAsHVRHXrfXk1gkv2-9TanU5V_ZvdNf4MXotLqUMWe_a3X1x9MCUEWKPl1QG4bCqXPtHig1tD9a6U2Qmlul1oUxx13tL-VU7sYXvbJUduCtv7FK8H9RmVmemTvxv63ZzadaBcNbynz77GqEVNbnU9CMSsmZudLJSgC2o2ieaHKWv4-njKqdX69yY0LuXOV1m-6xuYiHDpu8y9MEhisG0k');">
+                            </div>
+                        </div>
+                        <span class="text-sm font-bold tracking-tight">Beverages</span>
+                    </a>
+                    <a href="category.html?cat=snacks" class="group cursor-pointer text-center">
+                        <div
+                            class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
+                            <div class="h-full w-full bg-cover bg-center rounded-xl"
+                                data-alt="Packets of snacks, chips, and cookies"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyqtwudDViTgwfQLOfO8wt-GsX0TWlIobvXYvuCdt02mTi4sOsKm9aB6NPJK783fuZhhkhBp7fWq0yuFzhCv_hE7IFtxjIS-HvUHrgqH2Sk1wzBqHMF-trAEWImxTtdBfVmyHPXphSnF-fun4wFpFC7T6rm8JEvEmsbZzpEmWgsWqI-5gewwIS9GRtd1wOFRE28tCggS8b9XVz4r2QVykRUmpNGi9QSlJwyPtBE5y2BLPg2vxl9S5YCRH3whxnjZZzC9L-OAPizqw');">
+                            </div>
+                        </div>
+                        <span class="text-sm font-bold tracking-tight">Snacks</span>
+                    </a>
+                    <a href="category.html?cat=staples" class="group cursor-pointer text-center">
+                        <div
+                            class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
+                            <div class="h-full w-full bg-cover bg-center rounded-xl"
+                                data-alt="Glass jars with lentils, rice, and grains"
+                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCotta8P0V2AqJUa30_RfrQhH05H_VrgbNTGmO-_5b-k8YC9BSYn_ZEx42DWHCcjNGI5PbFUfMRKZo6rc0s9tKGIlzycFfZUrtZZekiIxJBtddAn1XGES1S00LB2d6qBLHR4ukn6-NZJ9lKeb4H8mDdO7On3kZrOX-1s9YP2iJa8ay63kq4jruhIDuiAoEpV_BUcVzcmAu7FeMHOnTo9bgyZi0TsO54iN1TUbRXqY6qS28L8BsJiNuVvdLuCpZ1FJ57OZML6OMzYTU');">
+                            </div>
+                        </div>
+                        <span class="text-sm font-bold tracking-tight">Pantry</span>
+                    </a>
+                </div>
+            </section>
+
+            <section id="featured-section"
+                class="mx-auto max-w-[1280px] px-6 py-12 bg-primary/5 dark:bg-primary/5 rounded-[40px] mb-20">
+                <div class="flex items-center justify-between mb-10 px-4">
+                    <div>
+                        <h3 class="text-3xl font-black tracking-tight">Featured Products</h3>
+                        <p class="text-sm font-medium opacity-60">Handpicked items for your weekly grocery needs</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button
+                            class="h-10 w-10 flex items-center justify-center rounded-full border border-primary/20 bg-white dark:bg-background-dark hover:bg-primary hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button
+                            class="h-10 w-10 flex items-center justify-center rounded-full border border-primary/20 bg-white dark:bg-background-dark hover:bg-primary hover:text-white transition-colors">
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Product 1 (Matched to ID 1) -->
+                    <div
+                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
+                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                                data-alt="A bunch of yellow ripe bananas"
+                                style="background-image: url('https://images.unsplash.com/photo-1630563452481-6f180e227308?auto=format&fit=crop&q=80&w=400');">
+                            </div>
+                            <button
+                                class="absolute top-3 right-3 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm text-red-500">
+                                <span class="material-symbols-outlined text-xl">favorite</span>
+                            </button>
+                        </div>
+                        <div class="px-2 pb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Produce</span>
+                            <h4 class="mt-1 text-lg font-bold">Kashmiri Apples</h4>
+                            <p class="text-xs font-medium opacity-50">1 kg</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹180</span>
+                                <!-- Added add-to-cart-btn class and data-id -->
+                                <button
+                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
+                                    data-id="1">
+                                    <span class="material-symbols-outlined">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 2 (Matched to ID 2) -->
+                    <div
+                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
+                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                                data-alt="A carton of fresh whole organic milk"
+                                style="background-image: url('https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400');">
+                            </div>
+                            <span
+                                class="absolute top-3 left-3 rounded-md bg-red-500 px-2 py-1 text-[10px] font-bold text-white uppercase">Sale</span>
+                        </div>
+                        <div class="px-2 pb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Dairy</span>
+                            <h4 class="mt-1 text-lg font-bold">Amul Taaza Milk</h4>
+                            <p class="text-xs font-medium opacity-50">1 Litre Packet</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹54</span>
+                                    <span class="text-xs line-through opacity-30">₹58</span>
+                                </div>
+                                <button
+                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
+                                    data-id="2">
+                                    <span class="material-symbols-outlined">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 3 (Matched to ID 5 - Chocolate) -->
+                    <div
+                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
+                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Freshly baked crusty sourdough bread loaf"
+                                style="background-image: url('https://images.unsplash.com/photo-1623863765181-432d64f068af?auto=format&fit=crop&q=80&w=400');">
+                            </div>
+                        </div>
+                        <div class="px-2 pb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Snacks</span>
+                            <h4 class="mt-1 text-lg font-bold">Cadbury Silk</h4>
+                            <p class="text-xs font-medium opacity-50">Roast Almond, 134g</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹204</span>
+                                <button
+                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
+                                    data-id="5">
+                                    <span class="material-symbols-outlined">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product 4 (Matched to ID 4 - Salt) -->
+                    <div
+                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div
+                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
+                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
+                                data-alt="Fresh vine-ripened red cherry tomatoes"
+                                style="background-image: url('https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400');">
+                            </div>
+                        </div>
+                        <div class="px-2 pb-2">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Pantry</span>
+                            <h4 class="mt-1 text-lg font-bold">Tata Salt</h4>
+                            <p class="text-xs font-medium opacity-50">1 kg pack</p>
+                            <div class="mt-4 flex items-center justify-between">
+                                <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹28</span>
+                                <button
+                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
+                                    data-id="4">
+                                    <span class="material-symbols-outlined">add</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-white dark:bg-background-dark border-t border-primary/10 py-12 mb-20 lg:mb-0">
+            <div class="mx-auto max-w-[1280px] px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                    <div class="col-span-1 md:col-span-1">
+                        <div class="flex items-center gap-2 mb-6">
+                            <div
+                                class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-background-dark">
+                                <span class="material-symbols-outlined text-lg font-bold">shopping_basket</span>
+                            </div>
+                            <h1 class="text-lg font-extrabold tracking-tight">DailyFreshFarm</h1>
+                        </div>
+                        <p class="text-sm opacity-60 leading-relaxed">Your local general store delivered. We bring
+                            fresh, organic, and daily essentials straight to your door with care.</p>
+                    </div>
+                    <div>
+                        <h5 class="text-sm font-bold uppercase tracking-widest mb-6">Quick Links</h5>
+                        <ul class="space-y-4 text-sm opacity-70">
+                            <li><a class="hover:text-primary" href="#">Shop All</a></li>
+                            <li><a class="hover:text-primary" href="#">Weekly Deals</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-sm font-bold uppercase tracking-widest mb-6">Support</h5>
+                        <ul class="space-y-4 text-sm opacity-70">
+                            <li><a class="hover:text-primary" href="#">Track Order</a></li>
+                            <li><a class="hover:text-primary" href="#">Help Center</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h5 class="text-sm font-bold uppercase tracking-widest mb-6">Store Location</h5>
+                        <div class="rounded-xl overflow-hidden h-32 mb-4 bg-primary/5">
+                            <div class="h-full w-full bg-cover bg-center" data-location="Mumbai, India"
+                                style="background-image: url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&q=80&w=400');">
+                            </div>
+                        </div>
+                        <p class="text-xs opacity-60">45 Fresh Lane, Bandra West<br />Mumbai, MH 400050</p>
+                    </div>
+                </div>
+                <div
+                    class="mt-12 pt-8 border-t border-primary/5 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <p class="text-xs opacity-40">© 2024 DailyFreshFarm General Store. All rights reserved.</p>
+                </div>
             </div>
-            <div class="cat-product-grid" id="featured-products">
-                </div>
-        </section>
+        </footer>
+    </div>
 
-    </main>
-
-    <footer></footer>
-
+    <!-- Mobile Nav (keeping existing simple nav for now, overlapping or replaced by footer? The design has a footer but mobile usually needs sticky nav) -->
     <nav class="bottom-nav lg:hidden">
         <a href="index.html" class="nav-item active">
-            <span class="nav-icon">🏠</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
             <span>Home</span>
         </a>
         <a href="category.html" class="nav-item">
-            <span class="nav-icon">🔍</span>
+            <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
             <span>Search</span>
         </a>
         <a href="cart.html" class="nav-item relative">
-            <span class="nav-icon">🛒</span>
+            <div style="position: relative;">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="nav-badge" class="hidden"
+                    style="position: absolute; top: -5px; right: -8px; background: var(--primary); color: white; font-size: 0.6rem; padding: 2px 4px; border-radius: 10px; min-width: 16px; text-align: center;">0</span>
+            </div>
             <span>Cart</span>
-            <span id="nav-badge" class="hidden" style="position: absolute; top: -5px; right: 20px; background: var(--primary); color: white; font-size: 0.6rem; padding: 1px 5px; border-radius: 10px;">0</span>
         </a>
         <a href="orders.html" class="nav-item">
-            <span class="nav-icon">🛍️</span>
+            <svg viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
             <span>Orders</span>
         </a>
     </nav>
 
-    <script type="module">
-        import { categories, products } from './js/data.js';
-        
-        // 1. Render Categories
-        const catContainer = document.getElementById('category-container');
-        if (catContainer) {
-            catContainer.innerHTML = categories.map(cat => `
-                <a href="category.html?cat=${cat.id}" class="cat-item-dense">
-                    <div class="cat-thumb-dense">
-                        <img src="${cat.image}" alt="${cat.name}">
-                    </div>
-                    <span class="cat-name-dense">${cat.name.replace('&', '<br>&')}</span>
-                </a>
-            `).join('');
-        }
-
-        // 2. Render Featured Products (Limit to 6-8)
-        const productContainer = document.getElementById('featured-products');
-        if (productContainer) {
-            // Pick a mix or specific category
-            const featured = products.slice(0, 10); 
-            
-            productContainer.innerHTML = featured.map(prod => `
-                <div class="product-card">
-                    <div class="product-img-wrapper">
-                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
-                        ${prod.isVeg ? '<div class="veg-icon"></div>' : ''}
-                        ${prod.deliveryTime ? `<div class="badge-time"><span>⏱</span> ${prod.deliveryTime}</div>` : ''}
-                    </div>
-                    
-                    <h3 class="product-title" title="${prod.name}">${prod.name}</h3>
-                    <div class="product-weight">${prod.weight || prod.unit}</div>
-                    
-                    <div class="product-footer">
-                        <div class="flex flex-col">
-                            <span class="price-current">₹${prod.price}</span>
-                            ${prod.mrp > prod.price ? `<span class="price-mrp">₹${prod.mrp}</span>` : ''}
-                        </div>
-                        <button class="btn-add-blinkit add-to-cart-btn" data-id="${prod.id}">ADD</button>
-                    </div>
-                </div>
-            `).join('');
-        }
-    </script>
     <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

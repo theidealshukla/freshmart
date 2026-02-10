@@ -34,21 +34,25 @@ const desktopHeaderHTML = `
 
 // 2. Mobile Header (Sticky & Compact)
 const mobileHeaderHTML = `
-<div class="header-mobile" style="background: white; position: sticky; top: 0; z-index: 999; border-bottom: 1px solid #f0f0f0;">
-    <div class="flex items-center justify-between p-3">
-        <div class="flex flex-col">
-            <span class="font-bold text-xl" style="letter-spacing: -0.5px;">FarmFresh in 8 mins</span>
-            <span class="text-xs text-muted">Home - Bangalore ▼</span>
+<div class="mobile-header-modern">
+    <div class="header-top-row">
+        <div class="location-info">
+            <div class="delivery-title">Delivery in <span class="delivery-time-highlight" style="margin-left:4px;"> 8 mins</span></div>
+            <div class="location-subtitle">Home - Bangalore <span style="font-size: 0.6rem; transform: translateY(1px);">▼</span></div>
         </div>
-        <div style="background: #f5f5f5; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+        <div class="user-profile-btn">
             👤
         </div>
     </div>
-    <div class="px-3 pb-3">
-        <div class="flex items-center bg-gray-50 border rounded-lg px-3 py-2" style="background: #f8f8f8; border: 1px solid #eee; border-radius: 10px;">
-            <span class="text-muted mr-2">🔍</span>
-            <input type="text" placeholder="Search 'chips'" style="background: transparent; border: none; outline: none; width: 100%; font-size: 0.9rem;">
-        </div>
+    
+    <div class="header-search-container">
+        <label for="search-input-mobile" class="modern-search-bar">
+            <svg class="search-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input id="search-input-mobile" type="text" class="modern-search-input" placeholder="Search 'milk', 'chips'...">
+        </label>
     </div>
 </div>
 `;
@@ -77,7 +81,8 @@ export function formatCurrency(amount) {
 
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
-    // Inject Header (Handle both if strict placement needed, otherwise replace first header)
+    // Inject Header - DISABLED for new design which has hardcoded header
+    /*
     const headerEl = document.querySelector('header');
     if (headerEl) {
         // We inject BOTH. CSS controls visibility.
@@ -85,9 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Remove class restrictions from the container if they conflict
         headerEl.className = ''; 
     }
+    */
 
     const footerEl = document.querySelector('footer');
-    if (footerEl) footerEl.innerHTML = footerHTML;
+    // if (footerEl) footerEl.innerHTML = footerHTML; // Keep existing footer if any, or disable if new design has one
 
     // Initial Cart Update
     updateCartUI();
@@ -109,17 +115,24 @@ document.addEventListener('DOMContentLoaded', () => {
             if (product) {
                 cart.add(product);
                 showToast(`Added ${product.name}`);
-                
+
                 // Visual feedback
-                const originalText = btn.textContent;
-                btn.textContent = "ADDED";
-                btn.style.background = "#0c831f";
-                btn.style.color = "white";
-                setTimeout(() => {
-                    btn.textContent = originalText; // Reset for now (simple logic)
-                    btn.style.background = "";
-                    btn.style.color = "";
-                }, 1000);
+                const iconSpan = btn.querySelector('.material-symbols-outlined');
+                if (iconSpan) {
+                    const originalText = iconSpan.textContent;
+                    iconSpan.textContent = "check";
+                    setTimeout(() => iconSpan.textContent = originalText, 1000);
+                } else {
+                    const originalText = btn.textContent;
+                    btn.textContent = "ADDED";
+                    btn.style.background = "#0c831f";
+                    btn.style.color = "white";
+                    setTimeout(() => {
+                        btn.textContent = originalText; // Reset for now (simple logic)
+                        btn.style.background = "";
+                        btn.style.color = "";
+                    }, 1000);
+                }
             }
         }
     });
@@ -127,11 +140,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function updateCartUI() {
     const totals = cart.getTotals();
-    
-    // Desktop Cart Button
+
+    // New Design Desktop Badge
+    const deskBadge = document.getElementById('desk-cart-badge');
+
+    // Old Design Desktop Elements (Safety check)
     const deskCount = document.getElementById('desk-cart-count');
     const deskTotal = document.getElementById('desk-cart-total');
-    
+
+    if (deskBadge) {
+        // Toggle visibility based on count
+        if (totals.count > 0) {
+            deskBadge.textContent = totals.count;
+            deskBadge.classList.remove('hidden');
+        } else {
+            deskBadge.classList.add('hidden');
+        }
+    }
+
     if (deskCount && deskTotal) {
         if (totals.count > 0) {
             deskCount.textContent = `${totals.count} items`;
@@ -147,6 +173,23 @@ function updateCartUI() {
     if (mobileBadge) {
         mobileBadge.textContent = totals.count;
         mobileBadge.classList.toggle('hidden', totals.count === 0);
+    }
+
+    // Sticky Cart Footer (Category Page)
+    const stickyBar = document.getElementById('cart-sticky-bar');
+    const stickyCount = document.getElementById('cart-sticky-count');
+    const stickyTotal = document.getElementById('cart-sticky-total');
+
+    if (stickyBar && stickyCount && stickyTotal) {
+        if (totals.count > 0) {
+            stickyBar.classList.remove('hidden');
+            stickyBar.classList.add('flex'); // Ensure flex display when shown
+            stickyCount.textContent = totals.count;
+            stickyTotal.textContent = `₹${totals.total}`;
+        } else {
+            stickyBar.classList.add('hidden');
+            stickyBar.classList.remove('flex');
+        }
     }
 }
 

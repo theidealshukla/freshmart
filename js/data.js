@@ -1,25 +1,12 @@
 
 export const categories = [
-    { id: 'paan-corner', name: 'Paan Corner', image: 'https://images.unsplash.com/photo-1549480017-d76466a4b7e8?auto=format&fit=crop&q=80&w=200' },
-    { id: 'dairy-bread', name: 'Dairy, Bread & Eggs', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=200' },
     { id: 'fruits-veg', name: 'Fruits & Vegetables', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=200' },
-    { id: 'cold-drinks', name: 'Cold Drinks & Juices', image: 'https://images.unsplash.com/photo-1623864070747-0610996f2648?auto=format&fit=crop&q=80&w=200' },
-    { id: 'snacks', name: 'Snacks & Munchies', image: 'https://images.unsplash.com/photo-1621939514649-28b12e816a85?auto=format&fit=crop&q=80&w=200' },
-    { id: 'breakfast', name: 'Breakfast & Instant Food', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=200' },
-    { id: 'sweet-tooth', name: 'Sweet Tooth', image: 'https://images.unsplash.com/photo-1548907040-4baa42bf10c4?auto=format&fit=crop&q=80&w=200' },
-    { id: 'bakery', name: 'Bakery & Biscuits', image: 'https://images.unsplash.com/photo-1588195538326-c5f1f9c4a79a?auto=format&fit=crop&q=80&w=200' },
-    { id: 'tea-coffee', name: 'Tea, Coffee & Milk Drinks', image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&q=80&w=200' },
-    { id: 'staples', name: 'Atta, Rice & Dal', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=200' },
-    { id: 'masala', name: 'Masala, Oil & More', image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=200' },
-    { id: 'sauces', name: 'Sauces & Spreads', image: 'https://images.unsplash.com/photo-1565557623262-b51c2513a641?auto=format&fit=crop&q=80&w=200' },
-    { id: 'chicken-meat', name: 'Chicken, Meat & Fish', image: 'https://images.unsplash.com/photo-1588168333986-5078d3ae3976?auto=format&fit=crop&q=80&w=200' },
-    { id: 'organic', name: 'Organic & Healthy Living', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&q=80&w=200' },
-    { id: 'baby-care', name: 'Baby Care', image: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=200' },
-    { id: 'pharma', name: 'Pharma & Wellness', image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&q=80&w=200' },
-    { id: 'cleaning', name: 'Cleaning Essentials', image: 'https://images.unsplash.com/photo-1585830812406-894101e1493b?auto=format&fit=crop&q=80&w=200' },
-    { id: 'home', name: 'Home & Office', image: 'https://images.unsplash.com/photo-1583947215259-38e31be8751f?auto=format&fit=crop&q=80&w=200' },
-    { id: 'personal-care', name: 'Personal Care', image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=200' },
-    { id: 'pet-care', name: 'Pet Care', image: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=200' },
+    { id: 'dairy-bread', name: 'Dairy, Bread & Eggs', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=200' },
+    { id: 'staples', name: 'Atta, Rice, Dal & Oil', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=200' },
+    { id: 'snacks-beverages', name: 'Snacks & Beverages', image: 'https://images.unsplash.com/photo-1621939514649-28b12e816a85?auto=format&fit=crop&q=80&w=200' },
+    { id: 'instant-frozen', name: 'Instant & Frozen Food', image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&q=80&w=200' },
+    { id: 'household-cleaning', name: 'Household & Cleaning', image: 'https://images.unsplash.com/photo-1585830812406-894101e1493b?auto=format&fit=crop&q=80&w=200' },
+    { id: 'personal-care', name: 'Personal Care', image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=200' }
 ];
 
 export const products = [
@@ -87,7 +74,7 @@ export const products = [
     {
         id: 5,
         name: 'Cadbury Dairy Milk Silk Valentine Roast Almond',
-        category: 'snacks',
+        category: 'snacks-beverages',
         subcategory: 'Chocolates',
         price: 204.00,
         mrp: 214.00,
@@ -103,7 +90,7 @@ export const products = [
     {
         id: 6,
         name: 'Nestle KitKat Valentine 4F Choco Wafer',
-        category: 'snacks',
+        category: 'snacks-beverages',
         subcategory: 'Chocolates',
         price: 30.00,
         mrp: 35.00,
@@ -119,7 +106,7 @@ export const products = [
     {
         id: 7,
         name: 'Cadbury Dairy Milk Chocolate Bar',
-        category: 'snacks',
+        category: 'snacks-beverages',
         subcategory: 'Chocolates',
         price: 26.00,
         mrp: 28.00,
@@ -134,7 +121,7 @@ export const products = [
     {
         id: 9,
         name: 'Snickers Nougat & Caramel Miniature',
-        category: 'snacks',
+        category: 'snacks-beverages',
         subcategory: 'Chocolates',
         price: 108.00,
         mrp: 135.00,
@@ -246,10 +233,84 @@ export const products = [
         deliveryTime: '10 MINS',
         outOfStock: true
     },
-
-
-
+    // New Products for Snacks & Drinks Page
+    {
+        id: 101,
+        name: 'Orange Fizz Sparkling Soda',
+        category: 'snacks-beverages',
+        price: 155.00,
+        mrp: 185.00,
+        unit: '2 L',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA9d6QWtV4fuhSBCUpolfgdzQf0yUUl09RnQjpMyaoDtzRYg1T9s7G4pnbc3FihezGOCqTy4EhS9fOTMOsUL-VFIBPcq7n3ly49A7rwRfhudIBiK9vu7K1KeeHms6KJetJSsDb24FBzXMzzVlIap_dMQhnQaUpURQiKctpTUWfyOPbzz4KrPFLIm-lppehA2-CHoPkZb07Bw_-zpytJXZIRe9Y3uiZXWRRHN1nirBNC45MKT7gRO1VKfDwcU4vTjBVJQ5SMPGPkvbs',
+        deliveryTime: '10 MINS'
+    },
+    {
+        id: 102,
+        name: 'Classic Salted Potato Chips',
+        category: 'snacks-beverages',
+        price: 95.00,
+        unit: '250 g',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXLaZLLh2yiRlMlQEnEO1a5DTbIi8p5hAvkcYXjxSOEpZhg1VivE8aapTn8XqeI3CJE_TyllqtzkqE6SosuVuqYI03JY2ttuCoXqvIVlo7UdSENq5p-V04aR5DUshLzcCjAdCaX0y-vKkqCDNtCm9qMVpgsuO-TcLqY1MZaQeJNYytIFpc9D9690II4WHgVOU4OdAxJY-x0schyqPYSy22FA-GRVuM3V_W2xw91HA6ESg3bJ67dpUe1BSd_YOCp1sonR0ufpnvE',
+        deliveryTime: '8 MINS'
+    },
+    {
+        id: 103,
+        name: 'Pure Organic Apple Juice',
+        category: 'snacks-beverages',
+        price: 345.00,
+        unit: '1 L',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC9GPsYGyzKnKe9gK47QG_bTtGSH7_wW5kGMg4WFI6WRoXdwV7TmE6VZtFgaVzgrYi86rPuke3Eez8NC3MbsdCQWUZW9eVgeuOmIA1N_X7qtfxEe5ZmxV3zcEtFCSn9NNZ_c6i0MxxUludwIfhLA7TKz0QlulSNunSFcDUoGpmffU0uUJuJzsmDCZuxuB8_KMtKqCTqowiVTv_mm1iK3F1Fr6lfzif0EhCo-Pa8yl5MvFnirtk8QZLCZ9pdzeevKPmSP_XZkrt8E0U',
+        deliveryTime: '12 MINS'
+    },
+    {
+        id: 104,
+        name: 'Premium Dark Chocolate 70%',
+        category: 'snacks-beverages',
+        price: 249.00,
+        unit: '100 g',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDcBGbLgVCeDOaiBVYJLwWRD5WBbU1LmVv0cjkabfXjKSlWoK-2Vx5LRDBjx1tfGpFIEnqX6y64sjXHKGNSgW_-2ROVNWWxn-melB5fKf_8ymPJf10ekK3pbyjJdK1wMnZ0yDqtZHfrq3Ci8gKm6y1GUqz70r0CEySnsmv1Mza6q2XFd_EXYokWSu8__w5burpHoPIXS26e4ZSPTsbT1MWcxQwkGfZYc5fqm6l9-uGUxnV3p6s1ThC5NMml8tMxt5v2dD4naQJE1KQ',
+        deliveryTime: '9 MINS'
+    },
+    {
+        id: 105,
+        name: 'Cheesy Spicy Nachos',
+        category: 'snacks-beverages',
+        price: 120.00,
+        unit: '150 g',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC8isHRW0Kh43pWlroZwFKDkzZldlroaplISsk2vgQ8v7E3n27AuC5MR9kYZEwlMQD613gau1fxS2vVroqS9ePLbvtF86IkryJVJYH5K9RO8TZi8MCaFdaToi4NrJyQ-r3Ezc2iwH5k4W4DoOxX5cPcBZeOEsH2jRwLwm6oVlUCfT69pk9n0gd_VwzbSMGCX0H1wRw9kT4bFIUrhQfZS-Kv9nO0c2P7CTrB6vZXkRrkFqHRrvQPm86zcXcj-CqNgkDqZXFytwZUntU',
+        deliveryTime: '11 MINS'
+    },
+    {
+        id: 106,
+        name: 'Refreshing Cola Soda',
+        category: 'snacks-beverages',
+        price: 40.00,
+        mrp: 45.00,
+        unit: '330 ml',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCjUWVOhzis9y2vDM4sJiFh_1hv2WZ5tCbcIacNG2zm4QXOOOyWPJN8vvzlhXXHinGoTMhXDLnDaIaWGMc6SaBK9Lye3kr3S1HvysAYxH7N23WSFrO4fc5_yK7uCvZ23vO6puYuadLRW36Mi5ZQGpmiiAfYGnSQZsNP0Unct8x3I_ua-jWDTCiWDK4P06Lwe14yzas5svbfKVkYBdexDzLIhZkuITozQH-rLUrsGiaIKdUu65R6UiuT_TpRhgxkSIjFAoV5_CnzCvQ',
+        deliveryTime: '7 MINS'
+    },
+    {
+        id: 107,
+        name: 'Sparkling Mineral Water',
+        category: 'snacks-beverages',
+        price: 85.00,
+        unit: '1 L',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDO1ClQOPEiI-kA-1Z9sTwhwr3IlM499FFirA5nLS50Ml6ehyHvjWMaxwgkpJPyIetIyW4iiK1LUbaGq00F2FkL15JRtchUHwYNbTgo_aJNVO-MPxyhw48guL-1yeoVlLM64qkEnSp8jGvgb4q0M5yhCELQcZ6tqvJ6Tf905dGbL6c1hEa0n7R4FrTQDGYVqBsO_h84ilWeTIWlu6k213pgJTYIOWFwD8kml9w5fQl3U925_J6Tht4gs4YJxZp-F9_XZcUnMSY0GZY',
+        deliveryTime: '10 MINS'
+    },
+    {
+        id: 108,
+        name: 'Gummy Bears Party Mix',
+        category: 'snacks-beverages',
+        price: 120.00,
+        unit: '200 g',
+        image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDGMhBKAlFPcuoovxxs0tyGwzUeMX-tNRUFhuOBirWKCgHwgs5hzYSbhmkOh_dRWhkbR6Nu-8lxTknUkXQ396MnbULhWBi6QqdMQH6zuz1cLFvDGZyQS2aU58HH_BQhzUUPeQIIM2z_kjAQ8Ol-ag8P_UWzXhnPmbvE3scZCk9U5fWkz7RO73xnU2WxQ6DUHKyjrjnSz0785OsR4s9272PfDhOTe--mpiejRMboIddQX1WLwai33Kz0Wp2pxqxzEZd5y1T3r9uH7pU',
+        deliveryTime: '15 MINS'
+    },
 ];
+
+
 
 export const orders = [
     {
