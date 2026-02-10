@@ -1,156 +1,155 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snacks & Drinks - FreshMart India</title>
-    <link rel="stylesheet" href="css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Buy Milk, Bread & Eggs Online - Daily FarmFresh</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
-    <header class="header container"></header>
 
-    <div class="container breadcrumb" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
-        <a href="index.html">Home</a> &gt; <a href="#">Groceries</a> &gt; <span class="text-dark">Snacks & Drinks</span>
+    <header></header>
+
+    <div class="filter-row lg:hidden">
+        <button class="filter-chip active">Sort <span class="text-muted">▼</span></button>
+        <button class="filter-chip dark">Brand <span class="text-white">▼</span></button>
+        <button class="filter-chip">Price</button>
+        <button class="filter-chip">Pack Size</button>
     </div>
 
-    <!-- Mobile Filter Toggle -->
-    <div class="container lg:hidden py-4" style="display: none;">
-        <button id="filter-toggle" class="btn btn-outline w-full flex justify-between items-center">
-            <span>Filter & Sort</span>
-            <span>⬇</span>
-        </button>
-    </div>
+    <div class="cat-layout">
 
-    <main class="container"
-        style="margin-top: 1rem; margin-bottom: 4rem; display: grid; grid-template-columns: 240px 1fr; gap: 2rem;">
-        <!-- Sidebar Filters -->
-        <aside class="filters" id="filters-sidebar" style="padding-right: 1rem;">
-            <div class="filter-group mb-6">
-                <h3 class="text-sm font-bold uppercase text-muted mb-3" style="letter-spacing: 0.5px;">Categories</h3>
-                <div class="flex flex-col gap-2 text-sm">
-                    <label class="flex items-center gap-2"><input type="checkbox" checked> Namkeen & Chips <span
-                            class="text-muted ml-auto">(24)</span></label>
-                    <label class="flex items-center gap-2"><input type="checkbox" checked> Cold Drinks & Juices <span
-                            class="text-muted ml-auto">(18)</span></label>
-                    <label class="flex items-center gap-2"><input type="checkbox"> Chocolates <span
-                            class="text-muted ml-auto">(42)</span></label>
-                    <label class="flex items-center gap-2"><input type="checkbox"> Biscuits & Cookies <span
-                            class="text-muted ml-auto">(12)</span></label>
-                </div>
+        <aside class="sidebar-nav hidden lg:block">
+            <div class="sidebar-header">Dairy, Bread & Eggs</div>
+            <div class="sidebar-item active">
+                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/922_1643384380004.png" alt="Milk"></div>
+                <span class="text-sm font-medium">Milk</span>
             </div>
-
-            <div class="filter-group mb-6">
-                <h3 class="text-sm font-bold uppercase text-muted mb-3">Price Range</h3>
-                <input type="range" min="0" max="1000" class="w-full" style="width: 100%;">
-                <div class="flex justify-between text-xs text-muted mt-2">
-                    <span>₹0</span>
-                    <span>₹1000+</span>
-                </div>
+            <div class="sidebar-item">
+                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/953_1657599742631.png" alt="Bread"></div>
+                <span class="text-sm font-medium">Bread & Pav</span>
             </div>
-
-            <div class="filter-group mb-6">
-                <h3 class="text-sm font-bold uppercase text-muted mb-3">Dietary Needs</h3>
-                <div class="flex flex-col gap-2 text-sm">
-                    <label class="flex items-center gap-2"><input type="checkbox"> Vegetarian (Veg)</label>
-                    <label class="flex items-center gap-2"><input type="checkbox"> Sugar-Free</label>
-                </div>
+            <div class="sidebar-item">
+                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/954_1680251634382.png" alt="Eggs"></div>
+                <span class="text-sm font-medium">Eggs</span>
             </div>
-
-            <!-- Promotion Card -->
-            <div class="bg-green-100 p-4 rounded-lg"
-                style="background: #e8f5e9; padding: 1.5rem; border-radius: var(--radius-lg);">
-                <span class="text-xs font-bold text-green-700 block mb-2">🏷️ Monsoon Sale</span>
-                <p class="text-sm text-green-800 mb-4">Get 20% off all soft drinks this weekend!</p>
-                <a href="#" class="text-xs font-bold text-green-700 flex items-center gap-1">View Offers →</a>
+            <div class="sidebar-item">
+                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/923_1643384369257.png" alt="Paneer"></div>
+                <span class="text-sm font-medium">Paneer & Tofu</span>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/123_1643384414434.png" alt="Curd"></div>
+                <span class="text-sm font-medium">Curd & Yogurt</span>
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-thumb"><img src="https://cdn.grofers.com/app/images/category/cms_images/icon/1089_1643384401831.png" alt="Butter"></div>
+                <span class="text-sm font-medium">Butter & More</span>
             </div>
         </aside>
 
-        <!-- Product Listing -->
-        <section class="product-listing-section">
-            <div class="flex justify-between items-center mb-4 mobile-col">
-                <div>
-                    <h1 class="text-2xl font-bold mb-1">Snacks & Drinks</h1>
-                    <p class="text-sm text-muted">Showing 12 of 128 products</p>
+        <main class="cat-main">
+            
+            <div class="hidden lg:block">
+                <div class="breadcrumb">
+                    <a href="index.html">Home</a> <span>/</span> 
+                    <a href="#">Dairy, Bread & Eggs</a> <span>/</span> 
+                    <span class="text-dark">Milk</span>
                 </div>
-                <!-- Sort Dropdown -->
-                <select
-                    style="border: 1px solid var(--border); padding: 0.5rem; border-radius: var(--radius-md); font-size: 0.9rem;"
-                    class="mobile-full-width mt-mobile-2">
-                    <option>Relevance</option>
-                    <option>Price: Low to High</option>
-                    <option>Price: High to Low</option>
-                    <option>Top Rated</option>
-                </select>
+                <div class="cat-header-desktop">
+                    <h1 class="text-xl font-bold">Buy Milk Online</h1>
+                    <div class="text-xs text-muted">Sort by <span class="font-bold text-success" style="color:#0c831f">Relevance</span></div>
+                </div>
             </div>
 
-            <!-- Active Filters -->
-            <div class="flex gap-2 mb-6 flex-wrap">
-                <span class="badge flex items-center gap-1 bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs"
-                    style="background:var(--primary); color:white;">
-                    Cold Drinks <button style="color:white; margin-left: 4px;">×</button>
-                </span>
-                <span class="badge flex items-center gap-1 bg-gray-100 text-gray-800 px-3 py-1 rounded-full text-xs"
-                    style="border:1px solid var(--border);">
-                    Under ₹200 <button style="margin-left: 4px;">×</button>
-                </span>
-                <button class="text-xs text-green-600 font-medium ml-2" style="color:var(--primary);">Clear all</button>
+            <div class="lg:hidden mb-4 mt-2">
+                <h1 class="text-lg font-bold">Milk</h1>
+                <p class="text-xs text-muted">24 products</p>
             </div>
 
-            <!-- Grid -->
-            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem;"
-                id="product-grid">
-                <!-- Injected via JS -->
-            </div>
-        </section>
-    </main>
+            <div class="cat-product-grid" id="product-grid">
+                </div>
 
-    <footer class="footer container"></footer>
+        </main>
+    </div>
+
+    <footer class="hidden lg:block"></footer>
+
+    <nav class="bottom-nav lg:hidden">
+        <a href="index.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item active">
+            <span class="nav-icon">🔍</span>
+            <span>Search</span>
+        </a>
+        <a href="cart.html" class="nav-item relative">
+            <span class="nav-icon">🛒</span>
+            <span>Cart</span>
+            <span id="nav-badge" class="hidden" style="position: absolute; top: -5px; right: 20px; background: var(--primary); color: white; font-size: 0.6rem; padding: 1px 5px; border-radius: 10px;">0</span>
+        </a>
+        <a href="orders.html" class="nav-item">
+            <span class="nav-icon">🛍️</span>
+            <span>Orders</span>
+        </a>
+    </nav>
 
     <script type="module">
         import { products } from './js/data.js';
 
         const grid = document.getElementById('product-grid');
 
-        // Filter products for "Snacks & Drinks" page
-        const categoryProducts = products.filter(p => p.category === 'snacks-drinks' || p.category === 'beverages');
+        // Logic: Filter for "Milk" related items
+        // In a real app, we would read the URL param ?cat=...
+        // Here we simulate the "Milk" category page
+        let displayProducts = products.filter(p => 
+            (p.subcategory && p.subcategory === 'Milk') || 
+            p.name.toLowerCase().includes('milk')
+        );
 
-        // Render function
-        function renderProducts(list) {
-            grid.innerHTML = list.map(prod => `
-                <div class="card product-card">
-                    <div class="product-img-wrapper">
-                        ${prod.badge ? `<span style="position:absolute; top:10px; left:10px; background:${prod.badge.includes('OFF') ? 'var(--danger)' : 'var(--primary)'}; color:white; padding:2px 8px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${prod.badge}</span>` : ''}
-                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
-                    </div>
-                    <div class="product-info">
-                        <div class="product-cat">${prod.subcategory || 'Snacks'}</div>
-                        <h3 class="product-title">${prod.name}</h3>
-                        ${prod.origPrice ? `<div class="text-xs text-muted mb-1"><del>₹${prod.origPrice}</del></div>` : ''}
-                        <div class="product-footer">
-                            <div class="flex flex-col">
-                                <span class="product-price">₹${prod.price}</span>
-                                <span class="text-muted text-xs">${prod.unit}</span>
-                            </div>
-                            <button class="btn-add add-to-cart-btn" data-id="${prod.id}">+</button>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
+        // Fallback if data is scarce, just show dairy
+        if (displayProducts.length < 3) {
+            displayProducts = products.filter(p => p.category === 'dairy-bread');
         }
 
-        renderProducts(categoryProducts);
+        // 1. Render Function (Reusing FarmFresh Card Style)
+        function renderProductCard(prod) {
+            const isOutOfStock = prod.outOfStock;
+            // Generate a random delivery time for realism if missing
+            const time = prod.deliveryTime || "12 MINS";
+            
+            return `
+                <div class="product-card ${isOutOfStock ? 'opacity-50 pointer-events-none' : ''}">
+                    <div class="product-img-wrapper">
+                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
+                        ${prod.isVeg !== false ? '<div class="veg-icon"></div>' : ''}
+                        ${!isOutOfStock ? `<div class="badge-time"><span>⏱</span> ${time}</div>` : ''}
+                    </div>
+                    
+                    <h3 class="product-title" title="${prod.name}">${prod.name}</h3>
+                    <div class="product-weight">${prod.weight || prod.unit || '500 g'}</div>
+                    
+                    <div class="product-footer">
+                        <div class="flex flex-col">
+                            <span class="price-current">₹${prod.price}</span>
+                            ${prod.mrp && prod.mrp > prod.price ? `<span class="price-mrp">₹${prod.mrp}</span>` : ''}
+                        </div>
+                        
+                        ${isOutOfStock 
+                            ? '<button class="btn-add-blinkit" style="border-color:#ccc; color:#ccc;" disabled>OOS</button>' 
+                            : `<button class="btn-add-blinkit add-to-cart-btn" data-id="${prod.id}">ADD</button>`
+                        }
+                    </div>
+                    ${isOutOfStock ? '<div style="position:absolute; top:40%; left:50%; transform:translate(-50%, -50%); background:white; padding:4px 8px; border-radius:4px; font-weight:bold; font-size:0.7rem; box-shadow:0 2px 5px rgba(0,0,0,0.1);">Out of Stock</div>' : ''}
+                </div>
+            `;
+        }
 
-        // Mobile Filter Toggle Logic (Simulated)
-        const filterToggle = document.getElementById('filter-toggle');
-        const sidebar = document.getElementById('filters-sidebar');
-
-        // Simple logic handled in style.css media queries primarily, but JS can toggle classes if needed.
-        // For now, we rely on CSS media queries to show/hide or stack.
+        // 2. Inject
+        if(grid) {
+            grid.innerHTML = displayProducts.map(renderProductCard).join('');
+        }
     </script>
     <script type="module" src="js/main.js"></script>
 </body>
-
 </html>

@@ -1,128 +1,142 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shopping Cart - FreshMart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>My Cart - Daily FarmFresh</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+<body style="background: #f4f6fb;">
 
-<body>
-    <header class="header container"></header>
+    <header></header>
 
-    <div class="container breadcrumb" style="margin-top: 1rem;">
-        <a href="index.html">Home</a> &gt; <span class="text-dark">Cart</span>
-    </div>
+    <main class="container" style="margin-top: 2rem; margin-bottom: 6rem; min-height: 60vh;">
+        <h1 class="text-xl font-bold mb-4">My Cart</h1>
 
-    <main class="container" style="margin-top: 2rem; margin-bottom: 4rem;">
-        <div class="flex flex-col lg:flex-row gap-8" style="display: flex; gap: 2rem;">
-            <!-- Cart Items -->
-            <div class="flex-1">
-                <h1 class="text-2xl font-bold mb-4">Your Cart (<span id="cart-count">0</span> items)</h1>
-                <div id="cart-items" class="flex flex-col gap-4">
-                    <!-- Items injected here -->
-                    <div class="text-center p-8 text-muted">Your cart is empty</div>
+        <div class="flex flex-col lg:flex-row gap-6">
+            
+            <div class="flex-1" id="cart-items-container">
                 </div>
-            </div>
 
-            <!-- Summary -->
-            <div class="cart-summary"
-                style="min-width: 300px; padding: 1.5rem; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); height: fit-content;">
-                <h2 class="text-lg font-bold mb-4">Order Summary</h2>
-                <div class="flex justify-between mb-2 text-sm">
-                    <span class="text-muted">Subtotal</span>
-                    <span id="summary-subtotal">$0.00</span>
+            <div class="cart-summary" style="min-width: 340px;">
+                <div class="bill-card">
+                    <h2 class="text-sm font-bold mb-3">Bill Details</h2>
+                    
+                    <div class="bill-row">
+                        <span>MRP Total</span>
+                        <span id="bill-mrp">₹0</span>
+                    </div>
+                    <div class="bill-row">
+                        <span>Product Discount</span>
+                        <span class="text-primary" id="bill-discount">- ₹0</span>
+                    </div>
+                    <div class="bill-row">
+                        <span>Delivery Charge</span>
+                        <span class="text-primary">FREE</span>
+                    </div>
+                    
+                    <div class="bill-row total">
+                        <span>Grand Total</span>
+                        <span id="bill-total">₹0</span>
+                    </div>
                 </div>
-                <div class="flex justify-between mb-2 text-sm">
-                    <span class="text-muted">Tax (8%)</span>
-                    <span id="summary-tax">$0.00</span>
+
+                <div class="savings-strip" id="savings-strip">
+                    <span>🏷️</span> You are saving ₹<span id="savings-amt">0</span> on this order
                 </div>
-                <div class="flex justify-between mb-4 text-sm">
-                    <span class="text-muted">Shipping</span>
-                    <span id="summary-shipping">$0.00</span>
-                </div>
-                <hr style="border: 0; border-top: 1px solid var(--border); margin: 1rem 0;">
-                <div class="flex justify-between mb-6 font-bold text-lg">
-                    <span>Total</span>
-                    <span id="summary-total">$0.00</span>
-                </div>
-                <a href="checkout.html" class="btn btn-primary w-full text-center"
-                    style="width: 100%; display: block;">Proceed to Checkout</a>
-                <div class="text-center mt-4 text-xs text-muted">
-                    🔒 Secure Checkout
-                </div>
+
+                <a href="checkout.html" class="btn-pay w-full justify-center hidden lg:flex" style="text-align:center;">
+                    Proceed to Pay
+                </a>
             </div>
         </div>
     </main>
 
-    <footer class="footer container"></footer>
+    <div class="bottom-pay-bar lg:hidden">
+        <div class="flex flex-col">
+            <span class="text-xs font-bold uppercase text-muted">Total</span>
+            <span class="text-lg font-bold" id="mobile-total">₹0</span>
+        </div>
+        <a href="checkout.html" class="btn-pay">
+            Proceed
+            <span>→</span>
+        </a>
+    </div>
 
     <script type="module">
         import { cart } from './js/cart.js';
 
-        const cartItemsContainer = document.getElementById('cart-items');
-        const cartCountEl = document.getElementById('cart-count');
-        const summarySubtotal = document.getElementById('summary-subtotal');
-        const summaryTax = document.getElementById('summary-tax');
-        const summaryShipping = document.getElementById('summary-shipping');
-        const summaryTotal = document.getElementById('summary-total');
+        const container = document.getElementById('cart-items-container');
+        const els = {
+            mrp: document.getElementById('bill-mrp'),
+            discount: document.getElementById('bill-discount'),
+            total: document.getElementById('bill-total'),
+            savings: document.getElementById('savings-amt'),
+            mobileTotal: document.getElementById('mobile-total'),
+            savingsStrip: document.getElementById('savings-strip')
+        };
 
         function renderCart() {
             const items = cart.items;
-            const totals = cart.getTotals();
+            const totals = cart.getTotals(); // You might need to adjust logic if getTotals() returns flat numbers
+            
+            // 1. Calculations (Mocking MRP logic since data might not have it strictly)
+            const payTotal = parseFloat(totals.total);
+            const mrpTotal = (payTotal * 1.2).toFixed(2); // Fake 20% markup for display
+            const savings = (mrpTotal - payTotal).toFixed(2);
 
-            cartCountEl.textContent = totals.count;
-            summarySubtotal.textContent = `$${totals.subtotal}`;
-            summaryTax.textContent = `$${totals.tax}`;
-            summaryShipping.textContent = totals.shipping === '0.00' ? 'Free' : `$${totals.shipping}`;
-            summaryTotal.textContent = `$${totals.total}`;
-
+            // 2. Render Items
             if (items.length === 0) {
-                cartItemsContainer.innerHTML = '<div class="text-center p-8 text-muted">Your cart is empty. <a href="index.html" class="text-primary font-bold">Start Shopping</a></div>';
+                container.innerHTML = `
+                    <div class="empty-cart bg-white rounded-lg border p-8">
+                        <div style="font-size:3rem; margin-bottom:1rem;">🛒</div>
+                        <h3 class="font-bold text-lg">Your cart is empty</h3>
+                        <p class="text-muted mb-4">Add items to start your shopping</p>
+                        <a href="index.html" class="btn-pay" style="display:inline-block; padding:0.5rem 1rem; font-size:0.9rem;">Browse Products</a>
+                    </div>
+                `;
+                document.querySelector('.cart-summary').style.display = 'none';
+                document.querySelector('.bottom-pay-bar').style.display = 'none';
                 return;
             }
 
-            cartItemsContainer.innerHTML = items.map(item => `
-                <div class="cart-item flex items-center gap-4 p-4 border rounded bg-white shadow-sm" style="border: 1px solid var(--border); border-radius: var(--radius-md);">
-                    <img src="${item.image}" alt="${item.name}" style="width: 80px; height: 80px; object-fit: cover; border-radius: var(--radius-sm);">
+            container.innerHTML = items.map(item => `
+                <div class="cart-item">
+                    <img src="${item.image}" class="cart-img" alt="${item.name}">
                     <div class="flex-1">
-                        <div class="flex justify-between mb-1">
-                            <h3 class="font-bold text-sm text-dark">${item.name}</h3>
-                            <span class="font-bold text-dark">$${(item.price * item.qty).toFixed(2)}</span>
-                        </div>
-                        <p class="text-xs text-muted mb-2">$${item.price} / ${item.unit}</p>
-                        <div class="flex items-center gap-4">
-                            <div class="qty-control flex items-center border rounded" style="border: 1px solid var(--border);">
-                                <button onclick="window.updateCartQty(${item.id}, -1)" class="px-2 py-1 hover:bg-gray-100">-</button>
-                                <span class="px-2 text-sm font-medium w-8 text-center">${item.qty}</span>
-                                <button onclick="window.updateCartQty(${item.id}, 1)" class="px-2 py-1 hover:bg-gray-100">+</button>
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="font-semibold text-sm mb-1">${item.name}</h3>
+                                <div class="text-xs text-muted mb-2">${item.weight || item.unit}</div>
+                                <div class="font-bold">₹${item.price} <span class="text-xs text-muted line-through font-normal">₹${item.mrp || (item.price*1.2).toFixed(0)}</span></div>
                             </div>
-                            <button onclick="window.removeCartItem(${item.id})" class="text-xs text-danger hover:underline" style="color:var(--danger)">Remove</button>
+                            <div class="qty-counter">
+                                <button class="qty-btn" onclick="window.updateCartQty(${item.id}, -1)">-</button>
+                                <span class="qty-val">${item.qty}</span>
+                                <button class="qty-btn" onclick="window.updateCartQty(${item.id}, 1)">+</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             `).join('');
+
+            // 3. Update Bill
+            els.mrp.textContent = `₹${mrpTotal}`;
+            els.discount.textContent = `- ₹${savings}`;
+            els.total.textContent = `₹${payTotal}`;
+            els.mobileTotal.textContent = `₹${payTotal}`;
+            els.savings.textContent = savings;
         }
 
-        // Expose functions to window directly since onclick is used
+        // Global handlers for onclick
         window.updateCartQty = (id, delta) => {
             cart.updateQty(id, delta);
             renderCart();
         };
 
-        window.removeCartItem = (id) => {
-            cart.remove(id);
-            renderCart();
-        };
-
-        // Initial Render
         renderCart();
-
-        // Listen for updates from other tabs/events
         window.addEventListener('cart-updated', renderCart);
     </script>
     <script type="module" src="js/main.js"></script>
 </body>
-
 </html>

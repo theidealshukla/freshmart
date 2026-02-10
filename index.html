@@ -1,130 +1,110 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreshMart India - Local Grocery Delivery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Daily FarmFresh - Fresh groceries delivered in 10 minutes</title>
     <link rel="stylesheet" href="css/style.css">
-    <meta name="description" content="Fresh groceries delivered from local farms to your doorstep in minutes.">
 </head>
-
 <body>
-    <header class="header container"></header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero container" style="margin-top: 2rem; margin-bottom: 3rem;">
-            <div class="hero-card"
-                style="background: linear-gradient(to right, #e8f5e9, #c8e6c9); border-radius: var(--radius-lg); padding: 3rem; display: flex; align-items: center; justify-content: space-between; overflow: hidden; position: relative;">
-                <div class="hero-text" style="z-index: 2; max-width: 50%;">
-                    <span class="badge"
-                        style="background:var(--primary); color:white; padding:4px 12px; border-radius:20px; font-size:0.8rem; font-weight:bold; margin-bottom:1rem; display:inline-block;">WEEKLY
-                        SPECIAL</span>
-                    <h1 class="text-3xl" style="color: #1b5e20; margin-bottom: 1rem; line-height: 1.2;">Fresh from the
-                        <br><span style="color:var(--primary)">Local Mandi</span></h1>
-                    <p class="text-muted" style="margin-bottom: 2rem;">Get 20% off all seasonal fruits and staples this
-                        week.</p>
-                    <div class="flex gap-4">
-                        <a href="category.html" class="btn btn-primary">Shop Now</a>
-                        <a href="#" class="btn btn-outline">View Deals</a>
-                    </div>
+    <header></header>
+
+    <main class="container">
+        
+        <section class="hero-wrapper">
+            <div class="hero-banner">
+                <div class="hero-text">
+                    <h1 class="hero-title">Order fresh items,<br>delivered in 8 mins</h1>
+                    <p class="hero-subtitle">Get farm-fresh vegetables, fruits, and dairy delivered to your doorstep.</p>
+                    <a href="#products-section" class="btn-hero">Shop Now</a>
                 </div>
-                <!-- Decorative Image simulation -->
-                <div class="hero-img"
-                    style="position: absolute; right: -50px; bottom: -50px; width: 400px; height: 400px; background: url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=800') no-repeat center/cover; border-radius: 50%; opacity: 0.9;">
-                </div>
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80" class="hero-img" alt="Grocery Banner">
             </div>
         </section>
 
-        <!-- Categories -->
-        <section class="container" style="margin-bottom: 3rem;">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl">Shop by Category</h2>
-                <a href="category.html" class="text-primary font-medium text-sm">View all →</a>
-            </div>
-            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1.5rem;"
-                id="categories-grid">
-                <!-- Injected via JS -->
-            </div>
+        <section class="mb-12" style="margin-bottom: 3rem;">
+            <div class="cat-grid-dense" id="category-container">
+                </div>
         </section>
 
-        <!-- Featured Products -->
-        <section class="container" style="margin-bottom: 4rem;">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-xl">Featured Products</h2>
-                <div class="flex gap-2">
-                    <button class="nav-btn-prev">←</button>
-                    <button class="nav-btn-next">→</button>
+        <section id="products-section" style="margin-bottom: 4rem;">
+            <div class="section-header">
+                <h2 class="section-title">Dairy, Breads & Eggs</h2>
+                <a href="category.html" class="section-link">see all</a>
+            </div>
+            <div class="cat-product-grid" id="featured-products">
                 </div>
-            </div>
-            <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.5rem;"
-                id="featured-products">
-                <!-- Injected via JS -->
-            </div>
         </section>
 
-        <!-- Promotion Banner -->
-        <section class="container" style="margin-bottom: 4rem;">
-            <div class="promo-banner"
-                style="background: #1a237e; border-radius: var(--radius-lg); padding: 3rem; color: white; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
-                <div>
-                    <h2 class="text-2xl" style="color:white; margin-bottom: 0.5rem;">Get <span
-                            style="color: #4caf50;">₹200 off</span> your first order</h2>
-                    <p style="opacity: 0.8; margin-bottom: 1.5rem;">Subscribe to our newsletter and get exclusive deals.
-                    </p>
-                    <div class="flex gap-2 flex-wrap">
-                        <input type="email" placeholder="Enter your email"
-                            style="padding: 0.8rem; border-radius: 4px; border: none; min-width: 250px;">
-                        <button class="btn btn-primary">Subscribe</button>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <footer class="footer container"></footer>
+    <footer></footer>
+
+    <nav class="bottom-nav lg:hidden">
+        <a href="index.html" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+        </a>
+        <a href="category.html" class="nav-item">
+            <span class="nav-icon">🔍</span>
+            <span>Search</span>
+        </a>
+        <a href="cart.html" class="nav-item relative">
+            <span class="nav-icon">🛒</span>
+            <span>Cart</span>
+            <span id="nav-badge" class="hidden" style="position: absolute; top: -5px; right: 20px; background: var(--primary); color: white; font-size: 0.6rem; padding: 1px 5px; border-radius: 10px;">0</span>
+        </a>
+        <a href="orders.html" class="nav-item">
+            <span class="nav-icon">🛍️</span>
+            <span>Orders</span>
+        </a>
+    </nav>
 
     <script type="module">
         import { categories, products } from './js/data.js';
-
-        // Render Categories
-        const catGrid = document.getElementById('categories-grid');
-        categories.slice(0, 6).forEach(cat => {
-            catGrid.innerHTML += `
-                <a href="category.html?cat=${cat.id}" class="cat-card flex flex-col items-center p-4 hover:shadow-lg transition-all" style="background:white; border:1px solid var(--border); border-radius:var(--radius-md); padding: 1.5rem; text-align:center;">
-                    <img src="${cat.image}" alt="${cat.name}" style="width:60px; height:60px; border-radius:50%; object-fit:cover; margin-bottom:1rem;">
-                    <span class="font-medium text-sm">${cat.name}</span>
-                </a>
-            `;
-        });
-
-        // Render Featured Products
-        const prodGrid = document.getElementById('featured-products');
-        products.slice(0, 4).forEach(prod => { // Using new Indian products from data.js
-            prodGrid.innerHTML += `
-                <div class="card product-card">
-                    <div class="product-img-wrapper">
-                        ${prod.badge ? `<span style="position:absolute; top:10px; left:10px; background:var(--danger); color:white; padding:2px 8px; border-radius:4px; font-size:0.7rem; font-weight:bold;">${prod.badge}</span>` : ''}
-                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
+        
+        // 1. Render Categories
+        const catContainer = document.getElementById('category-container');
+        if (catContainer) {
+            catContainer.innerHTML = categories.map(cat => `
+                <a href="category.html?cat=${cat.id}" class="cat-item-dense">
+                    <div class="cat-thumb-dense">
+                        <img src="${cat.image}" alt="${cat.name}">
                     </div>
-                    <div class="product-info">
-                        <div class="product-cat">${prod.category}</div>
-                        <h3 class="product-title">${prod.name}</h3>
-                        <div class="flex text-sm text-yellow-500 mb-2">★★★★★ <span class="text-muted ml-1">(${prod.reviews})</span></div>
-                        <div class="product-footer">
-                            <div>
-                                <span class="product-price">₹${prod.price}</span>
-                                <span class="text-muted text-xs">/${prod.unit}</span>
-                            </div>
-                            <button class="btn-add add-to-cart-btn" data-id="${prod.id}">+</button>
+                    <span class="cat-name-dense">${cat.name.replace('&', '<br>&')}</span>
+                </a>
+            `).join('');
+        }
+
+        // 2. Render Featured Products (Limit to 6-8)
+        const productContainer = document.getElementById('featured-products');
+        if (productContainer) {
+            // Pick a mix or specific category
+            const featured = products.slice(0, 10); 
+            
+            productContainer.innerHTML = featured.map(prod => `
+                <div class="product-card">
+                    <div class="product-img-wrapper">
+                        <img src="${prod.image}" alt="${prod.name}" class="product-img">
+                        ${prod.isVeg ? '<div class="veg-icon"></div>' : ''}
+                        ${prod.deliveryTime ? `<div class="badge-time"><span>⏱</span> ${prod.deliveryTime}</div>` : ''}
+                    </div>
+                    
+                    <h3 class="product-title" title="${prod.name}">${prod.name}</h3>
+                    <div class="product-weight">${prod.weight || prod.unit}</div>
+                    
+                    <div class="product-footer">
+                        <div class="flex flex-col">
+                            <span class="price-current">₹${prod.price}</span>
+                            ${prod.mrp > prod.price ? `<span class="price-mrp">₹${prod.mrp}</span>` : ''}
                         </div>
+                        <button class="btn-add-blinkit add-to-cart-btn" data-id="${prod.id}">ADD</button>
                     </div>
                 </div>
-            `;
-        });
+            `).join('');
+        }
     </script>
     <script type="module" src="js/main.js"></script>
 </body>
-
 </html>

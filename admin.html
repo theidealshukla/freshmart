@@ -1,210 +1,106 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard - FreshMart</title>
+    <title>Partner Dashboard - Daily FarmFresh</title>
     <link rel="stylesheet" href="css/style.css">
-    <style>
-        /* Admin Specific Styles */
-        body {
-            background-color: #f4f6f8;
-        }
-
-        .admin-layout {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            min-height: 100vh;
-        }
-
-        .sidebar {
-            background: white;
-            border-right: 1px solid var(--border);
-            padding: 1.5rem;
-            position: fixed;
-            height: 100%;
-            width: 240px;
-        }
-
-        .main-content {
-            grid-column: 2;
-            padding: 2rem;
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 0.75rem 1rem;
-            border-radius: var(--radius-md);
-            color: var(--text-muted);
-            margin-bottom: 0.5rem;
-            transition: all 0.2s;
-        }
-
-        .nav-item:hover,
-        .nav-item.active {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 1.5rem;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow-sm);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Utility Classes for Status */
-        .bg-green-100 {
-            background-color: #e8f5e9;
-            color: #2e7d32;
-        }
-
-        .bg-blue-100 {
-            background-color: #e3f2fd;
-            color: #1565c0;
-        }
-
-        .bg-red-100 {
-            background-color: #ffebee;
-            color: #c62828;
-        }
-
-        .bg-gray-100 {
-            background-color: #f5f5f5;
-            color: #616161;
-        }
-
-        /* Simple CSS Chart */
-        .chart-bar {
-            height: 8px;
-            background: #eee;
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
-        }
-
-        .chart-fill {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 1s ease-out;
-        }
-    </style>
 </head>
+<body style="background: #f4f6fb;">
 
-<body>
-    <div class="admin-layout">
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <h1 class="logo mb-8">FreshMart <span class="text-xs ml-1 text-muted">Admin</span></h1>
+    <div class="admin-wrapper">
+        
+        <aside class="admin-sidebar">
+            <div class="mb-8 px-4">
+                <a href="index.html" class="logo-text" style="font-size: 1.5rem;">daily<span class="logo-suffix">farmfresh</span></a>
+                <div class="text-xs text-muted mt-1">PARTNER PORTAL</div>
+            </div>
 
             <nav>
-                <a href="#" class="nav-item active">Dashboard</a>
-                <a href="#" class="nav-item">Products</a>
-                <a href="#" class="nav-item">Orders <span
-                        class="badge bg-red-100 text-red-800 text-xs px-2 rounded-full ml-auto">3</span></a>
-                <a href="#" class="nav-item">Customers</a>
-                <a href="#" class="nav-item">Settings</a>
+                <a href="#" class="admin-nav-link active">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="#" class="admin-nav-link">
+                    <span>📦</span> Orders <span class="ml-auto bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">5</span>
+                </a>
+                <a href="#" class="admin-nav-link">
+                    <span>🥑</span> Products
+                </a>
+                <a href="#" class="admin-nav-link">
+                    <span>👥</span> Customers
+                </a>
+                <a href="#" class="admin-nav-link">
+                    <span>⚙️</span> Settings
+                </a>
             </nav>
 
-            <div class="mt-auto pt-8 border-t" style="margin-top:auto;">
-                <a href="index.html" class="nav-item text-danger" style="color:var(--danger)">Logout</a>
+            <div style="margin-top: auto; padding: 1rem;">
+                <a href="index.html" class="text-sm text-muted hover:text-red-600">← Log Out</a>
             </div>
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
+        <main style="padding: 2rem;">
+            
             <header class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold">Dashboard Overview</h2>
-                <div class="flex items-center gap-4">
-                    <span class="text-muted text-sm">Welcome back, Admin</span>
-                    <div class="w-10 h-10 rounded-full bg-gray-300 overflow-hidden">
-                        <img src="https://ui-avatars.com/api/?name=Admin+User&background=0aad0a&color=fff" alt="Admin">
+                <div>
+                    <h1 class="text-2xl font-bold">Overview</h1>
+                    <p class="text-muted">Welcome back, Store Manager</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="btn-add-blinkit" style="background: white;">Export Data</button>
+                    <div class="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center font-bold text-white shadow-sm" style="background: var(--brand-yellow);">
+                        SM
                     </div>
                 </div>
             </header>
 
-            <!-- Stats Grid -->
-            <div class="grid"
-                style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <div class="stat-grid">
                 <div class="stat-card">
-                    <span class="stat-label">Total Sales Today</span>
-                    <span class="stat-value" id="stat-sales">$0.00</span>
-                    <div class="chart-bar">
-                        <div class="chart-fill" style="width: 70%"></div>
-                    </div>
-                    <span class="text-xs text-green-600 mt-2">↑ 12% vs yesterday</span>
+                    <span class="stat-label">Total Revenue</span>
+                    <span class="stat-value" id="stat-sales">₹0</span>
+                    <span class="stat-trend up">↑ 12% vs yesterday</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">Orders Pending</span>
+                    <span class="stat-label">Active Orders</span>
                     <span class="stat-value" id="stat-orders">0</span>
-                    <div class="chart-bar">
-                        <div class="chart-fill" style="width: 45%; background: var(--accent);"></div>
-                    </div>
-                    <span class="text-xs text-muted mt-2">5 urgent orders</span>
+                    <span class="stat-trend">Pending dispatch</span>
                 </div>
                 <div class="stat-card">
-                    <span class="stat-label">New Customers</span>
+                    <span class="stat-label">Total Customers</span>
                     <span class="stat-value" id="stat-customers">0</span>
-                    <div class="chart-bar">
-                        <div class="chart-fill" style="width: 30%; background: #9c27b0;"></div>
-                    </div>
-                    <span class="text-xs text-muted mt-2">Last 7 days</span>
+                    <span class="stat-trend up">↑ 8 New today</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Avg Delivery Time</span>
+                    <span class="stat-value">9m 30s</span>
+                    <span class="stat-trend up" style="color:var(--primary)">⚡ Excellent</span>
                 </div>
             </div>
 
-            <!-- Recent Orders Table -->
-            <div class="bg-white rounded-lg shadow-sm border p-6"
-                style="background:white; border:1px solid var(--border); border-radius:var(--radius-lg);">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-lg font-bold">Recent Orders</h3>
-                    <button class="btn btn-outline btn-sm">View All</button>
+            <div class="admin-table-container">
+                <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                    <h3 class="font-bold">Recent Orders</h3>
+                    <a href="#" class="text-sm text-primary font-bold">View All</a>
                 </div>
-                <table class="w-full text-left border-collapse" style="width:100%;">
+                <table class="admin-table">
                     <thead>
-                        <tr class="text-xs text-muted uppercase border-b">
-                            <th class="p-3">Order ID</th>
-                            <th class="p-3">Items</th>
-                            <th class="p-3">Date</th>
-                            <th class="p-3">Total</th>
-                            <th class="p-3">Status</th>
-                            <th class="p-3 text-right">Action</th>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Items</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="admin-orders-table">
-                        <!-- Injected via JS -->
-                    </tbody>
+                        </tbody>
                 </table>
             </div>
+
         </main>
     </div>
 
-    <script type="module">
-        import { initAdmin } from './js/admin.js';
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initAdmin();
-        });
-    </script>
+    <script type="module" src="js/admin.js"></script>
 </body>
-
 </html>

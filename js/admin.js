@@ -1,58 +1,63 @@
-
 import { orders } from './data.js';
 
-export function initAdmin() {
-    renderDashboardStats();
-    renderRecentOrders();
+document.addEventListener('DOMContentLoaded', () => {
+    initDashboard();
+});
+
+function initDashboard() {
+    renderStats();
+    renderOrdersTable();
 }
 
-function renderDashboardStats() {
-    // Mock Stats
+function renderStats() {
+    // Mock Statistics
     const stats = {
-        sales: 12450.00,
-        orders: 156,
-        customers: 24,
-        growth: '+12%'
+        revenue: 145000,
+        pendingOrders: 12,
+        customers: 128
     };
 
-    document.getElementById('stat-sales').textContent = `₹${stats.sales.toLocaleString('en-IN')}`;
-    document.getElementById('stat-orders').textContent = stats.orders;
-    document.getElementById('stat-customers').textContent = stats.customers;
+    // Format Currency
+    const fmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+
+    const elSales = document.getElementById('stat-sales');
+    const elOrders = document.getElementById('stat-orders');
+    const elCust = document.getElementById('stat-customers');
+
+    if(elSales) elSales.textContent = fmt.format(stats.revenue);
+    if(elOrders) elOrders.textContent = stats.pendingOrders;
+    if(elCust) elCust.textContent = stats.customers;
 }
 
-function renderRecentOrders() {
+function renderOrdersTable() {
     const tbody = document.getElementById('admin-orders-table');
     if (!tbody) return;
 
-    // Use imported orders or generate random ones if list is short
-    const displayOrders = [...orders, ...orders, ...orders].slice(0, 5); // Duplicate to fill table
+    // Use data.js orders, replicate to fill table
+    const data = [...orders, ...orders].slice(0, 6);
 
-    tbody.innerHTML = displayOrders.map(order => `
-        <tr class="border-b hover:bg-gray-50">
-            <td class="p-3 text-sm text-primary font-bold">#${order.id}</td>
-            <td class="p-3 text-sm flex items-center gap-2">
-                <img src="${order.items[0]?.image || 'https://via.placeholder.com/30'}" class="w-6 h-6 rounded-full" style="width:24px; height:24px;">
-                ${order.items[0]?.name || 'Unknown'} +${order.itemCount - 1}
+    tbody.innerHTML = data.map(order => `
+        <tr>
+            <td class="font-bold text-primary">#${order.id}</td>
+            <td>
+                <div class="flex items-center gap-2">
+                    <div style="width:24px; height:24px; background:#eee; border-radius:50%;"></div>
+                    <span>Customer ${order.id.slice(-4)}</span>
+                </div>
             </td>
-            <td class="p-3 text-sm">${order.date}</td>
-            <td class="p-3 text-sm font-bold">₹${order.total.toFixed(2)}</td>
-            <td class="p-3">
-                <span class="badge px-2 py-1 rounded text-xs font-bold ${getStatusClass(order.status)}">
+            <td>
+                <div class="text-sm text-muted">${order.items.length} Items</div>
+            </td>
+            <td class="font-bold">₹${order.total}</td>
+            <td>
+                <span class="status-badge ${order.status === 'Delivered' ? 'delivered' : 'live'}" 
+                      style="font-size:0.7rem;">
                     ${order.status}
                 </span>
             </td>
-            <td class="p-3 text-sm text-right">
-                <button class="text-xs text-primary hover:underline" style="color:var(--primary)">View</button>
+            <td>
+                <button class="text-xs border rounded px-2 py-1 hover:bg-gray-50">View</button>
             </td>
         </tr>
     `).join('');
-}
-
-function getStatusClass(status) {
-    switch (status) {
-        case 'Delivered': return 'bg-green-100 text-green-800';
-        case 'Out for Delivery': return 'bg-blue-100 text-blue-800';
-        case 'Cancelled': return 'bg-red-100 text-red-800';
-        default: return 'bg-gray-100 text-gray-800';
-    }
 }
