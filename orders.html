@@ -13,6 +13,7 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="css/style.css">
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -50,7 +51,7 @@
 </head>
 
 <body
-    class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200">
+    class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200 pb-20">
     <nav
         class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-primary/10 dark:border-primary/20">
         <div class="max-w-7xl mx-auto px-4 py-2">
@@ -78,254 +79,94 @@
     </nav>
 
     <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
-        <!-- Header Section -->
-        <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div>
-                <div class="flex items-center gap-3 mb-1">
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Order #8492-B</h1>
-                    <span
-                        class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-green-700 dark:text-green-300 border border-primary/30">
-                        In Progress
-                    </span>
-                </div>
-                <p class="text-gray-500 dark:text-gray-400">Estimated delivery by <span
-                        class="font-semibold text-gray-800 dark:text-gray-200">4:30 PM today</span></p>
-            </div>
-            <div class="flex gap-3">
-                <a href="index.html"
-                    class="flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors bg-surface-light dark:bg-surface-dark text-gray-700 dark:text-gray-200 font-medium text-sm">
-                    <span class="material-icons text-sm">home</span>
-                    Home
+        <!-- Page Title -->
+        <div class="mb-8">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">My Orders</h1>
+            <p class="text-gray-500 dark:text-gray-400 mt-1">View and track all your orders</p>
+        </div>
+
+        <!-- Order History List -->
+        <div id="order-history-container" class="space-y-4 mb-8">
+            <!-- Orders will be loaded dynamically -->
+            <div class="text-center py-12 bg-white dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-800">
+                <span class="material-symbols-outlined text-5xl text-gray-300 dark:text-gray-600 mb-4 block">shopping_bag</span>
+                <p class="text-gray-500 dark:text-gray-400">No orders yet</p>
+                <a href="category.html" class="inline-flex items-center gap-2 mt-4 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors">
+                    <span class="material-icons text-sm">shopping_cart</span>
+                    Start Shopping
                 </a>
-                <button
-                    class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark transition-colors text-white font-semibold text-sm shadow-lg shadow-primary/20">
-                    <span class="material-icons text-sm">support_agent</span>
-                    Contact Support
-                </button>
             </div>
         </div>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full">
-            <!-- Left Column: Map & Timeline (2/3 width) -->
-            <div class="lg:col-span-2 space-y-6">
-                <!-- Map Card -->
-                <div
-                    class="bg-surface-light dark:bg-surface-dark rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden relative group">
-                    <div
-                        class="absolute top-4 left-4 z-10 bg-surface-light/95 dark:bg-surface-dark/95 backdrop-blur px-4 py-2 rounded-lg shadow-md border border-gray-100 dark:border-gray-700 flex items-center gap-3">
-                        <div class="relative">
-                            <span class="material-icons text-primary animate-pulse">local_shipping</span>
-                            <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                                <span
-                                    class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
-                            </span>
-                        </div>
-                        <div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold tracking-wider">
-                                Driver Status</p>
-                            <p class="text-sm font-semibold text-gray-900 dark:text-white">Less than 10 mins away</p>
-                        </div>
+
+        <!-- Order Detail Modal/Section (Hidden by default) -->
+        <div id="order-detail-section" class="hidden">
+            <!-- Header Section -->
+            <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-1">
+                        <button id="back-to-orders" class="flex items-center gap-1 text-primary hover:underline font-medium text-sm">
+                            <span class="material-icons text-sm">arrow_back</span>
+                            Back to Orders
+                        </button>
                     </div>
-                    <!-- Map Visual Placeholder -->
-                    <div class="h-64 sm:h-80 w-full relative bg-gray-200 dark:bg-gray-900 overflow-hidden">
-                        <img alt="Map showing city streets with a route highlighted"
-                            class="w-full h-full object-cover opacity-80 dark:opacity-60 mix-blend-overlay"
-                            data-alt="Abstract map view showing city streets and delivery route" data-location="Seattle"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBh3cYndKki7qjRxGAMVW6mGjg-WOfbQVCzv4sD9GdG-7PJRGfIG3XkmJVYzPEoKMs2rf6xPltUjeQgIAplv7JkqQ0UXECpTdeGp6OKKm8R2dkthqA0KZweQ-gKBQ1eLCcQKczgcoiKRKi_YAR2ZdYbM029JJm-eEzS9QxB8g584RL0OFBzE1UEg-z8S7emOvyrl2X-BBkbTSpQ3fKwiw8s1RlgenNHLBb6w1Jhnyjhhc4oS3f22tDIcMPP-5EE29K7WJyuXN12QJs" />
-                        <!-- Simulated Map UI Elements -->
-                        <div
-                            class="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface-light/20 dark:to-surface-dark/20">
-                        </div>
-                        <!-- Path Line (Simulated) -->
-                        <svg class="absolute inset-0 w-full h-full pointer-events-none"
-                            style="filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.3));">
-                            <path class="animate-pulse" d="M 200 150 Q 400 200 600 250" fill="none" stroke="#0c831f"
-                                stroke-dasharray="10 5" stroke-linecap="round" stroke-width="6"></path>
-                            <circle cx="200" cy="150" fill="white" r="8" stroke="#0c831f" stroke-width="4"></circle>
-                            <!-- Store -->
-                            <circle cx="600" cy="250" fill="#0c831f" r="8" stroke="white" stroke-width="4"></circle>
-                            <!-- Driver -->
-                        </svg>
-                        <!-- Driver Info Overlay on Map -->
-                        <div
-                            class="absolute bottom-4 right-4 bg-surface-light dark:bg-surface-dark p-3 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 flex items-center gap-3 max-w-xs">
-                            <img alt="Delivery driver portrait"
-                                class="w-10 h-10 rounded-full object-cover border-2 border-primary"
-                                data-alt="Portrait of the delivery driver smiling"
-                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCadF5npiuiBB8kraX4fXwTMKQCAN20n3_5nbV1SS7a-0BbnkBPuvdUCo-1Yf9YXDiHepQY88fZFLFVG-tH3-u9Vf5OMA5cu-T0gvsSKuWKiVlIAdtB0RYIqQLr-y2dz1NSZBj8SkSlPL_XQpdt3hcEbnhRU4JJrq-chBD3EKHS0gHFOZ-eOc5ck8dQX-6V08gXbiRF9tUWEAHPHDTV1i6Rw7JIRAjRxrIfH74RasNdGBsoci8GGZXm5leUE2q8yEqO-sOf4qm0ymc" />
-                            <div>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Michael R.</p>
-                                <div class="flex items-center text-xs text-yellow-500">
-                                    <span class="material-icons text-[14px]">star</span>
-                                    <span class="ml-1 text-gray-600 dark:text-gray-400 font-medium">4.9 (120
-                                        deliveries)</span>
-                                </div>
-                            </div>
-                            <button
-                                class="ml-auto bg-gray-100 dark:bg-gray-800 p-2 rounded-full text-primary hover:bg-primary/20 transition-colors">
-                                <span class="material-icons text-xl">phone</span>
-                            </button>
-                        </div>
+                    <div class="flex items-center gap-3 mt-2">
+                        <h2 id="detail-order-id" class="text-2xl font-bold text-gray-900 dark:text-white">Order #8492-B</h2>
+                        <span id="detail-order-status" class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-green-700 dark:text-green-300 border border-primary/30">
+                            Delivered
+                        </span>
                     </div>
+                    <p id="detail-order-date" class="text-gray-500 dark:text-gray-400 mt-1">Ordered on January 15, 2026</p>
                 </div>
-                <!-- Timeline Card -->
-                <div
-                    class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
-                    <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-6">Tracking History</h2>
-                    <div class="relative pl-4">
-                        <!-- Connecting Line -->
-                        <div
-                            class="absolute top-2 left-[27px] w-0.5 h-[calc(100%-24px)] bg-gray-200 dark:bg-gray-700 -z-0">
-                        </div>
-                        <div
-                            class="absolute top-2 left-[27px] w-0.5 h-[60%] bg-primary -z-0 transition-all duration-1000">
-                        </div>
-                        <!-- Step 1: Placed -->
-                        <div class="relative flex items-start gap-6 mb-8 z-10 group">
-                            <div
-                                class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg shadow-primary/30 ring-4 ring-surface-light dark:ring-surface-dark">
-                                <span class="material-icons text-sm font-bold">check</span>
-                            </div>
-                            <div class="pt-1">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-base">Order Placed</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">We have received your order.</p>
-                                <span class="text-xs text-gray-400 mt-1 block">10:23 AM</span>
-                            </div>
-                        </div>
-                        <!-- Step 2: Packed -->
-                        <div class="relative flex items-start gap-6 mb-8 z-10 group">
-                            <div
-                                class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center shadow-lg shadow-primary/30 ring-4 ring-surface-light dark:ring-surface-dark">
-                                <span class="material-icons text-sm font-bold">check</span>
-                            </div>
-                            <div class="pt-1">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-base">Order Packed</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Items have been gathered and packed.
-                                </p>
-                                <span class="text-xs text-gray-400 mt-1 block">10:45 AM</span>
-                            </div>
-                        </div>
-                        <!-- Step 3: Out for Delivery (Active) -->
-                        <div class="relative flex items-start gap-6 mb-8 z-10 group">
-                            <div
-                                class="bg-surface-light dark:bg-surface-dark border-2 border-primary text-primary w-8 h-8 rounded-full flex items-center justify-center ring-4 ring-surface-light dark:ring-surface-dark relative">
-                                <div class="w-3 h-3 bg-primary rounded-full animate-pulse"></div>
-                            </div>
-                            <div class="pt-1">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-base flex items-center gap-2">
-                                    Out for Delivery
-                                    <span
-                                        class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-primary/20 text-green-800 dark:text-green-200">
-                                        Current Stage
-                                    </span>
-                                </h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Driver is on the way to your
-                                    location.</p>
-                                <span class="text-xs text-gray-400 mt-1 block">11:15 AM</span>
-                            </div>
-                        </div>
-                        <!-- Step 4: Delivered -->
-                        <div class="relative flex items-start gap-6 z-10 group opacity-50">
-                            <div
-                                class="bg-gray-200 dark:bg-gray-700 text-gray-400 w-8 h-8 rounded-full flex items-center justify-center ring-4 ring-surface-light dark:ring-surface-dark">
-                                <span class="material-icons text-sm">home</span>
-                            </div>
-                            <div class="pt-1">
-                                <h3 class="font-bold text-gray-900 dark:text-white text-base">Delivered</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">Package delivered to your doorstep.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="flex gap-3">
+                    <button
+                        class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary-dark transition-colors text-white font-semibold text-sm shadow-lg shadow-primary/20">
+                        <span class="material-icons text-sm">refresh</span>
+                        Reorder
+                    </button>
                 </div>
             </div>
-            <!-- Right Column: Order Details (1/3 width) -->
-            <div class="lg:col-span-1 space-y-6">
-                <!-- Delivery Address Card -->
-                <div
-                    class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
-                    <h2 class="text-xs uppercase tracking-wider font-bold text-gray-500 dark:text-gray-400 mb-4">
-                        Delivery Address</h2>
-                    <div class="flex gap-4">
-                        <div class="bg-primary/10 p-3 rounded-lg h-fit text-primary">
-                            <span class="material-icons">location_on</span>
-                        </div>
-                        <div>
-                            <h3 class="font-bold text-gray-900 dark:text-white text-base mb-1">Home</h3>
-                            <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
-                                402, Green Valley Apartments,<br />
-                                Near City Park,<br />
-                                Mumbai, MH - 400001
-                            </p>
-                            <p class="text-xs text-gray-400 mt-2">Note: Please leave at the front desk.</p>
-                        </div>
+
+            <!-- Order Details Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Order Items -->
+                <div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Order Items</h3>
+                    <div id="detail-items-list" class="space-y-4">
+                        <!-- Items loaded dynamically -->
                     </div>
                 </div>
-                <!-- Order Summary Card -->
-                <div
-                    class="bg-surface-light dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col h-fit">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-lg font-bold text-gray-900 dark:text-white">Order Summary</h2>
-                        <span class="text-sm text-gray-500 dark:text-gray-400">3 Items</span>
-                    </div>
-                    <!-- Items List (Mocked to match style) -->
-                    <div class="space-y-4 mb-6">
-                        <!-- Item 1 -->
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="h-16 w-16 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 flex items-center justify-center border border-gray-100 dark:border-gray-700">
-                                <img alt="Bottle of fresh milk"
-                                    class="h-full w-full object-contain mix-blend-multiply dark:mix-blend-normal"
-                                    data-alt="Carton of milk"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzR1OfBBh2ZBN0fxUNpgkJXRl2nmv_kE5ktg2m-GS676yGDVbdqfQKiPfqQvgwWEPXjc80NZCXHqx0C13Tji6B8SjVIIxA58D4BBcOAr6k5MRlgE_mhPfR3yfw-GaUNY6O4C_iR9B05P8Qk-ChScw5VoejF_eu0lpYH2D_Pb40dg3uPIRbBhn48zgSb-I1I60tXVy-Zm6WIQUA8CVownNsIPdGdPXs8mlH0j-ghxW8rm8usm_0St9X6_Az_A0KU034CQzwpralrCk" />
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-gray-900 dark:text-white text-sm">Amul Taaza Fresh Milk</h4>
-                                <p class="text-xs text-gray-500">500ml</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-gray-900 dark:text-white text-sm">₹27.00</p>
-                                <p class="text-xs text-gray-500">Qty: 2</p>
-                            </div>
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="flex gap-4 items-center">
-                            <div
-                                class="h-16 w-16 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 flex items-center justify-center border border-gray-100 dark:border-gray-700">
-                                <img alt="Sourdough Bread"
-                                    class="h-full w-full object-contain mix-blend-multiply dark:mix-blend-normal"
-                                    data-alt="Fresh sourdough bread loaf"
-                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1S-20_XgvYXetBV37y5RVZtghngNgwkFJK4E9fR-dF6w1hU01Xt9CkdYnnl6F3LvA0OavO0L8KpnY91KWjZ9bXwxqfJbFqLfSHG853dtQYqnxE7gOVp_sYsgpL75HFzaKlrsb_ToqjxZQr20Dw9pZopyAFnEOUd43Cldu7drLCsjpUANbe4q7ow2GRWa8Z3DF3ET8sOt_M_vV5v2njdZg_oqzqyR858LcYFRW8lwyfIReMvq779mdHcdEqpBopqFOmGwUL5BIv2s" />
-                            </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-gray-900 dark:text-white text-sm">Modern White Bread</h4>
-                                <p class="text-xs text-gray-500">400g</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="font-semibold text-gray-900 dark:text-white text-sm">₹45.00</p>
-                                <p class="text-xs text-gray-500">Qty: 1</p>
-                            </div>
-                        </div>
 
+                <!-- Order Summary -->
+                <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Order Summary</h3>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Items Total</span>
+                            <span id="detail-subtotal" class="font-medium">₹0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Delivery Fee</span>
+                            <span class="text-primary font-medium">FREE</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">Taxes & Charges</span>
+                            <span id="detail-charges" class="font-medium">₹63.00</span>
+                        </div>
+                        <div class="border-t border-dashed border-gray-200 dark:border-gray-700 my-3"></div>
+                        <div class="flex justify-between text-lg font-bold text-gray-900 dark:text-white">
+                            <span>Total</span>
+                            <span id="detail-total" class="text-primary">₹0.00</span>
+                        </div>
                     </div>
-                    <div class="border-t border-gray-100 dark:border-gray-700 pt-4 mt-auto">
-                        <div class="flex justify-between mb-2">
-                            <span class="text-sm text-gray-500">Subtotal</span>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">₹99.00</span>
-                        </div>
-                        <div class="flex justify-between mb-2">
-                            <span class="text-sm text-gray-500">Delivery Fee</span>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">₹15.00</span>
-                        </div>
-                        <div class="flex justify-between mb-4">
-                            <span class="text-sm text-gray-500">Tax</span>
-                            <span class="text-sm font-medium text-gray-900 dark:text-white">₹18.00</span>
-                        </div>
-                        <div
-                            class="flex justify-between items-center pt-4 border-t border-dashed border-gray-200 dark:border-gray-700">
-                            <span class="text-base font-bold text-gray-900 dark:text-white">Total</span>
-                            <span class="text-xl font-bold text-primary">₹132.00</span>
-                        </div>
+
+                    <div class="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Payment Method</h4>
+                        <p id="detail-payment-method" class="font-medium text-gray-900 dark:text-white">UPI</p>
+                    </div>
+
+                    <div class="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Delivery Address</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">B-402, Green Valley Apartments<br>HSR Layout, Bangalore - 560102</p>
                     </div>
                 </div>
             </div>
@@ -379,48 +220,191 @@
                 });
             }
 
-            // Load order data from localStorage
-            const orderDataStr = localStorage.getItem('last_order');
-            if (orderDataStr) {
-                const orderData = JSON.parse(orderDataStr);
-                
-                // Update order ID and status in header
-                const orderHeader = document.querySelector('h1.text-3xl');
-                if (orderHeader) orderHeader.textContent = 'Order #' + orderData.orderId;
-                
-                // Update order summary section
-                const summaryItemsContainer = document.querySelector('.lg\\:col-span-1 .space-y-4.mb-6');
-                if (summaryItemsContainer && orderData.items) {
-                    summaryItemsContainer.innerHTML = orderData.items.map(item => `
-                        <div class="flex gap-4 items-center">
-                            <div class="h-16 w-16 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 flex items-center justify-center border border-gray-100 dark:border-gray-700">
-                                <img alt="${item.name}" class="h-full w-full object-contain mix-blend-multiply dark:mix-blend-normal" src="${item.image || ''}"/>
+            // Order History Functions
+            const orderHistoryContainer = document.getElementById('order-history-container');
+            const orderDetailSection = document.getElementById('order-detail-section');
+            const backToOrdersBtn = document.getElementById('back-to-orders');
+
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            }
+
+            function formatTime(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleTimeString('en-IN', {
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            function getPaymentMethodLabel(method) {
+                const labels = {
+                    'upi': 'UPI',
+                    'card': 'Credit/Debit Card',
+                    'cod': 'Cash on Delivery',
+                    'netbanking': 'Net Banking'
+                };
+                return labels[method] || method || 'UPI';
+            }
+
+            function showOrderDetail(order) {
+                orderHistoryContainer.classList.add('hidden');
+                orderDetailSection.classList.remove('hidden');
+
+                document.getElementById('detail-order-id').textContent = 'Order #' + order.orderId;
+                document.getElementById('detail-order-date').textContent = 'Ordered on ' + formatDate(order.orderDate) + ' at ' + formatTime(order.orderDate);
+                document.getElementById('detail-subtotal').textContent = '₹' + (order.subtotal?.toFixed(2) || '0.00');
+                document.getElementById('detail-charges').textContent = '₹' + (order.charges?.toFixed(2) || '63.00');
+                document.getElementById('detail-total').textContent = '₹' + (order.total?.toFixed(2) || '0.00');
+                document.getElementById('detail-payment-method').textContent = getPaymentMethodLabel(order.paymentMethod);
+
+                const itemsList = document.getElementById('detail-items-list');
+                if (order.items && order.items.length > 0) {
+                    itemsList.innerHTML = order.items.map(item => `
+                        <div class="flex gap-4 items-center py-3 border-b border-gray-100 dark:border-gray-800 last:border-0">
+                            <div class="h-16 w-16 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 flex items-center justify-center border border-gray-100 dark:border-gray-700 flex-shrink-0">
+                                <img alt="${item.name}" class="h-full w-full object-contain" src="${item.image || ''}"/>
                             </div>
-                            <div class="flex-1">
-                                <h4 class="font-medium text-gray-900 dark:text-white text-sm">${item.name}</h4>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="font-medium text-gray-900 dark:text-white text-sm truncate">${item.name}</h4>
                                 <p class="text-xs text-gray-500">${item.unit || item.weight || ''}</p>
+                                <p class="text-xs text-gray-400">Qty: ${item.qty}</p>
                             </div>
-                            <div class="text-right">
+                            <div class="text-right flex-shrink-0">
                                 <p class="font-semibold text-gray-900 dark:text-white text-sm">₹${(item.price * item.qty).toFixed(2)}</p>
-                                <p class="text-xs text-gray-500">Qty: ${item.qty}</p>
+                                <p class="text-xs text-gray-500">₹${item.price} each</p>
                             </div>
                         </div>
                     `).join('');
                 }
-                
-                // Update item count
-                const itemCountSpan = document.querySelector('.lg\\:col-span-1 .flex.justify-between.items-center.mb-6 span:last-child');
-                if (itemCountSpan) itemCountSpan.textContent = orderData.itemCount + ' Items';
+            }
 
-                // Update price summary
-                const subtotalEl = document.querySelector('.lg\\:col-span-1 .border-t .flex.justify-between.mb-2:first-child span:last-child');
-                const totalEl = document.querySelector('.lg\\:col-span-1 .text-xl.font-bold.text-primary');
-                
-                if (subtotalEl) subtotalEl.textContent = '₹' + orderData.subtotal.toFixed(2);
-                if (totalEl) totalEl.textContent = '₹' + orderData.total.toFixed(2);
+            function showOrderList() {
+                orderDetailSection.classList.add('hidden');
+                orderHistoryContainer.classList.remove('hidden');
+            }
+
+            // Back button handler
+            if (backToOrdersBtn) {
+                backToOrdersBtn.addEventListener('click', showOrderList);
+            }
+
+            // Load order history
+            let orderHistory = [];
+            try {
+                const historyStr = localStorage.getItem('order_history');
+                if (historyStr) {
+                    orderHistory = JSON.parse(historyStr);
+                }
+            } catch (e) {
+                console.error('Error loading order history:', e);
+            }
+
+            if (orderHistory.length > 0) {
+                orderHistoryContainer.innerHTML = orderHistory.map((order, index) => `
+                    <div class="order-card bg-white dark:bg-surface-dark rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors cursor-pointer" data-order-index="${index}">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                                    <span class="material-symbols-outlined">receipt_long</span>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-2 flex-wrap">
+                                        <h3 class="font-bold text-gray-900 dark:text-white">Order #${order.orderId}</h3>
+                                        <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+                                            Delivered
+                                        </span>
+                                    </div>
+                                    <p class="text-sm text-gray-500 mt-1">${formatDate(order.orderDate)} at ${formatTime(order.orderDate)}</p>
+                                    <p class="text-xs text-gray-400 mt-1">${order.itemCount || order.items?.length || 0} items</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 sm:flex-col sm:items-end">
+                                <p class="text-lg font-bold text-primary">₹${order.total?.toFixed(2) || '0.00'}</p>
+                                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                            </div>
+                        </div>
+                        ${order.items && order.items.length > 0 ? `
+                        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
+                            <div class="flex items-center gap-2 overflow-x-auto pb-2">
+                                ${order.items.slice(0, 4).map(item => `
+                                    <div class="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-800 p-1 flex-shrink-0 border border-gray-100 dark:border-gray-700">
+                                        <img src="${item.image || ''}" alt="${item.name}" class="w-full h-full object-contain">
+                                    </div>
+                                `).join('')}
+                                ${order.items.length > 4 ? `
+                                    <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0 text-xs font-bold text-gray-500">
+                                        +${order.items.length - 4}
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        ` : ''}
+                    </div>
+                `).join('');
+
+                // Add click handlers to order cards
+                document.querySelectorAll('.order-card').forEach(card => {
+                    card.addEventListener('click', () => {
+                        const index = parseInt(card.dataset.orderIndex);
+                        showOrderDetail(orderHistory[index]);
+                    });
+                });
             }
         })();
     </script>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="nav-item">
+            <svg viewBox="0 0 24 24">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+            </svg>
+            <span>Home</span>
+        </a>
+        <a href="category.html" class="nav-item">
+            <svg viewBox="0 0 24 24">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span>Search</span>
+        </a>
+        <a href="cart.html" class="nav-item relative">
+            <div style="position: relative;">
+                <svg viewBox="0 0 24 24">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span id="nav-badge" class="hidden"
+                    style="position: absolute; top: -5px; right: -8px; background: var(--primary); color: white; font-size: 0.6rem; padding: 2px 4px; border-radius: 10px; min-width: 16px; text-align: center;">0</span>
+            </div>
+            <span>Cart</span>
+        </a>
+        <a href="orders.html" class="nav-item active">
+            <svg viewBox="0 0 24 24">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Orders</span>
+        </a>
+        <a href="profile.html" class="nav-item">
+            <svg viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>Profile</span>
+        </a>
+    </nav>
 </body>
 
 </html>
