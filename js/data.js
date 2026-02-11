@@ -1,12 +1,19 @@
 
 export const categories = [
-    { id: 'fruits-veg', name: 'Fruits & Vegetables', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=200' },
-    { id: 'dairy-bread', name: 'Dairy, Bread & Eggs', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=200' },
-    { id: 'staples', name: 'Atta, Rice, Dal & Oil', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=200' },
-    { id: 'snacks-beverages', name: 'Snacks & Beverages', image: 'https://images.unsplash.com/photo-1621939514649-28b12e816a85?auto=format&fit=crop&q=80&w=200' },
-    { id: 'instant-frozen', name: 'Instant & Frozen Food', image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&q=80&w=200' },
+    { id: 'fruits-vegetables', name: 'Fruits & Vegetables', image: 'https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=200' },
+    { id: 'dairy-bread-eggs', name: 'Dairy, Bread & Eggs', image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=200' },
+    { id: 'atta-rice-staples', name: 'Atta, Rice & Staples', image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=200' },
+    { id: 'oil-ghee-masala', name: 'Oil, Ghee & Masala', image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=200' },
+    { id: 'snacks-packaged-food', name: 'Snacks & Packaged Food', image: 'https://images.unsplash.com/photo-1621939514649-28b12e816a85?auto=format&fit=crop&q=80&w=200' },
+    { id: 'beverages', name: 'Beverages (Tea, Coffee, Soft Drinks, Juices)', image: 'https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&q=80&w=200' },
+    { id: 'instant-ready-to-eat', name: 'Instant & Ready-to-Eat', image: 'https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&q=80&w=200' },
+    { id: 'frozen-food', name: 'Frozen Food', image: 'https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?auto=format&fit=crop&q=80&w=200' },
+    { id: 'bakery-sweets', name: 'Bakery & Sweets', image: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=200' },
+    { id: 'personal-care', name: 'Personal Care', image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=200' },
     { id: 'household-cleaning', name: 'Household & Cleaning', image: 'https://images.unsplash.com/photo-1585830812406-894101e1493b?auto=format&fit=crop&q=80&w=200' },
-    { id: 'personal-care', name: 'Personal Care', image: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=200' }
+    { id: 'baby-care', name: 'Baby Care', image: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&q=80&w=200' },
+    { id: 'pet-care', name: 'Pet Care', image: 'https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=200' },
+    { id: 'health-wellness', name: 'Health & Wellness', image: 'https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&q=80&w=200' }
 ];
 
 export const products = [

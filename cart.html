@@ -243,7 +243,7 @@
                 itemsContainer.innerHTML = items.map(item => `
             <div class="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div class="flex items-center gap-4 w-full sm:w-auto">
-                    <div class="h-16 w-16 flex-shrink-0 rounded-xl bg-cover bg-center bg-gray-100" style="background-image: url('${item.image || ''}');"></div>
+                    <div class="h-16 w-16 flex-shrink-0 rounded-xl bg-cover bg-center bg-gray-100" style="background-image: url('${item.image_url || item.image || ''}');"></div>
                     <div class="flex-grow">
                         <h4 class="font-bold text-sm sm:text-base line-clamp-1">${item.name}</h4>
                         <p class="text-xs opacity-50 mb-1">${item.unit || item.weight || 'Unit'}</p>

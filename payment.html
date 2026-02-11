@@ -284,7 +284,7 @@
                 itemsPreview.innerHTML = items.map(item => `
                 <div class="flex items-start gap-4 mb-4 last:mb-0">
                     <div class="w-12 h-12 bg-background-light dark:bg-background-dark rounded-lg overflow-hidden flex-shrink-0 relative">
-                        <img src="${item.image || ''}" alt="${item.name}" class="w-full h-full object-cover">
+                        <img src="${item.image_url || item.image || ''}" alt="${item.name}" class="w-full h-full object-cover">
                         <span class="absolute bottom-0 right-0 bg-primary text-white text-[10px] font-bold px-1 py-0.5 rounded-tl-md">x${item.qty}</span>
                     </div>
                     <div>

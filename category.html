@@ -13,6 +13,11 @@
         rel="stylesheet" />
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="stylesheet" href="css/style.css"> <!-- Linked for Toast and global styles -->
+    
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="js/supabase.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -118,66 +123,111 @@
     <div class="flex-grow max-w-[1440px] mx-auto w-full flex flex-col md:flex-row items-start gap-4 p-4 lg:p-6">
         <aside
             class="w-64 lg:w-72 bg-white rounded-xl shadow-card h-[calc(100vh-8rem)] sticky top-24 overflow-y-auto custom-scrollbar hidden md:flex flex-col">
-            <nav class="py-2">
-                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-primary bg-primary-light group transition-colors active"
-                    href="#">
-                    <div
-                        class="w-10 h-10 rounded-full bg-white p-1 shadow-sm overflow-hidden flex items-center justify-center">
-                        <img alt="Category" class="w-8 h-8 object-contain"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9d6QWtV4fuhSBCUpolfgdzQf0yUUl09RnQjpMyaoDtzRYg1T9s7G4pnbc3FihezGOCqTy4EhS9fOTMOsUL-VFIBPcq7n3ly49A7rwRfhudIBiK9vu7K1KeeHms6KJetJSsDb24FBzXMzzVlIap_dMQhnQaUpURQiKctpTUWfyOPbzz4KrPFLIm-lppehA2-CHoPkZb07Bw_-zpytJXZIRe9Y3uiZXWRRHN1nirBNC45MKT7gRO1VKfDwcU4vTjBVJQ5SMPGPkvbs" />
+            <nav id="category-nav" class="py-2">
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Fruits %26 Vegetables" data-cat="Fruits & Vegetables">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Fruits & Vegetables" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1610832958506-aa56368176cf?auto=format&fit=crop&q=80&w=80" />
                     </div>
-                    <div class="flex flex-col">
-                        <span class="text-sm font-bold text-gray-900">Snacks &amp; Drinks</span>
-                        <span class="text-[10px] text-gray-500 font-medium">Chips, Sodas, Juices</span>
-                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Fruits &amp; Vegetables</span>
                 </a>
-                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
-                    href="#">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
-                        <img alt="Category" class="w-8 h-8 object-contain"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXLaZLLh2yiRlMlQEnEO1a5DTbIi8p5hAvkcYXjxSOEpZhg1VivE8aapTn8XqeI3CJE_TyllqtzkqE6SosuVuqYI03JY2ttuCoXqvIVlo7UdSENq5p-V04aR5DUshLzcCjAdCaX0y-vKkqCDNtCm9qMVpgsuO-TcLqY1MZaQeJNYytIFpc9D9690II4WHgVOU4OdAxJY-x0schyqPYSy22FA-GRVuM3V_W2xw91HA6ESg3bJ67dpUe1BSd_YOCp1sonR0ufpnvE" />
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Dairy%2C%20Bread%20%26%20Eggs" data-cat="Dairy, Bread & Eggs">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Dairy, Bread & Eggs" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&q=80&w=80" />
                     </div>
-                    <span
-                        class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Vegetables
-                        &amp; Fruits</span>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Dairy, Bread &amp; Eggs</span>
                 </a>
-                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
-                    href="#">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
-                        <img alt="Category" class="w-8 h-8 object-contain"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcBGbLgVCeDOaiBVYJLwWRD5WBbU1LmVv0cjkabfXjKSlWoK-2Vx5LRDBjx1tfGpFIEnqX6y64sjXHKGNSgW_-2ROVNWWxn-melB5fKf_8ymPJf10ekK3pbyjJdK1wMnZ0yDqtZHfrq3Ci8gKm6y1GUqz70r0CEySnsmv1Mza6q2XFd_EXYokWSu8__w5burpHoPIXS26e4ZSPTsbT1MWcxQwkGfZYc5fqm6l9-uGUxnV3p6s1ThC5NMml8tMxt5v2dD4naQJE1KQ" />
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Atta%2C%20Rice%20%26%20Staples" data-cat="Atta, Rice & Staples">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Atta, Rice & Staples" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&q=80&w=80" />
                     </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Dairy,
-                        Bread &amp; Eggs</span>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Atta, Rice &amp; Staples</span>
                 </a>
-                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
-                    href="#">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
-                        <img alt="Category" class="w-8 h-8 object-contain"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9GPsYGyzKnKe9gK47QG_bTtGSH7_wW5kGMg4WFI6WRoXdwV7TmE6VZtFgaVzgrYi86rPuke3Eez8NC3MbsdCQWUZW9eVgeuOmIA1N_X7qtfxEe5ZmxV3zcEtFCSn9NNZ_c6i0MxxUludwIfhLA7TKz0QlulSNunSFcDUoGpmffU0uUJuJzsmDCZuxuB8_KMtKqCTqowiVTv_mm1iK3F1Fr6lfzif0EhCo-Pa8yl5MvFnirtk8QZLCZ9pdzeevKPmSP_XZkrt8E0U" />
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Oil%2C%20Ghee%20%26%20Masala" data-cat="Oil, Ghee & Masala">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Oil, Ghee & Masala" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=80" />
                     </div>
-                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Cold
-                        Drinks &amp; Juices</span>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Oil, Ghee &amp; Masala</span>
                 </a>
-                <a class="flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
-                    href="#">
-                    <div
-                        class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
-                        <img alt="Category" class="w-8 h-8 object-contain"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8isHRW0Kh43pWlroZwFKDkzZldlroaplISsk2vgQ8v7E3n27AuC5MR9kYZEwlMQD613gau1fxS2vVroqS9ePLbvtF86IkryJVJYH5K9RO8TZi8MCaFdaToi4NrJyQ-r3Ezc2iwH5k4W4DoOxX5cPcBZeOEsH2jRwLwm6oVlUCfT69pk9n0gd_VwzbSMGCX0H1wRw9kT4bFIUrhQfZS-Kv9nO0c2P7CTrB6vZXkRrkFqHRrvQPm86zcXcj-CqNgkDqZXFytwZUntU" />
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Snacks%20%26%20Packaged%20Food" data-cat="Snacks & Packaged Food">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Snacks & Packaged Food" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1621939514649-28b12e816a85?auto=format&fit=crop&q=80&w=80" />
                     </div>
-                    <span
-                        class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Munchies</span>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Snacks &amp; Packaged Food</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Beverages%20(Tea%2C%20Coffee%2C%20Soft%20Drinks%2C%20Juices)" data-cat="Beverages (Tea, Coffee, Soft Drinks, Juices)">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Beverages" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1544145945-f90425340c7e?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Beverages</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Instant%20%26%20Ready-to-Eat" data-cat="Instant & Ready-to-Eat">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Instant & Ready-to-Eat" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1585238342024-78d387f4a707?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Instant &amp; Ready-to-Eat</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Frozen%20Food" data-cat="Frozen Food">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Frozen Food" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1584568694244-14fbdf83bd30?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Frozen Food</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Bakery%20%26%20Sweets" data-cat="Bakery & Sweets">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Bakery & Sweets" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Bakery &amp; Sweets</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Personal%20Care" data-cat="Personal Care">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Personal Care" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Personal Care</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Household%20%26%20Cleaning" data-cat="Household & Cleaning">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Household & Cleaning" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1585830812406-894101e1493b?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Household &amp; Cleaning</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Baby%20Care" data-cat="Baby Care">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Baby Care" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Baby Care</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Pet%20Care" data-cat="Pet Care">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Pet Care" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Pet Care</span>
+                </a>
+                <a class="category-link flex items-center gap-4 px-4 py-3 border-l-4 border-transparent hover:bg-gray-50 group transition-colors"
+                    href="category.html?cat=Health%20%26%20Wellness" data-cat="Health & Wellness">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 p-1 overflow-hidden flex items-center justify-center group-hover:bg-white group-hover:shadow-sm transition-all">
+                        <img alt="Health & Wellness" class="w-8 h-8 object-contain" src="https://images.unsplash.com/photo-1505576399279-565b52d4ac71?auto=format&fit=crop&q=80&w=80" />
+                    </div>
+                    <span class="text-sm font-medium text-gray-600 group-hover:text-primary transition-colors">Health &amp; Wellness</span>
                 </a>
             </nav>
         </aside>
         <main class="flex-1 bg-white rounded-xl shadow-card min-h-[calc(100vh-8rem)]">
             <div
                 class="sticky top-16 bg-white z-40 border-b border-border px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-t-xl">
-                <h2 class="text-lg sm:text-xl font-bold text-gray-800">Buy Snacks &amp; Drinks Online</h2>
+                <h2 id="category-title" class="text-lg sm:text-xl font-bold text-gray-800">All Products</h2>
                 <div class="flex items-center gap-2 flex-shrink-0">
                     <span class="text-xs text-gray-500 uppercase font-bold tracking-wide whitespace-nowrap">Sort By</span>
                     <select
@@ -188,215 +238,8 @@
                     </select>
                 </div>
             </div>
-            <div class="p-5 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 pb-24">
-                <!-- Product 101 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img alt="Orange Fizz"
-                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9d6QWtV4fuhSBCUpolfgdzQf0yUUl09RnQjpMyaoDtzRYg1T9s7G4pnbc3FihezGOCqTy4EhS9fOTMOsUL-VFIBPcq7n3ly49A7rwRfhudIBiK9vu7K1KeeHms6KJetJSsDb24FBzXMzzVlIap_dMQhnQaUpURQiKctpTUWfyOPbzz4KrPFLIm-lppehA2-CHoPkZb07Bw_-zpytJXZIRe9Y3uiZXWRRHN1nirBNC45MKT7gRO1VKfDwcU4vTjBVJQ5SMPGPkvbs" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">10 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Orange Fizz
-                            Sparkling Soda</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">2L Bottle</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-xs text-gray-400 line-through mb-0.5">₹185</span>
-                            <span class="text-sm font-bold text-gray-900">₹155</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="101">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 102 (Chips) -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img alt="Classic Salted"
-                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFBXLaZLLh2yiRlMlQEnEO1a5DTbIi8p5hAvkcYXjxSOEpZhg1VivE8aapTn8XqeI3CJE_TyllqtzkqE6SosuVuqYI03JY2ttuCoXqvIVlo7UdSENq5p-V04aR5DUshLzcCjAdCaX0y-vKkqCDNtCm9qMVpgsuO-TcLqY1MZaQeJNYytIFpc9D9690II4WHgVOU4OdAxJY-x0schyqPYSy22FA-GRVuM3V_W2xw91HA6ESg3bJ67dpUe1BSd_YOCp1sonR0ufpnvE" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">8 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Classic
-                            Salted Potato Chips</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">250g Pack</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-sm font-bold text-gray-900">₹95</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="102">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 103 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img alt="Apple Juice"
-                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9GPsYGyzKnKe9gK47QG_bTtGSH7_wW5kGMg4WFI6WRoXdwV7TmE6VZtFgaVzgrYi86rPuke3Eez8NC3MbsdCQWUZW9eVgeuOmIA1N_X7qtfxEe5ZmxV3zcEtFCSn9NNZ_c6i0MxxUludwIfhLA7TKz0QlulSNunSFcDUoGpmffU0uUJuJzsmDCZuxuB8_KMtKqCTqowiVTv_mm1iK3F1Fr6lfzif0EhCo-Pa8yl5MvFnirtk8QZLCZ9pdzeevKPmSP_XZkrt8E0U" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">12 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Pure Organic
-                            Apple Juice</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">1L Carton</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-sm font-bold text-gray-900">₹345</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="103">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 104 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img alt="Dark Chocolate"
-                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcBGbLgVCeDOaiBVYJLwWRD5WBbU1LmVv0cjkabfXjKSlWoK-2Vx5LRDBjx1tfGpFIEnqX6y64sjXHKGNSgW_-2ROVNWWxn-melB5fKf_8ymPJf10ekK3pbyjJdK1wMnZ0yDqtZHfrq3Ci8gKm6y1GUqz70r0CEySnsmv1Mza6q2XFd_EXYokWSu8__w5burpHoPIXS26e4ZSPTsbT1MWcxQwkGfZYc5fqm6l9-uGUxnV3p6s1ThC5NMml8tMxt5v2dD4naQJE1KQ" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">9 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Premium Dark
-                            Chocolate 70%</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">100g Bar</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-sm font-bold text-gray-900">₹249</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="104">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 105 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img alt="Nachos"
-                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8isHRW0Kh43pWlroZwFKDkzZldlroaplISsk2vgQ8v7E3n27AuC5MR9kYZEwlMQD613gau1fxS2vVroqS9ePLbvtF86IkryJVJYH5K9RO8TZi8MCaFdaToi4NrJyQ-r3Ezc2iwH5k4W4DoOxX5cPcBZeOEsH2jRwLwm6oVlUCfT69pk9n0gd_VwzbSMGCX0H1wRw9kT4bFIUrhQfZS-Kv9nO0c2P7CTrB6vZXkRrkFqHRrvQPm86zcXcj-CqNgkDqZXFytwZUntU" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">11 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Cheesy Spicy
-                            Nachos</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">150g Pack</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-sm font-bold text-gray-900">₹120</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="105">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 106 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img alt="Cola"
-                            class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCjUWVOhzis9y2vDM4sJiFh_1hv2WZ5tCbcIacNG2zm4QXOOOyWPJN8vvzlhXXHinGoTMhXDLnDaIaWGMc6SaBK9Lye3kr3S1HvysAYxH7N23WSFrO4fc5_yK7uCvZ23vO6puYuadLRW36Mi5ZQGpmiiAfYGnSQZsNP0Unct8x3I_ua-jWDTCiWDK4P06Lwe14yzas5svbfKVkYBdexDzLIhZkuITozQH-rLUrsGiaIKdUu65R6UiuT_TpRhgxkSIjFAoV5_CnzCvQ" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">7 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Refreshing
-                            Cola Soda</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">330ml Can</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-xs text-gray-400 line-through mb-0.5">₹45</span>
-                            <span class="text-sm font-bold text-gray-900">₹40</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="106">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 107 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDO1ClQOPEiI-kA-1Z9sTwhwr3IlM499FFirA5nLS50Ml6ehyHvjWMaxwgkpJPyIetIyW4iiK1LUbaGq00F2FkL15JRtchUHwYNbTgo_aJNVO-MPxyhw48guL-1yeoVlLM64qkEnSp8jGvgb4q0M5yhCELQcZ6tqvJ6Tf905dGbL6c1hEa0n7R4FrTQDGYVqBsO_h84ilWeTIWlu6k213pgJTYIOWFwD8kml9w5fQl3U925_J6Tht4gs4YJxZp-F9_XZcUnMSY0GZY" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">10 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Sparkling
-                            Mineral Water</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">1L Bottle</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-sm font-bold text-gray-900">₹85</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="107">ADD</button>
-                    </div>
-                </div>
-                <!-- Product 108 -->
-                <div
-                    class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-                    <div
-                        class="relative aspect-square mb-3 bg-white rounded-lg flex items-center justify-center overflow-hidden">
-                        <img class="w-4/5 h-4/5 object-contain group-hover:scale-110 transition-transform duration-300"
-                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuDGMhBKAlFPcuoovxxs0tyGwzUeMX-tNRUFhuOBirWKCgHwgs5hzYSbhmkOh_dRWhkbR6Nu-8lxTknUkXQ396MnbULhWBi6QqdMQH6zuz1cLFvDGZyQS2aU58HH_BQhzUUPeQIIM2z_kjAQ8Ol-ag8P_UWzXhnPmbvE3scZCk9U5fWkz7RO73xnU2WxQ6DUHKyjrjnSz0785OsR4s9272PfDhOTe--mpiejRMboIddQX1WLwai33Kz0Wp2pxqxzEZd5y1T3r9uH7pU" />
-                        <div
-                            class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                            <span class="text-[9px] font-bold text-gray-700 uppercase">15 MINS</span>
-                        </div>
-                    </div>
-                    <div class="flex-grow">
-                        <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">Gummy Bears
-                            Party Mix</h3>
-                        <span class="text-[12px] text-gray-500 font-medium block mb-2">200g Pack</span>
-                    </div>
-                    <div class="mt-2 flex items-center justify-between">
-                        <div class="flex flex-col leading-none">
-                            <span class="text-sm font-bold text-gray-900">₹120</span>
-                        </div>
-                        <button class="add-btn add-to-cart-btn" data-id="108">ADD</button>
-                    </div>
-                </div>
+            <div id="category-products-grid" class="p-5 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 pb-24">
+                <!-- Products will be loaded dynamically from Supabase -->
             </div>
         </main>
     </div>

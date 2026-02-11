@@ -41,6 +41,11 @@
     <link rel="icon" type="image/png" href="assets/logo.png">
     <!-- Existing CSS for toast notifications and utilities -->
     <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="js/supabase.js"></script>
 
     <script id="tailwind-config">
         tailwind.config = {
@@ -141,65 +146,65 @@
                     </a>
                 </div>
                 <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
-                    <a href="category.html?cat=fruits-veg" class="group cursor-pointer text-center">
+                    <a href="category.html?cat=Fruits%20%26%20Vegetables" class="group cursor-pointer text-center">
                         <div
                             class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
                             <div class="h-full w-full bg-cover bg-center rounded-xl"
-                                data-alt="Close up of fresh strawberries and oranges"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCPty-s-gz1Nhw_nFm6dsNP9JcOIzPhBxJTqGc-w3Itt0cHlt7Zh_nb9AQHYogapqUNM4G42V977_B0bKtl48FvjxEEw-qAEum-8PDCZt1SH-mPnT5uYKSovVy4dNQej5Rvm_iWNlGTJdOi8Z4RWiKZft34C6CYCZeo7nlUDIlrL1W-PQZ9yxxJPGBLXmZal3ot2ox2VmrVfYuftvQVb07e_RWSaCgZxUoKg0Bfw7_FGPSJmW55r_ba5Nznz2Fr3gMwRBU9cEOHcj0');">
+                                data-alt="Fresh fruits and vegetables"
+                                style="background-image: url('https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=200&h=200&fit=crop');">
                             </div>
                         </div>
-                        <span class="text-sm font-bold tracking-tight">Fruits &amp; Veggies</span>
+                        <span class="text-sm font-bold tracking-tight">Fruits &amp; Vegetables</span>
                     </a>
-                    <a href="category.html?cat=dairy-bread" class="group cursor-pointer text-center">
+                    <a href="category.html?cat=Dairy%2C%20Bread%20%26%20Eggs" class="group cursor-pointer text-center">
                         <div
                             class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
                             <div class="h-full w-full bg-cover bg-center rounded-xl"
-                                data-alt="A glass bottle of milk and organic eggs"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCch4IgOHy63FDotTWVOloeXhx-WiBGA4qnMonwiV3Rc8p9Z7FOlr-tSQo2DyMJoYVpipreD5QZ0AH-zpp5XSGJWsMrBDvRB9MX2pFIjUemhh0-UDhydYjt70Kkuy22XM4fpYhdZ2CHcG-8RRd-LjCfhLR-SJxAwG2nWZBjmcfbMwuHKXudvXG5-dfe-TvX9nEloaxtaR1oqB5KnLVMjlKB0dqAGsr8IE19ZljywFPjHYEtPOfgbg1dhFXJpGKJnqMg3Cz0UeV2q2U');">
+                                data-alt="Dairy products, bread and eggs"
+                                style="background-image: url('https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=200&h=200&fit=crop');">
                             </div>
                         </div>
-                        <span class="text-sm font-bold tracking-tight">Dairy &amp; Eggs</span>
+                        <span class="text-sm font-bold tracking-tight">Dairy, Bread &amp; Eggs</span>
                     </a>
-                    <a href="category.html?cat=dairy-bread" class="group cursor-pointer text-center">
+                    <a href="category.html?cat=Bakery%20%26%20Sweets" class="group cursor-pointer text-center">
                         <div
                             class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
                             <div class="h-full w-full bg-cover bg-center rounded-xl"
-                                data-alt="Loaves of fresh sourdough bread and pastries"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAaQi9WnuziNZRWsin2ar_N_HWw_TutlABs0XTjpmZVDw_P3qQIH0OICkUxHPSlxEzSyYCr1HyHPRN8-3NWrayE3xIxDVpVNNlHqb1hdzofmsw1gwtsFrRakSBmKq5QcKjFLhPS9DOR0VhxiqIm2ytaSp4vA04fIFyoP_VGQQkpbj2rwVLOx6Sr3WDQt0gvEb1W2SWRfVVVo6-E8ZxdSmTQbs-WDgQB3Ma1KBC9G7fmmHKvPyn_3izS5bDdlWT_NuMzznJeiSNbtPU');">
+                                data-alt="Fresh bakery items and sweets"
+                                style="background-image: url('https://images.unsplash.com/photo-1509440159596-0249088772ff?w=200&h=200&fit=crop');">
                             </div>
                         </div>
-                        <span class="text-sm font-bold tracking-tight">Bakery</span>
+                        <span class="text-sm font-bold tracking-tight">Bakery &amp; Sweets</span>
                     </a>
-                    <a href="category.html?cat=cold-drinks" class="group cursor-pointer text-center">
+                    <a href="category.html?cat=Beverages" class="group cursor-pointer text-center">
                         <div
                             class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
                             <div class="h-full w-full bg-cover bg-center rounded-xl"
-                                data-alt="Assorted juice bottles and mineral water"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDHe1nPqdo42yGbOw_TmjmU_3OjJW-6-8TUSIHFn3172RUPuIJFm_LOLaLAsHVRHXrfXk1gkv2-9TanU5V_ZvdNf4MXotLqUMWe_a3X1x9MCUEWKPl1QG4bCqXPtHig1tD9a6U2Qmlul1oUxx13tL-VU7sYXvbJUduCtv7FK8H9RmVmemTvxv63ZzadaBcNbynz77GqEVNbnU9CMSsmZudLJSgC2o2ieaHKWv4-njKqdX69yY0LuXOV1m-6xuYiHDpu8y9MEhisG0k');">
+                                data-alt="Beverages and drinks"
+                                style="background-image: url('https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200&h=200&fit=crop');">
                             </div>
                         </div>
                         <span class="text-sm font-bold tracking-tight">Beverages</span>
                     </a>
-                    <a href="category.html?cat=snacks" class="group cursor-pointer text-center">
+                    <a href="category.html?cat=Snacks%20%26%20Packaged%20Food" class="group cursor-pointer text-center">
                         <div
                             class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
                             <div class="h-full w-full bg-cover bg-center rounded-xl"
-                                data-alt="Packets of snacks, chips, and cookies"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCyqtwudDViTgwfQLOfO8wt-GsX0TWlIobvXYvuCdt02mTi4sOsKm9aB6NPJK783fuZhhkhBp7fWq0yuFzhCv_hE7IFtxjIS-HvUHrgqH2Sk1wzBqHMF-trAEWImxTtdBfVmyHPXphSnF-fun4wFpFC7T6rm8JEvEmsbZzpEmWgsWqI-5gewwIS9GRtd1wOFRE28tCggS8b9XVz4r2QVykRUmpNGi9QSlJwyPtBE5y2BLPg2vxl9S5YCRH3whxnjZZzC9L-OAPizqw');">
+                                data-alt="Snacks and packaged food"
+                                style="background-image: url('https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=200&h=200&fit=crop');">
                             </div>
                         </div>
-                        <span class="text-sm font-bold tracking-tight">Snacks</span>
+                        <span class="text-sm font-bold tracking-tight">Snacks &amp; Packaged Food</span>
                     </a>
-                    <a href="category.html?cat=staples" class="group cursor-pointer text-center">
+                    <a href="category.html?cat=Atta%2C%20Rice%20%26%20Staples" class="group cursor-pointer text-center">
                         <div
                             class="aspect-square w-full mb-3 overflow-hidden rounded-2xl bg-white dark:bg-white/5 p-4 transition-transform group-hover:-translate-y-1">
                             <div class="h-full w-full bg-cover bg-center rounded-xl"
-                                data-alt="Glass jars with lentils, rice, and grains"
-                                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCotta8P0V2AqJUa30_RfrQhH05H_VrgbNTGmO-_5b-k8YC9BSYn_ZEx42DWHCcjNGI5PbFUfMRKZo6rc0s9tKGIlzycFfZUrtZZekiIxJBtddAn1XGES1S00LB2d6qBLHR4ukn6-NZJ9lKeb4H8mDdO7On3kZrOX-1s9YP2iJa8ay63kq4jruhIDuiAoEpV_BUcVzcmAu7FeMHOnTo9bgyZi0TsO54iN1TUbRXqY6qS28L8BsJiNuVvdLuCpZ1FJ57OZML6OMzYTU');">
+                                data-alt="Rice, atta and staples"
+                                style="background-image: url('https://images.unsplash.com/photo-1586201375761-83865001e31c?w=200&h=200&fit=crop');">
                             </div>
                         </div>
-                        <span class="text-sm font-bold tracking-tight">Pantry</span>
+                        <span class="text-sm font-bold tracking-tight">Atta, Rice &amp; Staples</span>
                     </a>
                 </div>
             </section>
@@ -222,116 +227,9 @@
                         </button>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                    <!-- Product 1 (Matched to ID 1) -->
-                    <div
-                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
-                        <div
-                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
-                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                data-alt="A bunch of yellow ripe bananas"
-                                style="background-image: url('https://images.unsplash.com/photo-1630563452481-6f180e227308?auto=format&fit=crop&q=80&w=400');">
-                            </div>
-                            <button
-                                class="absolute top-3 right-3 h-8 w-8 flex items-center justify-center rounded-full bg-white/80 dark:bg-background-dark/80 backdrop-blur-sm text-red-500">
-                                <span class="material-symbols-outlined text-xl">favorite</span>
-                            </button>
-                        </div>
-                        <div class="px-2 pb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Produce</span>
-                            <h4 class="mt-1 text-lg font-bold">Kashmiri Apples</h4>
-                            <p class="text-xs font-medium opacity-50">1 kg</p>
-                            <div class="mt-4 flex items-center justify-between">
-                                <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹180</span>
-                                <!-- Added add-to-cart-btn class and data-id -->
-                                <button
-                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
-                                    data-id="1">
-                                    <span class="material-symbols-outlined">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 2 (Matched to ID 2) -->
-                    <div
-                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
-                        <div
-                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
-                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                data-alt="A carton of fresh whole organic milk"
-                                style="background-image: url('https://images.unsplash.com/photo-1563636619-e9143da7973b?auto=format&fit=crop&q=80&w=400');">
-                            </div>
-                            <span
-                                class="absolute top-3 left-3 rounded-md bg-red-500 px-2 py-1 text-[10px] font-bold text-white uppercase">Sale</span>
-                        </div>
-                        <div class="px-2 pb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Dairy</span>
-                            <h4 class="mt-1 text-lg font-bold">Amul Taaza Milk</h4>
-                            <p class="text-xs font-medium opacity-50">1 Litre Packet</p>
-                            <div class="mt-4 flex items-center justify-between">
-                                <div class="flex flex-col">
-                                    <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹54</span>
-                                    <span class="text-xs line-through opacity-30">₹58</span>
-                                </div>
-                                <button
-                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
-                                    data-id="2">
-                                    <span class="material-symbols-outlined">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 3 (Matched to ID 5 - Chocolate) -->
-                    <div
-                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
-                        <div
-                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
-                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Freshly baked crusty sourdough bread loaf"
-                                style="background-image: url('https://images.unsplash.com/photo-1623863765181-432d64f068af?auto=format&fit=crop&q=80&w=400');">
-                            </div>
-                        </div>
-                        <div class="px-2 pb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Snacks</span>
-                            <h4 class="mt-1 text-lg font-bold">Cadbury Silk</h4>
-                            <p class="text-xs font-medium opacity-50">Roast Almond, 134g</p>
-                            <div class="mt-4 flex items-center justify-between">
-                                <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹204</span>
-                                <button
-                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
-                                    data-id="5">
-                                    <span class="material-symbols-outlined">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 (Matched to ID 4 - Salt) -->
-                    <div
-                        class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
-                        <div
-                            class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-background-light dark:bg-white/5">
-                            <div class="h-full w-full bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-                                data-alt="Fresh vine-ripened red cherry tomatoes"
-                                style="background-image: url('https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=400');">
-                            </div>
-                        </div>
-                        <div class="px-2 pb-2">
-                            <span class="text-[10px] font-bold uppercase tracking-widest text-primary">Pantry</span>
-                            <h4 class="mt-1 text-lg font-bold">Tata Salt</h4>
-                            <p class="text-xs font-medium opacity-50">1 kg pack</p>
-                            <div class="mt-4 flex items-center justify-between">
-                                <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹28</span>
-                                <button
-                                    class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
-                                    data-id="4">
-                                    <span class="material-symbols-outlined">add</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Products will be dynamically loaded from Supabase -->
+                <div id="featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                    <!-- Products will be injected here by JavaScript -->
                 </div>
             </section>
         </main>

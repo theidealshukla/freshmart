@@ -268,7 +268,7 @@
                     itemsList.innerHTML = order.items.map(item => `
                         <div class="flex gap-4 items-center py-3 border-b border-gray-100 dark:border-gray-800 last:border-0">
                             <div class="h-16 w-16 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 flex items-center justify-center border border-gray-100 dark:border-gray-700 flex-shrink-0">
-                                <img alt="${item.name}" class="h-full w-full object-contain" src="${item.image || ''}"/>
+                                <img alt="${item.name}" class="h-full w-full object-contain" src="${item.image_url || item.image || ''}"/>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <h4 class="font-medium text-gray-900 dark:text-white text-sm truncate">${item.name}</h4>
@@ -334,7 +334,7 @@
                             <div class="flex items-center gap-2 overflow-x-auto pb-2">
                                 ${order.items.slice(0, 4).map(item => `
                                     <div class="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-800 p-1 flex-shrink-0 border border-gray-100 dark:border-gray-700">
-                                        <img src="${item.image || ''}" alt="${item.name}" class="w-full h-full object-contain">
+                                        <img src="${item.image_url || item.image || ''}" alt="${item.name}" class="w-full h-full object-contain">
                                     </div>
                                 `).join('')}
                                 ${order.items.length > 4 ? `
