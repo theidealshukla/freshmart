@@ -11,8 +11,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="stylesheet" href="css/style.css"> <!-- Linked for Toast and global styles -->
     <script id="tailwind-config">
         tailwind.config = {
@@ -94,48 +93,24 @@
 </head>
 
 <body class="bg-background font-sans text-gray-900 antialiased min-h-screen flex flex-col overflow-x-hidden">
-    <header class="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
-        <div class="max-w-[1440px] mx-auto px-4 lg:px-8 h-20 flex items-center gap-4 lg:gap-8">
-            <div class="flex-shrink-0 flex flex-col justify-center">
-                <a href="index.html" class="flex items-center gap-2">
-                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
-                        <span class="material-symbols-outlined text-2xl font-bold">shopping_basket</span>
-                    </div>
-                    <div class="flex flex-col hidden md:flex">
-                        <h1 class="font-extrabold text-2xl lg:text-3xl text-primary tracking-tight -mb-1">DailyFreshFarm
-                        </h1>
-                        <span class="text-[10px] text-gray-500 font-medium tracking-wide">GROCERY IN MINUTES</span>
-                    </div>
-                </a>
-            </div>
-            <div class="hidden lg:flex flex-col border-l border-border pl-6 max-w-[200px]">
-                <span class="text-[11px] font-bold uppercase text-gray-800">Delivery in 10 mins</span>
-                <div class="flex items-center gap-1 cursor-pointer group">
-                    <span class="text-xs text-gray-500 truncate group-hover:text-primary transition-colors">HSR Layout,
-                        Sector 2</span>
-                    <span class="material-symbols-outlined text-sm text-gray-400">expand_more</span>
-                </div>
-            </div>
-            <div class="flex-1 relative max-w-2xl mx-auto">
-                <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                    <span class="material-symbols-outlined text-gray-400">search</span>
-                </div>
-                <input
-                    class="w-full h-11 bg-gray-50 border border-gray-200 rounded-lg pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary placeholder-gray-400 transition-all"
-                    placeholder="Search 'milk'" type="text" />
-            </div>
-            <div class="flex items-center gap-6">
-                <button
-                    class="text-sm font-medium text-gray-600 hover:text-primary transition-colors hidden md:block">Login</button>
+    <header class="sticky top-0 z-50 bg-white border-b border-primary/10">
+        <div class="max-w-[1440px] mx-auto px-4 py-2 flex items-center justify-between">
+            <!-- Logo and Brand Name on Left -->
+            <a href="index.html" class="flex items-center">
+                <img src="assets/logo.png" alt="DailyFreshMart" class="h-20 md:h-28 w-auto">
+            </a>
+            <!-- Search and Cart Icons on Right -->
+            <div class="flex items-center gap-3">
+                <button id="search-btn"
+                    class="flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined text-2xl text-gray-900">search</span>
+                </button>
                 <a href="cart.html"
-                    class="flex items-center gap-2 bg-primary hover:bg-primary-dark transition-colors text-white px-4 py-2.5 rounded-lg font-bold shadow-sm relative">
-                    <span class="material-symbols-outlined text-[20px]">shopping_cart</span>
-                    <span class="text-sm hidden md:inline">My Cart <span id="desk-cart-badge"
-                            class="hidden bg-red-600 text-white text-[10px] px-1.5 py-0.5 rounded-full ml-1">0</span></span>
-                    <div class="flex flex-col items-start leading-none ml-1 md:hidden">
-                        <span class="text-[10px]"> Cart </span>
-                        <!-- Simplified for mobile since sticky bar handles details -->
-                    </div>
+                    class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                    <span class="material-symbols-outlined text-2xl text-gray-900">shopping_cart</span>
+                    <div id="desk-cart-badge"
+                        class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
+                        2</div>
                 </a>
             </div>
         </div>
@@ -201,12 +176,12 @@
         </aside>
         <main class="flex-1 bg-white rounded-xl shadow-card min-h-[calc(100vh-8rem)]">
             <div
-                class="sticky top-20 bg-white z-40 border-b border-border px-5 py-4 flex items-center justify-between rounded-t-xl">
-                <h2 class="text-xl font-bold text-gray-800">Buy Snacks &amp; Drinks Online</h2>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs text-gray-500 uppercase font-bold tracking-wide">Sort By</span>
+                class="sticky top-16 bg-white z-40 border-b border-border px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-t-xl">
+                <h2 class="text-lg sm:text-xl font-bold text-gray-800">Buy Snacks &amp; Drinks Online</h2>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <span class="text-xs text-gray-500 uppercase font-bold tracking-wide whitespace-nowrap">Sort By</span>
                     <select
-                        class="text-xs border-none focus:ring-0 font-semibold text-primary py-0 pr-8 cursor-pointer bg-transparent">
+                        class="text-sm border border-gray-200 rounded-lg focus:ring-1 focus:ring-primary font-semibold text-primary py-1.5 px-3 pr-8 cursor-pointer bg-white">
                         <option>Relevance</option>
                         <option>Price (Low to High)</option>
                         <option>Price (High to Low)</option>
@@ -264,23 +239,6 @@
                         <div class="flex flex-col leading-none">
                             <span class="text-sm font-bold text-gray-900">₹95</span>
                         </div>
-                        <!-- Showing Added state as per user design, but preserving functionality might need standard button. 
-Leaving as standard ADD for consistent functionality for now, as updating the UI for quantity needs more JS work. 
-Wait, I will use the USER's design for this card as a visual demo, but make the + button functional. -->
-                        <div class="add-btn added">
-                            <button class="hover:text-primary-light"><span
-                                    class="material-symbols-outlined text-[14px] font-bold">remove</span></button>
-                            <span class="text-[12px] font-bold">1</span>
-                            <!-- Adding add-to-cart-btn to the + button so it works partially? No, better to revert this to ADD button for consistency in this implementation round. -->
-                            <!-- Reverting to ADD button to ensure it works. User can request complex quantity toggle separately. -->
-                        </div>
-                        <!-- NOTE: Replaced simple added state with functional button for now -->
-                        <button class="add-btn add-to-cart-btn" data-id="102" style="display:none">ADD</button>
-                        <!-- Restoring User's Design but making + button act as Add -->
-                        <button class="hover:text-primary-light add-to-cart-btn" data-id="102"
-                            style="position: absolute; right: 20px; bottom: 20px; opacity: 0; width: 40px; height: 30px;">Add
-                            Hidden</button>
-                        <!-- Actually, let's just make it a normal button for functionality, visual fidelity is key but function is too. I'll make it a normal ADD button. -->
                         <button class="add-btn add-to-cart-btn" data-id="102">ADD</button>
                     </div>
                 </div>
@@ -464,6 +422,49 @@ Wait, I will use the USER's design for this card as a visual demo, but make the 
             </a>
         </div>
     </div>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
+        <div class="relative bg-white w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="flex items-center gap-3 p-4 border-b border-gray-200">
+                <span class="material-symbols-outlined text-gray-400">search</span>
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 placeholder-gray-400" autofocus>
+                <button id="search-close" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-gray-500">close</span>
+                </button>
+            </div>
+            <div class="p-4">
+                <p class="text-sm text-gray-500 mb-3">Popular searches</p>
+                <div class="flex flex-wrap gap-2">
+                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 rounded-full text-sm text-gray-700 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchModal = document.getElementById('search-modal');
+            const searchClose = document.getElementById('search-close');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchInput = document.getElementById('search-input');
+            if (searchBtn && searchModal) {
+                searchBtn.addEventListener('click', () => { searchModal.classList.remove('hidden'); searchInput.focus(); });
+                searchClose.addEventListener('click', () => { searchModal.classList.add('hidden'); });
+                searchOverlay.addEventListener('click', () => { searchModal.classList.add('hidden'); });
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && searchInput.value.trim()) window.location.href = `category.html?search=${encodeURIComponent(searchInput.value.trim())}`;
+                    if (e.key === 'Escape') searchModal.classList.add('hidden');
+                });
+            }
+        })();
+    </script>
 
     <script type="module" src="js/main.js"></script>
 </body>

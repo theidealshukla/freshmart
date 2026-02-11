@@ -100,43 +100,90 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Listen for Cart Updates
     window.addEventListener('cart-updated', updateCartUI);
+    window.addEventListener('cart-updated', updateProductButtons);
 
-    // Global Event Delegation for "Add to Cart"
+    // Initial render of product buttons based on cart state
+    updateProductButtons();
+
+    // Global Event Delegation for Cart Actions
     document.body.addEventListener('click', (e) => {
         // Handle "ADD" buttons
         const btn = e.target.closest('.add-to-cart-btn') || e.target.closest('.btn-add-blinkit');
         if (btn && !btn.disabled) {
             const productId = btn.dataset.id;
-            // Find product in data (requires importing products, or passing data)
-            // For now, we assume we can find it or it's attached. 
-            // Better: use the id to find in the imported 'products' array
             const product = products.find(p => p.id == productId);
 
             if (product) {
                 cart.add(product);
                 showToast(`Added ${product.name}`);
-
-                // Visual feedback
-                const iconSpan = btn.querySelector('.material-symbols-outlined');
-                if (iconSpan) {
-                    const originalText = iconSpan.textContent;
-                    iconSpan.textContent = "check";
-                    setTimeout(() => iconSpan.textContent = originalText, 1000);
-                } else {
-                    const originalText = btn.textContent;
-                    btn.textContent = "ADDED";
-                    btn.style.background = "#0c831f";
-                    btn.style.color = "white";
-                    setTimeout(() => {
-                        btn.textContent = originalText; // Reset for now (simple logic)
-                        btn.style.background = "";
-                        btn.style.color = "";
-                    }, 1000);
-                }
             }
+            return;
+        }
+
+        // Handle increment button
+        const incBtn = e.target.closest('.qty-increment');
+        if (incBtn) {
+            const productId = parseInt(incBtn.dataset.id);
+            cart.updateQty(productId, 1);
+            return;
+        }
+
+        // Handle decrement button
+        const decBtn = e.target.closest('.qty-decrement');
+        if (decBtn) {
+            const productId = parseInt(decBtn.dataset.id);
+            cart.updateQty(productId, -1);
+            return;
         }
     });
 });
+
+// Update product buttons to show quantity controls if item is in cart
+function updateProductButtons() {
+    document.querySelectorAll('.add-to-cart-btn, .btn-add-blinkit').forEach(btn => {
+        const productId = parseInt(btn.dataset.id);
+        const cartItem = cart.items.find(item => item.id === productId);
+        const container = btn.parentElement;
+
+        // Find existing quantity controls for THIS specific product
+        let qtyControls = container.querySelector(`.qty-controls[data-product-id="${productId}"]`);
+
+        if (cartItem && cartItem.qty > 0) {
+            // Hide the add button
+            btn.style.display = 'none';
+
+            if (!qtyControls) {
+                // Remove any orphaned qty-controls first
+                const oldControls = container.querySelectorAll('.qty-controls');
+                oldControls.forEach(ctrl => ctrl.remove());
+
+                // Create quantity controls
+                qtyControls = document.createElement('div');
+                qtyControls.className = 'qty-controls flex items-center bg-primary rounded-xl overflow-hidden';
+                qtyControls.dataset.productId = productId;
+                qtyControls.innerHTML = `
+                    <button class="qty-decrement flex h-10 w-10 items-center justify-center text-background-dark hover:bg-primary/80 transition-colors" data-id="${productId}">
+                        <span class="material-symbols-outlined text-lg">remove</span>
+                    </button>
+                    <span class="qty-value w-8 text-center font-bold text-background-dark">${cartItem.qty}</span>
+                    <button class="qty-increment flex h-10 w-10 items-center justify-center text-background-dark hover:bg-primary/80 transition-colors" data-id="${productId}">
+                        <span class="material-symbols-outlined text-lg">add</span>
+                    </button>
+                `;
+                container.appendChild(qtyControls);
+            } else {
+                // Update quantity display
+                const qtyValue = qtyControls.querySelector('.qty-value');
+                if (qtyValue) qtyValue.textContent = cartItem.qty;
+            }
+        } else {
+            // Show add button, remove ALL quantity controls in this container
+            btn.style.display = 'flex';
+            const allControls = container.querySelectorAll('.qty-controls');
+            allControls.forEach(ctrl => ctrl.remove());
+        }
+    });
+}
 
 function updateCartUI() {
     const totals = cart.getTotals();

@@ -12,8 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -45,22 +44,26 @@
 
 <body
     class="bg-background-light dark:bg-background-dark font-display antialiased min-h-screen flex flex-col transition-colors duration-300">
-    <!-- Navbar -->
-    <nav class="bg-surface-light dark:bg-surface-dark border-b border-gray-100 dark:border-green-900 sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <a href="index.html" class="flex items-center gap-2">
-                    <div
-                        class="cursor-pointer flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-background-dark">
-                        <span class="material-symbols-outlined text-2xl font-bold">agriculture</span>
-                    </div>
-                    <span
-                        class="text-xl font-bold text-gray-900 dark:text-white tracking-tight hidden md:block">DailyFreshFarm</span>
+    <nav class="bg-white dark:bg-surface-dark border-b border-primary/10 dark:border-green-900 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-2">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Brand Name on Left -->
+                <a href="index.html" class="flex items-center">
+                    <img src="assets/logo.png" alt="DailyFreshMart" class="h-20 md:h-28 w-auto">
                 </a>
-                <div
-                    class="flex items-center gap-2 bg-primary/10 dark:bg-primary/5 px-3 py-1 rounded-full border border-primary/20">
-                    <span class="material-icons text-primary text-sm">lock</span>
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-200">Secure Checkout</span>
+                <!-- Search and Cart Icons on Right -->
+                <div class="flex items-center gap-3">
+                    <button id="search-btn"
+                        class="flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">search</span>
+                    </button>
+                    <a href="cart.html"
+                        class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
+                        <div id="desk-cart-badge"
+                            class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
+                            2</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -311,9 +314,27 @@
                     return;
                 }
 
-                // Save details for success page
-                localStorage.setItem('last_order_total', totalEl.textContent);
-                localStorage.setItem('last_order_count', items.reduce((a, b) => a + b.qty, 0));
+                // Generate order ID
+                const orderId = 'DFF-' + Math.floor(10000 + Math.random() * 90000);
+                const orderDate = new Date().toISOString();
+
+                // Save complete order details for success and orders pages
+                const orderData = {
+                    orderId: orderId,
+                    items: items,
+                    subtotal: subtotalVal,
+                    charges: fixedCharges,
+                    total: grandTotal,
+                    itemCount: items.reduce((a, b) => a + b.qty, 0),
+                    paymentMethod: selectedMethod,
+                    orderDate: orderDate,
+                    status: 'confirmed'
+                };
+
+                localStorage.setItem('last_order', JSON.stringify(orderData));
+                localStorage.setItem('last_order_total', `₹${grandTotal.toFixed(2)}`);
+                localStorage.setItem('last_order_count', orderData.itemCount);
+                localStorage.setItem('last_order_subtotal', `₹${subtotalVal.toFixed(2)}`);
 
                 // Simulate processing
                 confirmBtn.disabled = true;
@@ -326,6 +347,49 @@
                 }, 2000);
             });
         });
+    </script>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
+        <div class="relative bg-white dark:bg-surface-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
+                <span class="material-symbols-outlined text-gray-400">search</span>
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400" autofocus>
+                <button id="search-close" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-gray-500">close</span>
+                </button>
+            </div>
+            <div class="p-4">
+                <p class="text-sm text-gray-500 mb-3">Popular searches</p>
+                <div class="flex flex-wrap gap-2">
+                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchModal = document.getElementById('search-modal');
+            const searchClose = document.getElementById('search-close');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchInput = document.getElementById('search-input');
+            if (searchBtn && searchModal) {
+                searchBtn.addEventListener('click', () => { searchModal.classList.remove('hidden'); searchInput.focus(); });
+                searchClose.addEventListener('click', () => { searchModal.classList.add('hidden'); });
+                searchOverlay.addEventListener('click', () => { searchModal.classList.add('hidden'); });
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && searchInput.value.trim()) window.location.href = `category.html?search=${encodeURIComponent(searchInput.value.trim())}`;
+                    if (e.key === 'Escape') searchModal.classList.add('hidden');
+                });
+            }
+        })();
     </script>
 </body>
 

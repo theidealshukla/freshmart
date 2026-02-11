@@ -12,8 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml"
-        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧺</text></svg>">
+    <link rel="icon" type="image/png" href="assets/logo.png">
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -86,28 +85,27 @@
         <div class="confetti left-[80%] top-[-10%] delay-[3s]"></div>
         <div class="confetti left-[90%] top-[-30%] delay-[2.5s]"></div>
     </div>
-    <!-- Navigation -->
     <nav
-        class="w-full bg-white dark:bg-background-dark/50 border-b border-gray-200 dark:border-white/10 backdrop-blur-md z-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="flex items-center gap-2">
-                    <div class="bg-primary/20 p-2 rounded-lg">
-                        <span
-                            class="material-icons text-primary-dark dark:text-primary text-2xl">local_grocery_store</span>
-                    </div>
-                    <span
-                        class="font-bold text-xl tracking-tight text-gray-900 dark:text-white hidden md:block">DailyFreshFarm</span>
+        class="w-full bg-white dark:bg-background-dark border-b border-primary/10 dark:border-white/10 z-20">
+        <div class="max-w-7xl mx-auto px-4 py-2">
+            <div class="flex justify-between items-center">
+                <!-- Logo and Brand Name on Left -->
+                <a href="index.html" class="flex items-center">
+                    <img src="assets/logo.png" alt="DailyFreshMart" class="h-20 md:h-28 w-auto">
                 </a>
-                <div class="flex items-center gap-4">
-                    <button class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
-                        <span class="material-icons text-gray-500 dark:text-gray-400">notifications</span>
+                <!-- Search and Cart Icons on Right -->
+                <div class="flex items-center gap-3">
+                    <button id="search-btn"
+                        class="flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">search</span>
                     </button>
-                    <div
-                        class="h-8 w-8 rounded-full bg-gray-200 overflow-hidden border border-gray-300 dark:border-gray-600">
-                        <span
-                            class="material-symbols-outlined text-gray-600 w-full h-full flex items-center justify-center">person</span>
-                    </div>
+                    <a href="cart.html"
+                        class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
+                        <div id="desk-cart-badge"
+                            class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
+                            2</div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -248,19 +246,73 @@
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Retrieve last order details from sessionStorage or URL params if implemented
-            // For now, we'll just parse the 'last_order_total' if we saved it, 
-            // OR just show a generic success. 
-            // Ideally, payment.js should have passed the total.
-            // Let's rely on what was previously in local storage if valid, or defaults.
+            // Retrieve complete order details from localStorage
+            const orderDataStr = localStorage.getItem('last_order');
+            const orderData = orderDataStr ? JSON.parse(orderDataStr) : null;
 
-            const lastTotal = localStorage.getItem('last_order_total') || '0.00';
-            const lastCount = localStorage.getItem('last_order_count') || '0';
+            if (orderData) {
+                // Update order ID in the page
+                const orderIdSpan = document.querySelector('.font-mono');
+                if (orderIdSpan) orderIdSpan.textContent = '#' + orderData.orderId;
 
-            document.getElementById('success-grand-total').textContent = lastTotal;
-            document.getElementById('success-items-total').textContent = (parseFloat(lastTotal.replace(/[^\d.]/g, '')) - 63).toFixed(2); // Reverse calc roughly or just use stored
-            document.getElementById('success-item-count').textContent = `Subtotal (${lastCount} items)`;
+                // Update payment summary
+                document.getElementById('success-grand-total').textContent = `₹${orderData.total.toFixed(2)}`;
+                document.getElementById('success-items-total').textContent = `₹${orderData.subtotal.toFixed(2)}`;
+                document.getElementById('success-item-count').textContent = `Subtotal (${orderData.itemCount} items)`;
+            } else {
+                // Fallback to old method
+                const lastTotal = localStorage.getItem('last_order_total') || '₹0.00';
+                const lastCount = localStorage.getItem('last_order_count') || '0';
+                const lastSubtotal = localStorage.getItem('last_order_subtotal') || '₹0.00';
+
+                document.getElementById('success-grand-total').textContent = lastTotal;
+                document.getElementById('success-items-total').textContent = lastSubtotal;
+                document.getElementById('success-item-count').textContent = `Subtotal (${lastCount} items)`;
+            }
         });
+    </script>
+
+    <!-- Search Modal -->
+    <div id="search-modal" class="fixed inset-0 z-[100] hidden">
+        <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
+        <div class="relative bg-white dark:bg-background-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+            <div class="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
+                <span class="material-symbols-outlined text-gray-400">search</span>
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400" autofocus>
+                <button id="search-close" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+                    <span class="material-symbols-outlined text-gray-500">close</span>
+                </button>
+            </div>
+            <div class="p-4">
+                <p class="text-sm text-gray-500 mb-3">Popular searches</p>
+                <div class="flex flex-wrap gap-2">
+                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const searchBtn = document.getElementById('search-btn');
+            const searchModal = document.getElementById('search-modal');
+            const searchClose = document.getElementById('search-close');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchInput = document.getElementById('search-input');
+            if (searchBtn && searchModal) {
+                searchBtn.addEventListener('click', () => { searchModal.classList.remove('hidden'); searchInput.focus(); });
+                searchClose.addEventListener('click', () => { searchModal.classList.add('hidden'); });
+                searchOverlay.addEventListener('click', () => { searchModal.classList.add('hidden'); });
+                searchInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && searchInput.value.trim()) window.location.href = `category.html?search=${encodeURIComponent(searchInput.value.trim())}`;
+                    if (e.key === 'Escape') searchModal.classList.add('hidden');
+                });
+            }
+        })();
     </script>
 </body>
 
