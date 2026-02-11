@@ -54,7 +54,8 @@
                         class="cursor-pointer flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-background-dark">
                         <span class="material-symbols-outlined text-2xl font-bold">agriculture</span>
                     </div>
-                    <span class="text-xl font-bold text-gray-900 dark:text-white tracking-tight">DailyFreshFarm</span>
+                    <span
+                        class="text-xl font-bold text-gray-900 dark:text-white tracking-tight hidden md:block">DailyFreshFarm</span>
                 </a>
                 <div
                     class="flex items-center gap-2 bg-primary/10 dark:bg-primary/5 px-3 py-1 rounded-full border border-primary/20">
@@ -152,14 +153,14 @@
                     <div class="pl-8">
                         <p class="text-text-body dark:text-text-body-dark text-sm mb-4">Pay using any UPI app by
                             entering your VPA.</p>
-                        <div class="flex gap-3 max-w-md">
+                        <div class="flex flex-col sm:flex-row gap-3 max-w-md">
                             <div class="relative w-full">
                                 <input
                                     class="w-full bg-background-light dark:bg-background-dark border-gray-300 dark:border-green-800 rounded-lg py-2.5 px-4 focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all dark:text-white placeholder-gray-400"
                                     placeholder="e.g. mobileNumber@upi" type="text" />
                             </div>
                             <button
-                                class="bg-primary hover:bg-primary-dark text-white font-medium py-2.5 px-6 rounded-lg transition-colors whitespace-nowrap shadow-subtle flex items-center gap-1">
+                                class="bg-primary hover:bg-primary-dark text-white font-medium py-2.5 px-6 rounded-lg transition-colors whitespace-nowrap shadow-subtle flex items-center justify-center gap-1">
                                 <span>Verify</span>
                             </button>
                         </div>

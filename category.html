@@ -97,10 +97,15 @@
     <header class="sticky top-0 z-50 bg-white border-b border-border shadow-sm">
         <div class="max-w-[1440px] mx-auto px-4 lg:px-8 h-20 flex items-center gap-4 lg:gap-8">
             <div class="flex-shrink-0 flex flex-col justify-center">
-                <a href="index.html" class="flex flex-col">
-                    <h1 class="font-extrabold text-2xl lg:text-3xl text-primary tracking-tight -mb-1">DailyFreshFarm
-                    </h1>
-                    <span class="text-[10px] text-gray-500 font-medium tracking-wide">GROCERY IN MINUTES</span>
+                <a href="index.html" class="flex items-center gap-2">
+                    <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
+                        <span class="material-symbols-outlined text-2xl font-bold">shopping_basket</span>
+                    </div>
+                    <div class="flex flex-col hidden md:flex">
+                        <h1 class="font-extrabold text-2xl lg:text-3xl text-primary tracking-tight -mb-1">DailyFreshFarm
+                        </h1>
+                        <span class="text-[10px] text-gray-500 font-medium tracking-wide">GROCERY IN MINUTES</span>
+                    </div>
                 </a>
             </div>
             <div class="hidden lg:flex flex-col border-l border-border pl-6 max-w-[200px]">
@@ -135,7 +140,7 @@
             </div>
         </div>
     </header>
-    <div class="flex-grow max-w-[1440px] mx-auto w-full flex items-start gap-4 p-4 lg:p-6">
+    <div class="flex-grow max-w-[1440px] mx-auto w-full flex flex-col md:flex-row items-start gap-4 p-4 lg:p-6">
         <aside
             class="w-64 lg:w-72 bg-white rounded-xl shadow-card h-[calc(100vh-8rem)] sticky top-24 overflow-y-auto custom-scrollbar hidden md:flex flex-col">
             <nav class="py-2">

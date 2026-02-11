@@ -59,7 +59,9 @@
                             class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-background-dark">
                             <span class="material-symbols-outlined text-2xl font-bold">agriculture</span>
                         </div>
-                        <h1 class="text-xl font-extrabold tracking-tight text-[#0d1b0d] dark:text-white">DailyFreshFarm
+                        <h1
+                            class="text-xl font-extrabold tracking-tight text-[#0d1b0d] dark:text-white hidden md:block">
+                            DailyFreshFarm
                         </h1>
                     </a>
                     <button
@@ -271,11 +273,11 @@
                 }
 
                 itemsContainer.innerHTML = items.map(item => `
-            <div class="py-4 flex items-center justify-between">
-                <div class="flex items-center gap-4">
-                    <div class="h-16 w-16 rounded-xl bg-cover bg-center bg-gray-100" style="background-image: url('${item.image || ''}');"></div>
-                    <div>
-                        <h4 class="font-bold text-sm sm:text-base">${item.name}</h4>
+            <div class="py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div class="flex items-center gap-4 w-full sm:w-auto">
+                    <div class="h-16 w-16 flex-shrink-0 rounded-xl bg-cover bg-center bg-gray-100" style="background-image: url('${item.image || ''}');"></div>
+                    <div class="flex-grow">
+                        <h4 class="font-bold text-sm sm:text-base line-clamp-1">${item.name}</h4>
                         <p class="text-xs opacity-50 mb-1">${item.unit || item.weight || 'Unit'}</p>
                         <div class="flex items-center gap-2 bg-primary/10 rounded-lg p-1 w-max">
                             <button class="decrease-qty w-6 h-6 flex items-center justify-center bg-white rounded-md shadow-sm text-primary hover:bg-primary hover:text-white transition-colors" data-id="${item.id}">
@@ -288,8 +290,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-right">
-                    <span class="font-bold">${formatCurrency(item.price * item.qty)}</span>
+                <div class="text-right w-full sm:w-auto flex justify-between sm:block">
+                    <span class="text-xs sm:hidden opacity-50 font-medium">Total:</span>
+                    <span class="font-bold text-lg sm:text-base">${formatCurrency(item.price * item.qty)}</span>
                 </div>
             </div>
         `).join('');
