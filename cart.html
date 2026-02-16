@@ -13,6 +13,12 @@
         rel="stylesheet" />
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="js/supabase.js"></script>
+
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -49,8 +55,7 @@
 
 <body class="bg-background-light dark:bg-background-dark text-[#0d1b0d] dark:text-white pb-20">
     <div class="relative flex min-h-screen flex-col overflow-x-hidden">
-        <header
-            class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white dark:bg-background-dark">
+        <header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-white dark:bg-background-dark">
             <div class="mx-auto flex max-w-[1280px] items-center justify-between px-4 py-2">
                 <!-- Logo and Brand Name on Left -->
                 <a href="index.html" class="flex items-center">
@@ -64,7 +69,8 @@
                     </button>
                     <a href="cart.html"
                         class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
-                        <span class="material-symbols-outlined text-2xl text-[#0d1b0d] dark:text-white">shopping_cart</span>
+                        <span
+                            class="material-symbols-outlined text-2xl text-[#0d1b0d] dark:text-white">shopping_cart</span>
                         <div id="desk-cart-badge"
                             class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
                             2</div>
@@ -310,29 +316,37 @@
     <!-- Search Modal -->
     <div id="search-modal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
-        <div class="relative bg-white dark:bg-background-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+        <div
+            class="relative bg-white dark:bg-background-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
             <div class="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
                 <span class="material-symbols-outlined text-gray-400">search</span>
-                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
-                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400" autofocus>
-                <button id="search-close" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..."
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400"
+                    autofocus>
+                <button id="search-close"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
                     <span class="material-symbols-outlined text-gray-500">close</span>
                 </button>
             </div>
             <div class="p-4">
                 <p class="text-sm text-gray-500 mb-3">Popular searches</p>
                 <div class="flex flex-wrap gap-2">
-                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
-                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
-                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
-                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
-                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                    <a href="category.html?search=milk"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        (function() {
+        (function () {
             const searchBtn = document.getElementById('search-btn');
             const searchModal = document.getElementById('search-modal');
             const searchClose = document.getElementById('search-close');
