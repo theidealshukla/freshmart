@@ -80,7 +80,8 @@
                 </a>
             </nav>
             <div class="p-4 mt-auto border-t border-primary/10">
-                <a class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
+                <a id="logout-btn-desktop"
+                    class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/10 rounded-lg transition-colors"
                     href="#">
                     <span class="material-symbols-outlined">logout</span>
                     Logout
@@ -342,7 +343,7 @@
                                 </div>
                                 <span class="material-symbols-outlined text-slate-400">chevron_right</span>
                             </a>
-                            <button
+                            <button id="logout-btn-mobile"
                                 class="w-full flex items-center justify-center gap-2 bg-red-50 dark:bg-red-900/10 text-red-500 p-4 rounded-xl font-semibold mt-4">
                                 <span class="material-symbols-outlined">logout</span>
                                 Logout
@@ -467,7 +468,7 @@
     <script type="module" src="js/main.js"></script>
 
     <script type="module">
-        import { getCurrentUser } from './js/auth.js';
+        import { getCurrentUser, logoutUser } from './js/auth.js';
 
         document.addEventListener('DOMContentLoaded', async () => {
             const user = await getCurrentUser();
@@ -494,6 +495,20 @@
 
             const headerPhone = document.querySelector('.text-slate-500.text-sm');
             if (headerPhone && user.profile?.phone) headerPhone.textContent = user.profile.phone;
+
+            // --- NEW: HANDLE LOGOUT ---
+            const logoutDesktop = document.getElementById('logout-btn-desktop');
+            const logoutMobile = document.getElementById('logout-btn-mobile');
+
+            function handleLogout(e) {
+                e.preventDefault();
+                if (confirm("Are you sure you want to logout?")) {
+                    logoutUser();
+                }
+            }
+
+            if (logoutDesktop) logoutDesktop.addEventListener('click', handleLogout);
+            if (logoutMobile) logoutMobile.addEventListener('click', handleLogout);
 
             // 2. Handle Edit/Save Logic
             let isEditing = false;

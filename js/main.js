@@ -287,18 +287,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function updateAuthUI() {
         const user = await getCurrentUser();
 
-        // Select elements (Desktop & Mobile)
+        // Select login buttons (Desktop & Mobile)
+        // Ensure your HTML elements have these classes
         const loginBtns = document.querySelectorAll('.login-btn, .user-profile-btn');
 
         if (user) {
             // User IS logged in
             loginBtns.forEach(btn => {
-                // Replace "Login" button with "Profile / Logout"
+                // Show User Icon instead of "Login" text
                 btn.innerHTML = `<span class="material-symbols-outlined">person</span>`;
                 btn.title = `Hi, ${user.profile?.full_name || 'User'}`;
-
-                // Make it clickable to go to profile directly
                 btn.style.cursor = 'pointer';
+
+                // FIX: Directly go to Profile Page (No popup)
                 btn.onclick = (e) => {
                     e.preventDefault();
                     window.location.href = 'profile.html';
