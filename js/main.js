@@ -297,16 +297,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 btn.innerHTML = `<span class="material-symbols-outlined">person</span>`;
                 btn.title = `Hi, ${user.profile?.full_name || 'User'}`;
 
-                // Make it clickable to go to profile or logout
+                // Make it clickable to go to profile directly
                 btn.style.cursor = 'pointer';
                 btn.onclick = (e) => {
                     e.preventDefault();
-                    // Simple dropdown logic or redirect
-                    if (confirm(`Signed in as ${user.profile?.full_name}.\nDo you want to logout?`)) {
-                        logoutUser();
-                    } else {
-                        window.location.href = 'profile.html';
-                    }
+                    window.location.href = 'profile.html';
                 };
             });
         } else {
