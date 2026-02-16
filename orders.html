@@ -48,12 +48,13 @@
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2313ec13' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
 </head>
 
 <body
     class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-200 pb-20">
-    <nav
-        class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-primary/10 dark:border-primary/20">
+    <nav class="sticky top-0 z-50 bg-white dark:bg-surface-dark border-b border-primary/10 dark:border-primary/20">
         <div class="max-w-7xl mx-auto px-4 py-2">
             <div class="flex justify-between items-center">
                 <!-- Logo and Brand Name on Left -->
@@ -68,7 +69,8 @@
                     </button>
                     <a href="cart.html"
                         class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
-                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
+                        <span
+                            class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
                         <div id="desk-cart-badge"
                             class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
                             2</div>
@@ -88,10 +90,13 @@
         <!-- Order History List -->
         <div id="order-history-container" class="space-y-4 mb-8">
             <!-- Orders will be loaded dynamically -->
-            <div class="text-center py-12 bg-white dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-800">
-                <span class="material-symbols-outlined text-5xl text-gray-300 dark:text-gray-600 mb-4 block">shopping_bag</span>
+            <div
+                class="text-center py-12 bg-white dark:bg-surface-dark rounded-2xl border border-gray-100 dark:border-gray-800">
+                <span
+                    class="material-symbols-outlined text-5xl text-gray-300 dark:text-gray-600 mb-4 block">shopping_bag</span>
                 <p class="text-gray-500 dark:text-gray-400">No orders yet</p>
-                <a href="category.html" class="inline-flex items-center gap-2 mt-4 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors">
+                <a href="category.html"
+                    class="inline-flex items-center gap-2 mt-4 bg-primary text-white px-6 py-3 rounded-xl font-semibold hover:bg-primary-dark transition-colors">
                     <span class="material-icons text-sm">shopping_cart</span>
                     Start Shopping
                 </a>
@@ -104,18 +109,22 @@
             <div class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <div class="flex items-center gap-3 mb-1">
-                        <button id="back-to-orders" class="flex items-center gap-1 text-primary hover:underline font-medium text-sm">
+                        <button id="back-to-orders"
+                            class="flex items-center gap-1 text-primary hover:underline font-medium text-sm">
                             <span class="material-icons text-sm">arrow_back</span>
                             Back to Orders
                         </button>
                     </div>
                     <div class="flex items-center gap-3 mt-2">
-                        <h2 id="detail-order-id" class="text-2xl font-bold text-gray-900 dark:text-white">Order #8492-B</h2>
-                        <span id="detail-order-status" class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-green-700 dark:text-green-300 border border-primary/30">
+                        <h2 id="detail-order-id" class="text-2xl font-bold text-gray-900 dark:text-white">Order #8492-B
+                        </h2>
+                        <span id="detail-order-status"
+                            class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/20 text-green-700 dark:text-green-300 border border-primary/30">
                             Delivered
                         </span>
                     </div>
-                    <p id="detail-order-date" class="text-gray-500 dark:text-gray-400 mt-1">Ordered on January 15, 2026</p>
+                    <p id="detail-order-date" class="text-gray-500 dark:text-gray-400 mt-1">Ordered on January 15, 2026
+                    </p>
                 </div>
                 <div class="flex gap-3">
                     <button
@@ -129,7 +138,8 @@
             <!-- Order Details Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Order Items -->
-                <div class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                <div
+                    class="lg:col-span-2 bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Order Items</h3>
                     <div id="detail-items-list" class="space-y-4">
                         <!-- Items loaded dynamically -->
@@ -137,7 +147,8 @@
                 </div>
 
                 <!-- Order Summary -->
-                <div class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
+                <div
+                    class="bg-white dark:bg-surface-dark rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Order Summary</h3>
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between">
@@ -166,7 +177,8 @@
 
                     <div class="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800">
                         <h4 class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Delivery Address</h4>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">B-402, Green Valley Apartments<br>HSR Layout, Bangalore - 560102</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">B-402, Green Valley Apartments<br>HSR
+                            Layout, Bangalore - 560102</p>
                     </div>
                 </div>
             </div>
@@ -182,181 +194,256 @@
     <!-- Search Modal -->
     <div id="search-modal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
-        <div class="relative bg-white dark:bg-surface-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+        <div
+            class="relative bg-white dark:bg-surface-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
             <div class="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
                 <span class="material-symbols-outlined text-gray-400">search</span>
-                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
-                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400" autofocus>
-                <button id="search-close" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..."
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400"
+                    autofocus>
+                <button id="search-close"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
                     <span class="material-symbols-outlined text-gray-500">close</span>
                 </button>
             </div>
             <div class="p-4">
                 <p class="text-sm text-gray-500 mb-3">Popular searches</p>
                 <div class="flex flex-wrap gap-2">
-                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
-                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
-                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
-                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
-                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                    <a href="category.html?search=milk"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        (function() {
-            const searchBtn = document.getElementById('search-btn');
-            const searchModal = document.getElementById('search-modal');
-            const searchClose = document.getElementById('search-close');
-            const searchOverlay = document.getElementById('search-overlay');
-            const searchInput = document.getElementById('search-input');
-            if (searchBtn && searchModal) {
-                searchBtn.addEventListener('click', () => { searchModal.classList.remove('hidden'); searchInput.focus(); });
-                searchClose.addEventListener('click', () => { searchModal.classList.add('hidden'); });
-                searchOverlay.addEventListener('click', () => { searchModal.classList.add('hidden'); });
-                searchInput.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' && searchInput.value.trim()) window.location.href = `category.html?search=${encodeURIComponent(searchInput.value.trim())}`;
-                    if (e.key === 'Escape') searchModal.classList.add('hidden');
-                });
-            }
+    <script type="module">
+        import { getCurrentUser } from './js/auth.js';
 
-            // Order History Functions
+        document.addEventListener('DOMContentLoaded', async () => {
             const orderHistoryContainer = document.getElementById('order-history-container');
             const orderDetailSection = document.getElementById('order-detail-section');
             const backToOrdersBtn = document.getElementById('back-to-orders');
 
-            function formatDate(dateString) {
-                const date = new Date(dateString);
-                return date.toLocaleDateString('en-IN', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric'
-                });
+            // 1. Fetch Orders from Supabase
+            async function fetchMyOrders() {
+                // 1. Get Logged In User
+                const user = await getCurrentUser();
+
+                if (!user) {
+                    // Redirect to login if not signed in
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                // 2. Use the REAL phone number from the profile
+                const myPhone = user.profile?.phone;
+
+                if (!myPhone) {
+                    console.error("User has no phone number linked.");
+                    // Optional: Show empty state or ask to update profile
+                    renderOrderList([]);
+                    return;
+                }
+
+                // 3. Fetch Orders for THIS user
+                const { data: orders, error } = await window.supabaseClient
+                    .from('orders')
+                    .select(`
+                        *,
+                        order_items (
+                            quantity,
+                            price_at_purchase,
+                            products ( name, unit, image_url )
+                        )
+                    `)
+                    .eq('phone', myPhone) // Filter by dynamic phone
+                    .order('created_at', { ascending: false });
+
+                if (error) {
+                    console.error('Error fetching orders:', error);
+                    return;
+                }
+
+                renderOrderList(orders);
+                subscribeToOrders(orders.map(o => o.id));
             }
 
-            function formatTime(dateString) {
-                const date = new Date(dateString);
-                return date.toLocaleTimeString('en-IN', {
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
+            // 2. Render the List
+            function renderOrderList(orders) {
+                if (!orders || orders.length === 0) {
+                    orderHistoryContainer.innerHTML = `
+                        <div class="text-center py-12 bg-white rounded-2xl border border-gray-100">
+                            <span class="material-symbols-outlined text-5xl text-gray-300 mb-4 block">shopping_bag</span>
+                            <p class="text-gray-500">No orders yet</p>
+                            <a href="index.html" class="inline-flex items-center gap-2 mt-4 bg-primary text-white px-6 py-3 rounded-xl font-semibold">
+                                Start Shopping
+                            </a>
+                        </div>`;
+                    return;
+                }
+
+                orderHistoryContainer.innerHTML = orders.map((order, index) => {
+                    const itemCount = order.order_items.length;
+                    const statusColor = getStatusColor(order.status);
+                    const displayStatus = order.status === 'Pending' ? 'Pending Confirmation' : order.status;
+
+                    return `
+                        <div class="order-card bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:border-primary/30 transition-colors cursor-pointer mb-4" 
+                             onclick="showOrderDetail('${order.id}')" id="order-card-${order.id}">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
+                                        <span class="material-symbols-outlined">receipt_long</span>
+                                    </div>
+                                    <div>
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <h3 class="font-bold text-gray-900">Order #${order.id}</h3>
+                                            <span id="status-badge-${order.id}" class="px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor}">
+                                                ${displayStatus}
+                                            </span>
+                                        </div>
+                                        <p class="text-sm text-gray-500 mt-1">${new Date(order.created_at).toLocaleDateString()}</p>
+                                        <p class="text-xs text-gray-400 mt-1">${itemCount} items</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 sm:flex-col sm:items-end">
+                                    <p class="text-lg font-bold text-primary">₹${order.total_amount}</p>
+                                    <span class="material-symbols-outlined text-gray-400">chevron_right</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Cancel Button Logic -->
+                            ${['Pending', 'Confirmed'].includes(order.status) ? `
+                            <div class="flex items-center justify-end mt-4 border-t pt-4">
+                                <button onclick="event.stopPropagation(); cancelMyOrder('${order.id}')" 
+                                    class="text-red-600 hover:text-red-800 text-sm font-semibold border border-red-200 bg-red-50 px-3 py-1 rounded-lg transition-colors hover:bg-red-100">
+                                    Cancel Order
+                                </button>
+                            </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+
+                // Store orders globally for detail view
+                window.currentOrders = orders;
             }
 
-            function getPaymentMethodLabel(method) {
-                const labels = {
-                    'upi': 'UPI',
-                    'card': 'Credit/Debit Card',
-                    'cod': 'Cash on Delivery',
-                    'netbanking': 'Net Banking'
-                };
-                return labels[method] || method || 'UPI';
-            }
+            // 3. Render Detail View
+            window.showOrderDetail = (orderId) => {
+                const order = window.currentOrders.find(o => o.id == orderId);
+                if (!order) return;
 
-            function showOrderDetail(order) {
                 orderHistoryContainer.classList.add('hidden');
                 orderDetailSection.classList.remove('hidden');
 
-                document.getElementById('detail-order-id').textContent = 'Order #' + order.orderId;
-                document.getElementById('detail-order-date').textContent = 'Ordered on ' + formatDate(order.orderDate) + ' at ' + formatTime(order.orderDate);
-                document.getElementById('detail-subtotal').textContent = '₹' + (order.subtotal?.toFixed(2) || '0.00');
-                document.getElementById('detail-charges').textContent = '₹' + (order.charges?.toFixed(2) || '63.00');
-                document.getElementById('detail-total').textContent = '₹' + (order.total?.toFixed(2) || '0.00');
-                document.getElementById('detail-payment-method').textContent = getPaymentMethodLabel(order.paymentMethod);
+                document.getElementById('detail-order-id').textContent = 'Order #' + order.id;
+                document.getElementById('detail-order-status').textContent = order.status;
+                document.getElementById('detail-order-status').className = `px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(order.status)}`;
+                document.getElementById('detail-total').textContent = '₹' + order.total_amount;
 
                 const itemsList = document.getElementById('detail-items-list');
-                if (order.items && order.items.length > 0) {
-                    itemsList.innerHTML = order.items.map(item => `
-                        <div class="flex gap-4 items-center py-3 border-b border-gray-100 dark:border-gray-800 last:border-0">
-                            <div class="h-16 w-16 bg-gray-50 dark:bg-gray-800 rounded-lg p-2 flex items-center justify-center border border-gray-100 dark:border-gray-700 flex-shrink-0">
-                                <img alt="${item.name}" class="h-full w-full object-contain" src="${item.image_url || item.image || ''}"/>
-                            </div>
-                            <div class="flex-1 min-w-0">
-                                <h4 class="font-medium text-gray-900 dark:text-white text-sm truncate">${item.name}</h4>
-                                <p class="text-xs text-gray-500">${item.unit || item.weight || ''}</p>
-                                <p class="text-xs text-gray-400">Qty: ${item.qty}</p>
-                            </div>
-                            <div class="text-right flex-shrink-0">
-                                <p class="font-semibold text-gray-900 dark:text-white text-sm">₹${(item.price * item.qty).toFixed(2)}</p>
-                                <p class="text-xs text-gray-500">₹${item.price} each</p>
-                            </div>
+                itemsList.innerHTML = order.order_items.map(item => `
+                    <div class="flex gap-4 items-center py-3 border-b border-gray-100 last:border-0">
+                        <div class="h-12 w-12 bg-gray-50 rounded-lg p-1 border border-gray-100">
+                             <img src="${item.products?.image_url || ''}" class="h-full w-full object-contain">
                         </div>
-                    `).join('');
-                }
-            }
-
-            function showOrderList() {
-                orderDetailSection.classList.add('hidden');
-                orderHistoryContainer.classList.remove('hidden');
-            }
-
-            // Back button handler
-            if (backToOrdersBtn) {
-                backToOrdersBtn.addEventListener('click', showOrderList);
-            }
-
-            // Load order history
-            let orderHistory = [];
-            try {
-                const historyStr = localStorage.getItem('order_history');
-                if (historyStr) {
-                    orderHistory = JSON.parse(historyStr);
-                }
-            } catch (e) {
-                console.error('Error loading order history:', e);
-            }
-
-            if (orderHistory.length > 0) {
-                orderHistoryContainer.innerHTML = orderHistory.map((order, index) => `
-                    <div class="order-card bg-white dark:bg-surface-dark rounded-2xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 hover:border-primary/30 transition-colors cursor-pointer" data-order-index="${index}">
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                            <div class="flex items-start gap-4">
-                                <div class="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary flex-shrink-0">
-                                    <span class="material-symbols-outlined">receipt_long</span>
-                                </div>
-                                <div>
-                                    <div class="flex items-center gap-2 flex-wrap">
-                                        <h3 class="font-bold text-gray-900 dark:text-white">Order #${order.orderId}</h3>
-                                        <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-                                            Delivered
-                                        </span>
-                                    </div>
-                                    <p class="text-sm text-gray-500 mt-1">${formatDate(order.orderDate)} at ${formatTime(order.orderDate)}</p>
-                                    <p class="text-xs text-gray-400 mt-1">${order.itemCount || order.items?.length || 0} items</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 sm:flex-col sm:items-end">
-                                <p class="text-lg font-bold text-primary">₹${order.total?.toFixed(2) || '0.00'}</p>
-                                <span class="material-symbols-outlined text-gray-400">chevron_right</span>
-                            </div>
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-900 text-sm">${item.products?.name}</h4>
+                            <p class="text-xs text-gray-500">Qty: ${item.quantity} x ₹${item.price_at_purchase}</p>
                         </div>
-                        ${order.items && order.items.length > 0 ? `
-                        <div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-800">
-                            <div class="flex items-center gap-2 overflow-x-auto pb-2">
-                                ${order.items.slice(0, 4).map(item => `
-                                    <div class="w-12 h-12 rounded-lg bg-gray-50 dark:bg-gray-800 p-1 flex-shrink-0 border border-gray-100 dark:border-gray-700">
-                                        <img src="${item.image_url || item.image || ''}" alt="${item.name}" class="w-full h-full object-contain">
-                                    </div>
-                                `).join('')}
-                                ${order.items.length > 4 ? `
-                                    <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-800 flex items-center justify-center flex-shrink-0 text-xs font-bold text-gray-500">
-                                        +${order.items.length - 4}
-                                    </div>
-                                ` : ''}
-                            </div>
-                        </div>
-                        ` : ''}
+                        <p class="font-semibold text-gray-900 text-sm">₹${item.quantity * item.price_at_purchase}</p>
                     </div>
                 `).join('');
+            };
 
-                // Add click handlers to order cards
-                document.querySelectorAll('.order-card').forEach(card => {
-                    card.addEventListener('click', () => {
-                        const index = parseInt(card.dataset.orderIndex);
-                        showOrderDetail(orderHistory[index]);
-                    });
+            // 4. Helper: Status Colors
+            function getStatusColor(status) {
+                switch (status) {
+                    case 'Delivered': return 'bg-green-100 text-green-700 border border-green-200';
+                    case 'Arrived': return 'bg-green-100 text-green-700 border border-green-200'; // Handle both
+                    case 'Out for Delivery': return 'bg-orange-100 text-orange-700 border border-orange-200';
+                    case 'Packing': return 'bg-yellow-100 text-yellow-700 border border-yellow-200';
+                    case 'Confirmed': return 'bg-blue-100 text-blue-700 border border-blue-200';
+                    case 'Pending': return 'bg-gray-100 text-gray-700 border border-gray-200';
+                    case 'Cancelled': return 'bg-red-100 text-red-700 border border-red-200';
+                    default: return 'bg-gray-100 text-gray-700 border border-gray-200';
+                }
+            }
+
+            // 5. LIVE TRACKING: The Magic Part
+            function subscribeToOrders(orderIds) {
+                window.supabaseClient
+                    .channel('custom-all-channel')
+                    .on(
+                        'postgres_changes',
+                        { event: 'UPDATE', schema: 'public', table: 'orders' },
+                        (payload) => {
+                            console.log('Change received!', payload);
+                            const updatedOrder = payload.new;
+
+                            // Logic for display text
+                            const displayStatus = updatedOrder.status === 'Pending' ? 'Pending Confirmation' : updatedOrder.status;
+
+                            // 1. Update the Status Badge on the list
+                            const badge = document.getElementById(`status-badge-${updatedOrder.id}`);
+                            if (badge) {
+                                badge.textContent = displayStatus;
+                                badge.className = `px-2 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(updatedOrder.status)}`;
+
+                                // Visual Alert
+                                badge.classList.add('animate-pulse');
+                                setTimeout(() => badge.classList.remove('animate-pulse'), 2000);
+                            }
+
+                            // 2. If detail view is open for this order, update it too
+                            const detailId = document.getElementById('detail-order-id').textContent;
+                            if (detailId === 'Order #' + updatedOrder.id) {
+                                const detailStatus = document.getElementById('detail-order-status');
+                                detailStatus.textContent = updatedOrder.status;
+                                detailStatus.className = `px-3 py-1 rounded-full text-xs font-semibold ${getStatusColor(updatedOrder.status)}`;
+                            }
+                        }
+                    )
+                    .subscribe();
+            }
+
+            // Back Button Logic
+            if (backToOrdersBtn) {
+                backToOrdersBtn.addEventListener('click', () => {
+                    orderDetailSection.classList.add('hidden');
+                    orderHistoryContainer.classList.remove('hidden');
                 });
             }
-        })();
+
+            // 6. Cancel Order Function
+            // 6. Cancel Order Function
+            window.cancelMyOrder = async (orderId) => {
+                if (!confirm("Are you sure you want to cancel this order?")) return;
+
+                // Call the SQL function we created
+                const { error } = await window.supabaseClient.rpc('cancel_order', {
+                    order_id_input: orderId
+                });
+
+                if (error) {
+                    alert("Error cancelling: " + error.message);
+                } else {
+                    alert("Order cancelled. Refund initiated.");
+                    location.reload(); // Refresh to see status change
+                }
+            };
+
+            // Initialize
+            fetchMyOrders();
+        });
     </script>
 
     <!-- Bottom Nav -->

@@ -72,6 +72,8 @@
 
         /* Adding a splash of yellow */
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
 </head>
 
 <body
@@ -86,8 +88,7 @@
         <div class="confetti left-[80%] top-[-10%] delay-[3s]"></div>
         <div class="confetti left-[90%] top-[-30%] delay-[2.5s]"></div>
     </div>
-    <nav
-        class="w-full bg-white dark:bg-background-dark border-b border-primary/10 dark:border-white/10 z-20">
+    <nav class="w-full bg-white dark:bg-background-dark border-b border-primary/10 dark:border-white/10 z-20">
         <div class="max-w-7xl mx-auto px-4 py-2">
             <div class="flex justify-between items-center">
                 <!-- Logo and Brand Name on Left -->
@@ -102,7 +103,8 @@
                     </button>
                     <a href="cart.html"
                         class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
-                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
+                        <span
+                            class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
                         <div id="desk-cart-badge"
                             class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
                             2</div>
@@ -156,17 +158,21 @@
                         </div>
                     </div>
                     <!-- Progress Bar -->
-                    <div class="relative">
+                    <div class="relative mt-4">
                         <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-gray-200 dark:bg-gray-700">
-                            <div class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary transition-all duration-1000 ease-out"
-                                style="width: 35%"></div>
+                            <div id="progress-fill"
+                                class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500 transition-all duration-1000 ease-out"
+                                style="width: 5%">
+                            </div>
                         </div>
-                        <div
-                            class="flex justify-between text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400">
-                            <div class="text-primary-dark dark:text-primary font-bold">Confirmed</div>
-                            <div class="text-gray-900 dark:text-white font-bold">Packing</div>
-                            <div>Out for Delivery</div>
-                            <div>Arrived</div>
+
+                        <div class="flex justify-between text-[10px] sm:text-xs font-medium text-gray-500 dark:text-gray-400"
+                            id="progress-labels">
+                            <div id="step-pending" class="text-yellow-600 font-bold">Pending</div>
+                            <div id="step-confirmed">Confirmed</div>
+                            <div id="step-packing">Packing</div>
+                            <div id="step-delivery">On Way</div>
+                            <div id="step-arrived">Delivered</div>
                         </div>
                     </div>
                 </div>
@@ -246,59 +252,135 @@
         <p>© 2024 DailyFreshFarm. Freshness Delivered.</p>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Retrieve complete order details from localStorage
+        document.addEventListener('DOMContentLoaded', async () => {
+            // 1. Get Order Data
             const orderDataStr = localStorage.getItem('last_order');
-            const orderData = orderDataStr ? JSON.parse(orderDataStr) : null;
+            if (!orderDataStr) return;
 
-            if (orderData) {
-                // Update order ID in the page
-                const orderIdSpan = document.querySelector('.font-mono');
-                if (orderIdSpan) orderIdSpan.textContent = '#' + orderData.orderId;
+            const orderData = JSON.parse(orderDataStr);
+            const orderId = orderData.orderId;
 
-                // Update payment summary
-                document.getElementById('success-grand-total').textContent = `₹${orderData.total.toFixed(2)}`;
-                document.getElementById('success-items-total').textContent = `₹${orderData.subtotal.toFixed(2)}`;
-                document.getElementById('success-item-count').textContent = `Subtotal (${orderData.itemCount} items)`;
-            } else {
-                // Fallback to old method
-                const lastTotal = localStorage.getItem('last_order_total') || '₹0.00';
-                const lastCount = localStorage.getItem('last_order_count') || '0';
-                const lastSubtotal = localStorage.getItem('last_order_subtotal') || '₹0.00';
+            // Render Initial Data
+            document.querySelector('.font-mono').textContent = '#' + orderId;
+            document.getElementById('success-grand-total').textContent = `₹${orderData.total.toFixed(2)}`;
+            document.getElementById('success-items-total').textContent = `₹${orderData.subtotal.toFixed(2)}`;
+            document.getElementById('success-item-count').textContent = `Subtotal (${orderData.itemCount} items)`;
 
-                document.getElementById('success-grand-total').textContent = lastTotal;
-                document.getElementById('success-items-total').textContent = lastSubtotal;
-                document.getElementById('success-item-count').textContent = `Subtotal (${lastCount} items)`;
+            // 2. LIVE TRACKING LOGIC
+            function updateUI(status) {
+                console.log("Live Update Received:", status);
+
+                const progressBar = document.getElementById('progress-fill');
+                const statusText = document.querySelector('.text-sm.font-medium.text-gray-700.dark\\:text-gray-200'); // Top right status badge text
+
+                // Reset all labels to gray first
+                ['pending', 'confirmed', 'packing', 'delivery', 'arrived'].forEach(step => {
+                    const el = document.getElementById('step-' + step);
+                    if (el) el.className = "text-gray-500 dark:text-gray-400";
+                });
+
+                // Helper to highlight a label
+                const highlight = (id, colorClass) => {
+                    const el = document.getElementById(id);
+                    if (el) el.className = `${colorClass} font-bold transform scale-110 transition-transform`;
+                };
+
+                // 1. PENDING (Step 1)
+                if (status === 'Pending') {
+                    progressBar.style.width = '10%';
+                    progressBar.className = "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-yellow-500 animate-pulse";
+                    if (statusText) statusText.textContent = 'Pending Confirmation';
+                    highlight('step-pending', 'text-yellow-600 dark:text-yellow-400');
+                }
+
+                // 2. CONFIRMED (Step 2)
+                else if (status === 'Confirmed') {
+                    progressBar.style.width = '30%';
+                    progressBar.className = "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary";
+                    if (statusText) statusText.textContent = 'Order Confirmed';
+                    highlight('step-confirmed', 'text-primary-dark dark:text-primary');
+                }
+
+                // 3. PACKING (Step 3)
+                else if (status === 'Packing') {
+                    progressBar.style.width = '55%';
+                    progressBar.className = "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary";
+                    if (statusText) statusText.textContent = 'Being Packed';
+                    highlight('step-packing', 'text-primary-dark dark:text-primary');
+                }
+
+                // 4. OUT FOR DELIVERY (Step 4)
+                else if (status === 'Out for Delivery') {
+                    progressBar.style.width = '80%';
+                    progressBar.className = "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary";
+                    if (statusText) statusText.textContent = 'Out for Delivery';
+                    highlight('step-delivery', 'text-primary-dark dark:text-primary');
+                }
+
+                // 5. DELIVERED (Step 5)
+                else if (status === 'Delivered' || status === 'Arrived') {
+                    progressBar.style.width = '100%';
+                    progressBar.className = "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-green-600";
+                    if (statusText) statusText.textContent = 'Delivered';
+                    highlight('step-arrived', 'text-green-700 dark:text-green-400');
+                }
+
+                // CANCELLED
+                else if (status === 'Cancelled') {
+                    progressBar.style.width = '100%';
+                    progressBar.className = "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-red-600";
+                    if (statusText) statusText.textContent = 'Order Cancelled';
+                    highlight('step-pending', 'text-red-600'); // Highlight start as red
+                }
             }
+
+            // 3. LISTEN TO SUPABASE
+            window.supabaseClient
+                .channel('public:orders:' + orderId)
+                .on('postgres_changes',
+                    { event: 'UPDATE', schema: 'public', table: 'orders', filter: `id=eq.${orderId}` },
+                    (payload) => {
+                        updateUI(payload.new.status);
+                    }
+                )
+                .subscribe();
         });
     </script>
 
     <!-- Search Modal -->
     <div id="search-modal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
-        <div class="relative bg-white dark:bg-background-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+        <div
+            class="relative bg-white dark:bg-background-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
             <div class="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
                 <span class="material-symbols-outlined text-gray-400">search</span>
-                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
-                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400" autofocus>
-                <button id="search-close" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..."
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400"
+                    autofocus>
+                <button id="search-close"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
                     <span class="material-symbols-outlined text-gray-500">close</span>
                 </button>
             </div>
             <div class="p-4">
                 <p class="text-sm text-gray-500 mb-3">Popular searches</p>
                 <div class="flex flex-wrap gap-2">
-                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
-                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
-                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
-                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
-                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                    <a href="category.html?search=milk"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
                 </div>
             </div>
         </div>
     </div>
     <script>
-        (function() {
+        (function () {
             const searchBtn = document.getElementById('search-btn');
             const searchModal = document.getElementById('search-modal');
             const searchClose = document.getElementById('search-close');

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - DailyFreshFarm</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <!-- Supabase SDK (MUST be here for auth.js imports or global usage) -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Your local Supabase Config (initializes window.supabaseClient) -->
+    <script src="js/supabase.js"></script>
+    <style>
+        body {
+            font-family: 'Work Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 flex items-center justify-center min-h-screen">
+
+    <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md border border-gray-100">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <a href="index.html">
+                <img src="assets/logo.png" alt="Logo" class="h-20 mx-auto mb-4 hover:opacity-90 transition-opacity">
+            </a>
+            <h2 class="text-2xl font-bold text-gray-900">Welcome Back</h2>
+            <p class="text-gray-500 text-sm mt-1">Login to continue shopping fresh!</p>
+        </div>
+
+        <!-- Login Form -->
+        <form id="login-form" class="space-y-6">
+            <!-- Email -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400 text-lg">mail</span>
+                    <input type="email" id="login-email" required
+                        class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0c831f] focus:border-[#0c831f] focus:outline-none transition-all placeholder-gray-400"
+                        placeholder="you@example.com">
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <div class="relative">
+                    <span class="material-symbols-outlined absolute left-3 top-3 text-gray-400 text-lg">lock</span>
+                    <input type="password" id="login-password" required
+                        class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#0c831f] focus:border-[#0c831f] focus:outline-none transition-all placeholder-gray-400"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <!-- Error Message -->
+            <div id="login-error"
+                class="text-red-600 bg-red-50 border border-red-100 p-3 rounded-lg text-sm text-center hidden flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-lg">error</span>
+                <span id="error-text"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="login-btn"
+                class="w-full bg-[#0c831f] hover:bg-green-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-green-200 transition-all transform active:scale-95 flex justify-center items-center gap-2">
+                Log In
+            </button>
+        </form>
+
+        <!-- Footer Links -->
+        <div class="mt-8 space-y-4 text-center">
+            <p class="text-sm text-gray-600">
+                Don't have an account?
+                <a href="signup.html" class="text-[#0c831f] font-bold hover:underline transition-colors">Create one
+                    now</a>
+            </p>
+            <div class="border-t border-gray-100 pt-4">
+                <a href="../freshmart-backed/index.html"
+                    class="text-xs text-gray-400 hover:text-gray-600 transition-colors">
+                    Are you an Admin? Login here
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <!-- We assume js/auth.js exports a loginUser function -->
+    <script type="module">
+        import { loginUser } from './js/auth.js';
+
+        const form = document.getElementById('login-form');
+        const btn = document.getElementById('login-btn');
+        const emailInput = document.getElementById('login-email');
+        const passwordInput = document.getElementById('login-password');
+        const errorEl = document.getElementById('login-error');
+        const errorText = document.getElementById('error-text');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // 1. UI Loading State
+            const originalBtnContent = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-xl">progress_activity</span> Verifying...`;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            errorEl.classList.add('hidden');
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            try {
+                // 2. Attempt Login
+                const { data, error } = await loginUser(email, password);
+
+                if (error) {
+                    throw error;
+                }
+
+                // 3. Success! Redirect
+                // Optional: Show success toast or small delay
+                btn.innerHTML = `<span class="material-symbols-outlined text-xl">check_circle</span> Success!`;
+                btn.classList.remove('bg-[#0c831f]', 'hover:bg-green-800');
+                btn.classList.add('bg-green-600');
+
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 800);
+
+            } catch (err) {
+                // 4. Handle Errors
+                console.error("Login Error:", err);
+                errorText.textContent = err.message || "Invalid email or password";
+                errorEl.classList.remove('hidden');
+
+                // Reset Button
+                btn.disabled = false;
+                btn.innerHTML = originalBtnContent;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        });
+    </script>
+</body>
+
+</html>

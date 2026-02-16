@@ -13,6 +13,11 @@
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link rel="icon" type="image/png" href="assets/logo.png">
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="js/supabase.js"></script>
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -59,7 +64,8 @@
                     </button>
                     <a href="cart.html"
                         class="relative flex h-11 w-11 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
-                        <span class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
+                        <span
+                            class="material-symbols-outlined text-2xl text-gray-900 dark:text-white">shopping_cart</span>
                         <div id="desk-cart-badge"
                             class="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-white font-bold">
                             2</div>
@@ -306,58 +312,65 @@
             payBtnText.textContent = `Pay ₹ ${grandTotal.toFixed(2)}`;
 
             // Handle Payment
-            confirmBtn.addEventListener('click', () => {
+            confirmBtn.addEventListener('click', async () => {
                 const selectedMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
+                if (!selectedMethod) return alert('Please select a payment method');
 
-                if (!selectedMethod) {
-                    alert('Please select a payment method');
-                    return;
-                }
+                confirmBtn.disabled = true;
+                payBtnText.textContent = "Processing Order...";
 
-                // Generate order ID
-                const orderId = 'DFF-' + Math.floor(10000 + Math.random() * 90000);
-                const orderDate = new Date().toISOString();
-
-                // Save complete order details for success and orders pages
+                // 1. Prepare data for Supabase 'orders' table
                 const orderData = {
-                    orderId: orderId,
-                    items: items,
-                    subtotal: subtotalVal,
-                    charges: fixedCharges,
-                    total: grandTotal,
-                    itemCount: items.reduce((a, b) => a + b.qty, 0),
-                    paymentMethod: selectedMethod,
-                    orderDate: orderDate,
-                    status: 'confirmed'
+                    customer_name: "Guest User", // Replace with real auth data later
+                    phone: "98765 43210",
+                    address: "402, Green Valley Apartments, Mumbai",
+                    total_amount: grandTotal,
+                    items_summary: items.map(i => `${i.name} x${i.qty}`).join(', '),
+                    status: 'Pending'
                 };
 
-                localStorage.setItem('last_order', JSON.stringify(orderData));
-                localStorage.setItem('last_order_total', `₹${grandTotal.toFixed(2)}`);
-                localStorage.setItem('last_order_count', orderData.itemCount);
-                localStorage.setItem('last_order_subtotal', `₹${subtotalVal.toFixed(2)}`);
-
-                // Save to order history array
-                let orderHistory = [];
                 try {
-                    const existingHistory = localStorage.getItem('order_history');
-                    if (existingHistory) {
-                        orderHistory = JSON.parse(existingHistory);
+                    // 2. Insert into Supabase 'orders' table
+                    const { data, error } = await window.supabaseClient
+                        .from('orders')
+                        .insert([orderData])
+                        .select();
+
+                    if (error) throw error;
+
+                    const orderId = data[0].id;
+
+                    // 3. Insert items into 'order_items' (Optional structure update, but good for data integrity)
+                    // For now, we will focus on updating STOCK.
+
+                    // 4. DECREMENT STOCK for each item
+                    for (const item of items) {
+                        const { error: stockError } = await window.supabaseClient
+                            .rpc('decrement_stock', {
+                                row_id: item.id,
+                                quantity: item.qty
+                            });
+
+                        if (stockError) console.error(`Failed to update stock for ${item.name}:`, stockError);
                     }
-                } catch (e) {
-                    orderHistory = [];
-                }
-                orderHistory.unshift(orderData); // Add new order at the beginning
-                localStorage.setItem('order_history', JSON.stringify(orderHistory));
 
-                // Simulate processing
-                confirmBtn.disabled = true;
-                payBtnText.textContent = "Processing...";
+                    // 5. Clear local cart and redirect
+                    cart.clear();
+                    localStorage.setItem('last_order', JSON.stringify({
+                        orderId: orderId,
+                        total: grandTotal,
+                        subtotal: subtotalVal,
+                        itemCount: items.length
+                    }));
 
-                // Show loader simulation (using button text for now, could be a modal)
-                setTimeout(() => {
-                    cart.clear(); // Clear cart
                     window.location.href = 'order-success.html';
-                }, 2000);
+
+                } catch (err) {
+                    console.error('Order failed:', err);
+                    alert('Order failed: ' + err.message);
+                    confirmBtn.disabled = false;
+                    payBtnText.textContent = "Try Again";
+                }
             });
         });
     </script>
@@ -365,30 +378,38 @@
     <!-- Search Modal -->
     <div id="search-modal" class="fixed inset-0 z-[100] hidden">
         <div class="absolute inset-0 bg-black/50" id="search-overlay"></div>
-        <div class="relative bg-white dark:bg-surface-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
+        <div
+            class="relative bg-white dark:bg-surface-dark w-full max-w-2xl mx-auto mt-20 rounded-2xl shadow-2xl overflow-hidden">
             <div class="flex items-center gap-3 p-4 border-b border-gray-200 dark:border-gray-700">
                 <span class="material-symbols-outlined text-gray-400">search</span>
-                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..." 
-                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400" autofocus>
-                <button id="search-close" class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
+                <input id="search-input" type="text" placeholder="Search for groceries, fruits, vegetables..."
+                    class="flex-1 bg-transparent border-none text-lg focus:outline-none focus:ring-0 text-gray-900 dark:text-white placeholder-gray-400"
+                    autofocus>
+                <button id="search-close"
+                    class="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors">
                     <span class="material-symbols-outlined text-gray-500">close</span>
                 </button>
             </div>
             <div class="p-4">
                 <p class="text-sm text-gray-500 mb-3">Popular searches</p>
                 <div class="flex flex-wrap gap-2">
-                    <a href="category.html?search=milk" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
-                    <a href="category.html?search=bread" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
-                    <a href="category.html?search=eggs" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
-                    <a href="category.html?search=fruits" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
-                    <a href="category.html?search=snacks" class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
+                    <a href="category.html?search=milk"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Milk</a>
+                    <a href="category.html?search=bread"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Bread</a>
+                    <a href="category.html?search=eggs"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Eggs</a>
+                    <a href="category.html?search=fruits"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Fruits</a>
+                    <a href="category.html?search=snacks"
+                        class="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 rounded-full text-sm text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">Snacks</a>
                 </div>
             </div>
         </div>
     </div>
     <link rel="stylesheet" href="css/style.css">
     <script>
-        (function() {
+        (function () {
             const searchBtn = document.getElementById('search-btn');
             const searchModal = document.getElementById('search-modal');
             const searchClose = document.getElementById('search-close');

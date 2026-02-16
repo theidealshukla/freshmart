@@ -1,4 +1,5 @@
 ﻿import { cart } from './cart.js';
+import { getCurrentUser, logoutUser } from './auth.js';
 
 // Products will be fetched from Supabase
 let products = [];
@@ -82,35 +83,36 @@ export function formatCurrency(amount) {
 }
 
 // Generate Product Card HTML matching the existing design
+// Updated Product Card for Home Page
 function generateProductCardHTML(product) {
+    // Check NUMERIC stock logic
+    const isOutOfStock = (product.stock_quantity !== null && product.stock_quantity <= 0);
     const hasDiscount = product.mrp && product.mrp > product.price;
+
+    // UI Logic
     const saleTag = hasDiscount ? `<span class="absolute top-3 left-3 rounded-md bg-red-500 px-2 py-1 text-[10px] font-bold text-white uppercase">Sale</span>` : '';
-    
-    const priceHTML = hasDiscount 
-        ? `<div class="flex flex-col">
-               <span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹${product.price}</span>
-               <span class="text-xs line-through opacity-30">₹${product.mrp}</span>
-           </div>`
-        : `<span class="text-xl font-extrabold text-[#0d1b0d] dark:text-white">₹${product.price}</span>`;
+    const opacityClass = isOutOfStock ? 'opacity-50 grayscale' : '';
+    const cursorClass = isOutOfStock ? 'cursor-not-allowed' : 'hover:scale-110';
+    const btnColor = isOutOfStock ? 'bg-gray-400' : 'bg-primary';
+    const btnText = isOutOfStock ? 'Sold Out' : '<span class="material-symbols-outlined">add</span>';
+    const btnDisabled = isOutOfStock ? 'disabled' : '';
 
     return `
-        <div class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300">
+        <div class="group rounded-3xl bg-white dark:bg-white/5 p-4 shadow-sm hover:shadow-xl transition-all duration-300 ${opacityClass}">
             <div class="relative mb-4 aspect-square overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-50 to-green-100 dark:from-emerald-900/30 dark:to-green-800/30">
-                <div class="h-full w-full flex items-center justify-center">
-                    <span class="material-symbols-outlined text-6xl text-emerald-300 dark:text-emerald-600">local_mall</span>
-                </div>
+                ${product.image_url ? `<img src="${product.image_url}" class="h-full w-full object-cover" />` :
+            `<div class="h-full w-full flex items-center justify-center"><span class="material-symbols-outlined text-6xl text-emerald-300">local_mall</span></div>`}
                 ${saleTag}
             </div>
             <div class="px-2 pb-2">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-primary">${product.category || 'General'}</span>
-                <h4 class="mt-1 text-lg font-bold">${product.name}</h4>
-                <p class="text-xs font-medium opacity-50">${product.unit || product.weight || ''}</p>
+                <h4 class="mt-1 text-lg font-bold truncate">${product.name}</h4>
+                <p class="text-xs font-medium opacity-50">${product.unit || ''}</p>
                 <div class="mt-4 flex items-center justify-between">
-                    ${priceHTML}
-                    <button
-                        class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-background-dark hover:scale-110 transition-transform"
-                        data-id="${product.id}">
-                        <span class="material-symbols-outlined">add</span>
+                    <span class="text-xl font-extrabold">₹${product.price}</span>
+                    <button class="add-to-cart-btn flex h-10 w-10 items-center justify-center rounded-xl ${btnColor} text-white transition-transform ${cursorClass}"
+                        data-id="${product.id}" ${btnDisabled}>
+                        ${btnText}
                     </button>
                 </div>
             </div>
@@ -122,32 +124,33 @@ function generateProductCardHTML(product) {
 async function initHomePage() {
     const grid = document.getElementById('featured-products-grid');
     if (!grid) return; // Not on home page
-    
+
     // Show loading state
     grid.innerHTML = '<p class="col-span-full text-center text-gray-500">Loading products...</p>';
-    
+
     try {
         // Fetch products from Supabase
         const allProducts = await window.dbFetchProducts();
-        
+
         // Store globally for cart functionality
         products = allProducts;
-        
+
         // Filter only 'In Stock' products
-        const inStockProducts = allProducts.filter(p => p.status === 'In Stock');
-        
-        if (inStockProducts.length === 0) {
+        // Create display list (show all, including out of stock)
+        const displayProducts = allProducts;
+
+        if (displayProducts.length === 0) {
             grid.innerHTML = '<p class="col-span-full text-center text-gray-500">No products available at the moment.</p>';
             return;
         }
-        
+
         // Generate and inject HTML
-        const cardsHTML = inStockProducts.map(product => generateProductCardHTML(product)).join('');
+        const cardsHTML = displayProducts.map(product => generateProductCardHTML(product)).join('');
         grid.innerHTML = cardsHTML;
-        
+
         // Update product buttons after rendering
         updateProductButtons();
-        
+
     } catch (error) {
         console.error('Error loading products:', error);
         grid.innerHTML = '<p class="col-span-full text-center text-red-500">Failed to load products. Please try again.</p>';
@@ -155,35 +158,29 @@ async function initHomePage() {
 }
 
 // Generate Category Page Product Card HTML (different style from home page)
+// Updated Product Card for Category/Search Page
 function generateCategoryProductCardHTML(product) {
-    const hasDiscount = product.mrp && product.mrp > product.price;
-    const deliveryTime = product.deliveryTime || '10 MINS';
-    
-    const priceHTML = hasDiscount 
-        ? `<div class="flex flex-col leading-none">
-               <span class="text-xs text-gray-400 line-through mb-0.5">₹${product.mrp}</span>
-               <span class="text-sm font-bold text-gray-900">₹${product.price}</span>
-           </div>`
-        : `<div class="flex flex-col leading-none">
-               <span class="text-sm font-bold text-gray-900">₹${product.price}</span>
-           </div>`;
+    // Check NUMERIC stock logic
+    const isOutOfStock = (product.stock_quantity !== null && product.stock_quantity <= 0);
 
     return `
-        <div class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative">
-            <div class="relative aspect-square mb-3 bg-gradient-to-br from-emerald-50 to-green-100 rounded-lg flex items-center justify-center overflow-hidden">
-                <span class="material-symbols-outlined text-5xl text-emerald-300">shopping_basket</span>
-                <div class="absolute bottom-0 left-0 bg-gray-100/90 backdrop-blur-[2px] px-1.5 py-0.5 rounded-tr-md flex items-center gap-1">
-                    <span class="material-symbols-outlined text-[10px] text-gray-600">schedule</span>
-                    <span class="text-[9px] font-bold text-gray-700 uppercase">${deliveryTime}</span>
-                </div>
+        <div class="product-card group flex flex-col p-3 rounded-lg border border-gray-100 bg-white transition-all h-full hover:shadow-lg relative ${isOutOfStock ? 'opacity-60' : ''}">
+            <div class="relative aspect-square mb-3 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
+                ${product.image_url ? `<img src="${product.image_url}" class="h-full w-full object-cover" />` :
+            `<span class="material-symbols-outlined text-5xl text-gray-300">shopping_basket</span>`}
             </div>
             <div class="flex-grow">
                 <h3 class="text-[13px] font-semibold text-gray-800 leading-snug mb-1 line-clamp-2">${product.name}</h3>
-                <span class="text-[12px] text-gray-500 font-medium block mb-2">${product.unit || product.weight || ''}</span>
+                <span class="text-[12px] text-gray-500 font-medium block mb-2">${product.unit || ''}</span>
             </div>
             <div class="mt-2 flex items-center justify-between">
-                ${priceHTML}
-                <button class="add-btn add-to-cart-btn" data-id="${product.id}">ADD</button>
+                <div class="flex flex-col leading-none">
+                    <span class="text-sm font-bold text-gray-900">₹${product.price}</span>
+                </div>
+                <button class="add-btn add-to-cart-btn ${isOutOfStock ? 'bg-gray-400 border-gray-400 cursor-not-allowed' : ''}" 
+                    data-id="${product.id}" ${isOutOfStock ? 'disabled' : ''}>
+                    ${isOutOfStock ? 'SOLD OUT' : 'ADD'}
+                </button>
             </div>
         </div>
     `;
@@ -193,15 +190,15 @@ function generateCategoryProductCardHTML(product) {
 async function initCategoryPage() {
     const grid = document.getElementById('category-products-grid');
     if (!grid) return; // Not on category page
-    
+
     // Show loading state
     grid.innerHTML = '<p class="col-span-full text-center text-gray-500 py-8">Loading products...</p>';
-    
+
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('cat');
     const searchParam = urlParams.get('search');
-    
+
     // Update page title based on category or search
     const titleEl = document.getElementById('category-title');
     if (titleEl) {
@@ -213,7 +210,7 @@ async function initCategoryPage() {
             titleEl.textContent = 'All Products';
         }
     }
-    
+
     // Highlight active category in sidebar
     const categoryLinks = document.querySelectorAll('.category-link');
     categoryLinks.forEach(link => {
@@ -230,58 +227,100 @@ async function initCategoryPage() {
             link.classList.remove('border-primary', 'bg-primary-light', 'active');
         }
     });
-    
+
     try {
         // Fetch products from Supabase
         const allProducts = await window.dbFetchProducts();
-        
+
         // Store globally for cart functionality
         products = allProducts;
-        
-        // Filter by 'In Stock' first
-        let filteredProducts = allProducts.filter(p => p.status === 'In Stock');
-        
+
+        // Use all products (including Out of Stock)
+        let filteredProducts = allProducts;
+
         // Apply category filter if present
         if (categoryParam) {
-            filteredProducts = filteredProducts.filter(p => 
+            filteredProducts = filteredProducts.filter(p =>
                 p.category && p.category.toLowerCase() === categoryParam.toLowerCase()
             );
         }
-        
+
         // Apply search filter if present
         if (searchParam) {
             const searchLower = searchParam.toLowerCase();
-            filteredProducts = filteredProducts.filter(p => 
+            filteredProducts = filteredProducts.filter(p =>
                 (p.name && p.name.toLowerCase().includes(searchLower)) ||
                 (p.category && p.category.toLowerCase().includes(searchLower))
             );
         }
-        
+
         if (filteredProducts.length === 0) {
-            const message = searchParam 
+            const message = searchParam
                 ? `No products found for "${searchParam}"`
-                : categoryParam 
+                : categoryParam
                     ? `No products found in this category`
                     : 'No products available';
             grid.innerHTML = `<p class="col-span-full text-center text-gray-500 py-8">${message}</p>`;
             return;
         }
-        
+
         // Generate and inject HTML
         const cardsHTML = filteredProducts.map(product => generateCategoryProductCardHTML(product)).join('');
         grid.innerHTML = cardsHTML;
-        
+
         // Update product buttons after rendering
         updateProductButtons();
-        
+
     } catch (error) {
         console.error('Error loading category products:', error);
         grid.innerHTML = '<p class="col-span-full text-center text-red-500 py-8">Failed to load products. Please try again.</p>';
     }
 }
 
+// Serialization of auth.js
+// Duplicate import removed
+
 // Initialization
 document.addEventListener('DOMContentLoaded', async () => {
+    // --- AUTH UI HANDLER ---
+    // Function to update Header UI
+    async function updateAuthUI() {
+        const user = await getCurrentUser();
+
+        // Select elements (Desktop & Mobile)
+        const loginBtns = document.querySelectorAll('.login-btn, .user-profile-btn');
+
+        if (user) {
+            // User IS logged in
+            loginBtns.forEach(btn => {
+                // Replace "Login" button with "Profile / Logout"
+                btn.innerHTML = `<span class="material-symbols-outlined">person</span>`;
+                btn.title = `Hi, ${user.profile?.full_name || 'User'}`;
+
+                // Make it clickable to go to profile or logout
+                btn.style.cursor = 'pointer';
+                btn.onclick = (e) => {
+                    e.preventDefault();
+                    // Simple dropdown logic or redirect
+                    if (confirm(`Signed in as ${user.profile?.full_name}.\nDo you want to logout?`)) {
+                        logoutUser();
+                    } else {
+                        window.location.href = 'profile.html';
+                    }
+                };
+            });
+        } else {
+            // User is NOT logged in
+            loginBtns.forEach(btn => {
+                btn.textContent = "Login";
+                btn.onclick = () => window.location.href = 'login.html';
+            });
+        }
+    }
+
+    // Run the check
+    updateAuthUI();
+
     // Inject Header - DISABLED for new design which has hardcoded header
     /*
     const headerEl = document.querySelector('header');
@@ -298,7 +337,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize Home Page (fetch products from Supabase)
     await initHomePage();
-    
+
     // Initialize Category Page (fetch products from Supabase)
     await initCategoryPage();
 

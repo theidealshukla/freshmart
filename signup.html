@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Sign Up - DailyFreshFarm</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Supabase CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <!-- Supabase Configuration -->
+    <script src="js/supabase.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0c831f",
+                        "primary-dark": "#096c19",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102210",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a331a",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 font-display min-h-screen flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+
+    <!-- Background Decoration -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-[10%] -left-[10%] w-[40%] h-[40%] bg-primary/20 rounded-full blur-[100px]"></div>
+        <div class="absolute top-[20%] right-[10%] w-[30%] h-[30%] bg-yellow-400/10 rounded-full blur-[80px]"></div>
+        <div class="absolute -bottom-[10%] left-[20%] w-[35%] h-[35%] bg-primary/20 rounded-full blur-[100px]"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-md w-full space-y-8 z-10">
+        <div class="text-center">
+            <a href="index.html" class="inline-block hover:opacity-90 transition-opacity">
+                <img src="assets/logo.png" alt="DailyFreshMart" class="mx-auto h-24 w-auto drop-shadow-lg">
+            </a>
+            <h2 class="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
+                Create your account
+            </h2>
+            <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                Join DailyFreshFarm for fresh, organic grocery delivery.
+            </p>
+        </div>
+
+        <div
+            class="bg-white dark:bg-surface-dark py-8 px-4 shadow-2xl rounded-2xl sm:px-10 border border-gray-100 dark:border-gray-800 backdrop-blur-sm bg-opacity-90 dark:bg-opacity-90">
+            <form class="space-y-6" id="signup-form">
+                <!-- Name Field -->
+                <div>
+                    <label for="fullName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Full Name
+                    </label>
+                    <div class="relative rounded-xl shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-gray-400 text-xl">person</span>
+                        </div>
+                        <input id="fullName" name="fullName" type="text" autocomplete="name" required
+                            class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm bg-gray-50 dark:bg-gray-800 dark:text-white transition-all"
+                            placeholder="John Doe">
+                    </div>
+                </div>
+
+                <!-- Phone Field -->
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Phone Number
+                    </label>
+                    <div class="relative rounded-xl shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-gray-400 text-xl">call</span>
+                        </div>
+                        <input id="phone" name="phone" type="tel" autocomplete="tel" required
+                            class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm bg-gray-50 dark:bg-gray-800 dark:text-white transition-all"
+                            placeholder="98765 43210">
+                    </div>
+                </div>
+
+                <!-- Email Field -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Email Address
+                    </label>
+                    <div class="relative rounded-xl shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-gray-400 text-xl">mail</span>
+                        </div>
+                        <input id="email" name="email" type="email" autocomplete="email" required
+                            class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm bg-gray-50 dark:bg-gray-800 dark:text-white transition-all"
+                            placeholder="you@example.com">
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                        Password
+                    </label>
+                    <div class="relative rounded-xl shadow-sm">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="material-symbols-outlined text-gray-400 text-xl">lock</span>
+                        </div>
+                        <input id="password" name="password" type="password" autocomplete="new-password" required
+                            class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-700 rounded-xl placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm bg-gray-50 dark:bg-gray-800 dark:text-white transition-all"
+                            placeholder="••••••••">
+                    </div>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-3.5 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-4 focus:ring-primary/30 shadow-lg shadow-primary/30 transition-all transform hover:-translate-y-0.5 active:scale-95">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <span
+                                class="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">arrow_forward</span>
+                        </span>
+                        Create Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-8">
+                <div class="relative">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300 dark:border-gray-700"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white dark:bg-surface-dark text-gray-500 rounded">
+                            Already have an account?
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <a href="login.html"
+                        class="font-semibold text-primary hover:text-primary-dark hover:underline transition-colors flex items-center justify-center gap-1">
+                        Sign in instead
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-xs text-gray-500 dark:text-gray-400">
+            &copy; 2024 DailyFreshFarm. All rights reserved.
+        </p>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3"></div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            // Basic Validation
+            if (!fullName || !phone || !email || !password) {
+                showToast("Please fill in all fields", "error");
+                return;
+            }
+
+            try {
+                // Determine loading state
+                const originalBtnText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-xl mr-2">progress_activity</span> Processing...';
+                submitBtn.disabled = true;
+                submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+
+                console.log("Attempting signup for:", email);
+
+                // 1. Sign up with Supabase Auth
+                const { data, error } = await window.supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: {
+                        data: {
+                            full_name: fullName,
+                            phone: phone
+                        }
+                    }
+                });
+
+                if (error) throw error;
+
+                console.log("Auth successful, checking profile creation...");
+
+                // 2. Insert into profiles table
+                if (data.user) {
+                    const { error: profileError } = await window.supabaseClient
+                        .from('profiles')
+                        .insert([
+                            {
+                                id: data.user.id,
+                                full_name: fullName,
+                                phone: phone,
+                                email: email,
+                                avatar_url: '', // Default empty or placeholder
+                                updated_at: new Date()
+                            }
+                        ]);
+
+                    if (profileError) {
+                        console.warn("Profile creation warning (might be handled by trigger):", profileError);
+                        // We do not throw here because the auth user was created successfully
+                    }
+                }
+
+                showToast("Account created! Please check your email to verify.", "success");
+
+                // Redirect after a delay
+                setTimeout(() => {
+                    window.location.href = 'index.html'; // Or login.html
+                }, 2000);
+
+            } catch (err) {
+                console.error("Signup error:", err);
+                showToast(err.message || "Failed to create account", "error");
+
+                // Reset button
+                submitBtn.innerHTML = `
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <span class="material-symbols-outlined text-white/50 group-hover:text-white transition-colors">arrow_forward</span>
+                        </span>
+                        Create Account`;
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+            }
+        });
+
+        // Simple Toast Function
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            // Colors based on type
+            let bgClass = 'bg-gray-800';
+            let icon = 'info';
+            if (type === 'success') { bgClass = 'bg-green-600'; icon = 'check_circle'; }
+            if (type === 'error') { bgClass = 'bg-red-600'; icon = 'error'; }
+
+            toast.className = `${bgClass} text-white px-6 py-4 rounded-xl shadow-2xl transform transition-all duration-300 translate-y-10 opacity-0 flex items-center gap-3 min-w-[320px] backdrop-blur-md`;
+            toast.innerHTML = `
+                <span class="material-symbols-outlined text-2xl">${icon}</span>
+                <span class="font-medium text-sm border-l border-white/20 pl-3">${message}</span>
+            `;
+
+            container.appendChild(toast);
+
+            // Animate in
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            });
+
+            // Remove after 3s
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+
+</html>
