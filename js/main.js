@@ -302,6 +302,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 // FIX: Directly go to Profile Page (No popup)
                 btn.onclick = (e) => {
                     e.preventDefault();
+                    console.log("Profile button clicked -> Going to profile.html"); // Debug line
                     window.location.href = 'profile.html';
                 };
             });
