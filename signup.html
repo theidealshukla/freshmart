@@ -200,13 +200,13 @@
 
                 console.log("Attempting signup for:", email);
 
-                // 1. Sign up with Supabase Auth
+                // 1. Sign up with Supabase Auth (Send metadata here!)
                 const { data, error } = await window.supabaseClient.auth.signUp({
                     email: email,
                     password: password,
                     options: {
                         data: {
-                            full_name: fullName,
+                            full_name: fullName, // This gets sent to the Trigger we just made
                             phone: phone
                         }
                     }
@@ -214,34 +214,13 @@
 
                 if (error) throw error;
 
-                console.log("Auth successful, checking profile creation...");
+                // The database trigger handles the profile creation now.
+                // We just notify the user.
 
-                // 2. Insert into profiles table
-                if (data.user) {
-                    const { error: profileError } = await window.supabaseClient
-                        .from('profiles')
-                        .insert([
-                            {
-                                id: data.user.id,
-                                full_name: fullName,
-                                phone: phone,
-                                email: email,
-                                avatar_url: '', // Default empty or placeholder
-                                updated_at: new Date()
-                            }
-                        ]);
+                showToast("Account created! Redirecting...", "success");
 
-                    if (profileError) {
-                        console.warn("Profile creation warning (might be handled by trigger):", profileError);
-                        // We do not throw here because the auth user was created successfully
-                    }
-                }
-
-                showToast("Account created! Please check your email to verify.", "success");
-
-                // Redirect after a delay
                 setTimeout(() => {
-                    window.location.href = 'index.html'; // Or login.html
+                    window.location.href = 'index.html';
                 }, 2000);
 
             } catch (err) {
