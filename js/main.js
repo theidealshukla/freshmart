@@ -67,7 +67,7 @@ const footerHTML = `
         <a href="#">About</a>
         <a href="#">Careers</a>
         <a href="#">Partner</a>
-        <a href="admin.html">Admin</a>
+        <a href="https://adminfreshmart.netlify.app/">Admin</a>
     </div>
     <p class="text-xs">© 2024 Daily FarmFresh. All rights reserved.</p>
 </div>
